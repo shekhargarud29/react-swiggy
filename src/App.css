@@ -1,38 +1,54 @@
-.App {
-  text-align: center;
+.cards {
+  /* width: 100%; */
+  /* max-width: 260px; */
+  transition: transhtmlForm 0.1s;
+  cursor: pointer;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.cards-img {
+  width: 100%;
+
+  height: 160px;
+  object-fit: cover;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.cards:hover {
+  transform: scale(0.95);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.textflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.input-button {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 3px solid white;
+  box-shadow: 0 0 0 1px #1e1d1c;
+  appearance: none;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  transition: all ease-in 0.2s;
 }
 
-.App-link {
-  color: #61dafb;
+.input-button:checked {
+  --bs-htmlForm-check-bg-image: none !important;
+  background-color: #f15700;
+  box-shadow: 0 0 0 1px #f15700;
+  border-color: none !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedEnd.css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root {
+  border-radius: var(--bs-border-radius-pill) !important;
 }
+
+#second,
+.filter-radio {
+  display: none;
+}
+/* #first-check:checked #first {
+  display: block;
+} */

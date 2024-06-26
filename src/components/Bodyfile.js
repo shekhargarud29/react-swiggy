@@ -1,9 +1,8 @@
+import CardContainer from "./CardContainerfile";
 const Body = () => {
   return (
     <>
-      <div>
-        <h1>Body</h1>
-      </div>
+      <CardContainer />
     </>
   );
 };

@@ -2,6 +2,7 @@
 import "./App.css";
 import Header from "./components/Headerfile";
 import Body from "./components/Bodyfile";
+import Footer from "./components/Footerfile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
     <>
       <Header />
       <Body />
+      <Footer />
     </>
   );
 }
