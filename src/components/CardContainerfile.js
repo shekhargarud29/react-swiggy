@@ -248,10 +248,10 @@ const CardContainer = () => {
     //   console.log("no checked from filter");
     // }
     const radios = document.getElementsByName("flexRadioDefault1");
-    console.log(radios);
+    // console.log(radios);
     radios.forEach((radio) => {
       if (radio.checked === true) {
-        console.log(radio.value);
+        console.log(radio.value + " from filter");
         sortBy(radio.value);
       }
     });
