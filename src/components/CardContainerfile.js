@@ -754,7 +754,7 @@ const CardContainer = () => {
             </div>
           </div>
           <div className=" col-6 ">
-            <div className="">
+            <div className="searchbar">
               <TextField
                 className=""
                 id="outlined-basic"
