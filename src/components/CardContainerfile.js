@@ -94,7 +94,7 @@ const CardContainer = () => {
   // const handleSearch = (e) => {
   //   setSearchTerm(e.target.value);
   // };
-  console.log(searchTerm);
+  // console.log(searchTerm);
   useEffect(() => {
     // const filterSearch = () => {
     if (searchTerm !== "") {
@@ -116,41 +116,148 @@ const CardContainer = () => {
     // };
   }, [searchTerm, restaurantCollection]);
 
-  const filterTime = () => {
-    const filterData = restaurantCollection.filter((restaurant) => {
-      console.log(restaurant?.info?.sla?.deliveryTime);
-      return restaurant?.info?.sla?.deliveryTime <= 30;
-    });
-    setrestaurantList(filterData);
-  };
+  const sortBy = (id) => {
+    console.log(id + " from sort");
+    if (id === "Relevance(Default)") {
+      // console.log("done");
+      console.log(restaurantCollection);
+      setrestaurantList(restaurantCollection);
+    } else if (id === "DeliveryTime") {
+      const filterTime = restaurantCollection.filter((restaurant) => {
+        if (restaurant?.info?.sla?.deliveryTime <= 30) {
+          console.log("time" + restaurant?.info?.sla?.deliveryTime);
+        }
+        return restaurant?.info?.sla?.deliveryTime <= 30;
+      });
 
-  const filterRating = () => {
-    const filterData = restaurantCollection.filter((restaurant) => {
-      return restaurant?.info?.avgRating >= 4;
-    });
-    setrestaurantList(filterData);
-  };
+      setrestaurantList(filterTime);
+    } else if (id === "Rating") {
+      const filterRating = restaurantCollection.filter((restaurant) => {
+        if (restaurant?.info?.avgRating >= 4) {
+          console.log("rating" + restaurant?.info?.avgRating);
+        }
+        return restaurant?.info?.avgRating >= 4;
+      });
 
-  const filterCostLowToHigh = (e) => {
-    const filterData = restaurantCollection.sort((a, b) => {
-      // const spl = a.info.costForTwo;
-      console.log(+a.info.costForTwo.match(/\d/g).join(""));
-      return (
-        +a.info.costForTwo.match(/\d/g).join("") -
-        +b.info.costForTwo.match(/\d/g).join("")
-      );
-    });
-    if (e.target.value === "ascend") {
-      // console.log("ascend");
-      setrestaurantList(filterData);
-    } else {
-      // console.log("descend");
-      setrestaurantList(filterData.reverse());
+      setrestaurantList(filterRating);
+    } else if (id === "Cost:LowtoHigh") {
+      const filterCostLowToHigh = restaurantCollection.sort((a, b) => {
+        // const spl = a.info.costForTwo;
+        // console.log(
+        //   "cost1" +
+        //     (+a.info.costForTwo.match(/\d/g).join("") -
+        //       +b.info.costForTwo.match(/\d/g).join(""))
+        // );
+        return (
+          +a.info.costForTwo.match(/\d/g).join("") -
+          +b.info.costForTwo.match(/\d/g).join("")
+        );
+      });
+      console.log(filterCostLowToHigh);
+      setrestaurantList(filterCostLowToHigh);
+    } else if (id === "Cost:HightoLow") {
+      const filterCostHightoLow = restaurantCollection.sort((a, b) => {
+        // console.log(
+        //   "cost2=" +
+        //     (+b.info.costForTwo.match(/\d/g).join("") -
+        //       +a.info.costForTwo.match(/\d/g).join(""))
+        // );
+        return (
+          +b.info.costForTwo.match(/\d/g).join("") -
+          +a.info.costForTwo.match(/\d/g).join("")
+        );
+      });
+      console.log(filterCostHightoLow);
+      setrestaurantList(filterCostHightoLow);
     }
-    // console.log(filterData);
-    // setrestaurantList(filterData);
-    // console.log(restaurantList);
   };
+
+  // {
+  //   // const filterTime = () => {
+  //   //   const filterData = restaurantCollection.filter((restaurant) => {
+  //   //     if (restaurant?.info?.sla?.deliveryTime <= 30) {
+  //   //       console.log("time" + restaurant?.info?.sla?.deliveryTime);
+  //   //     }
+  //   //     return restaurant?.info?.sla?.deliveryTime <= 30;
+  //   //   });
+  //   //   setrestaurantList(filterData);
+  //   // };
+  //   // const filterRating = () => {
+  //   //   const filterData = restaurantCollection.filter((restaurant) => {
+  //   //     if (restaurant?.info?.avgRating >= 4) {
+  //   //       console.log("rating" + restaurant?.info?.avgRating);
+  //   //     }
+  //   //     return restaurant?.info?.avgRating >= 4;
+  //   //   });
+  //   //   setrestaurantList(filterData);
+  //   // };
+  //   // const filterCostLowToHigh = () => {
+  //   //   const filterData = restaurantCollection.sort((a, b) => {
+  //   //     // const spl = a.info.costForTwo;
+  //   //     console.log(
+  //   //       "cost1" +
+  //   //         (+a.info.costForTwo.match(/\d/g).join("") -
+  //   //           +b.info.costForTwo.match(/\d/g).join(""))
+  //   //     );
+  //   //     return (
+  //   //       +a.info.costForTwo.match(/\d/g).join("") -
+  //   //       +b.info.costForTwo.match(/\d/g).join("")
+  //   //     );
+  //   //   });
+  //   //   console.log(filterData);
+  //   //   setrestaurantList(filterData);
+  //   // };
+  //   // const filterCostHightoLow = () => {
+  //   //   const filterData = restaurantCollection.sort((a, b) => {
+  //   //     // console.log("cost of a=" + +a.info.costForTwo.match(/\d/g).join(""));
+  //   //     // console.log("cost of b=" + +b.info.costForTwo.match(/\d/g).join(""));
+  //   //     console.log(
+  //   //       "cost2=" +
+  //   //         (+b.info.costForTwo.match(/\d/g).join("") -
+  //   //           +a.info.costForTwo.match(/\d/g).join(""))
+  //   //     );
+  //   //     return (
+  //   //       +b.info.costForTwo.match(/\d/g).join("") -
+  //   //       +a.info.costForTwo.match(/\d/g).join("")
+  //   //     );
+  //   //   });
+  //   //   console.log(filterData);
+  //   //   setrestaurantList(filterData);
+  //   // };
+  // }
+
+  const filter = () => {
+    // if (document.getElementById("Relevance(Default)1").checked === true) {
+    //   console.log("relevence from filter");
+    //   // console.log(document.getElementById("Relevance(Default)").id);
+    //   sortBy(document.getElementById("Relevance(Default)1").value);
+    // } else if (document.getElementById("DeliveryTime1").checked === true) {
+    //   console.log("deliveryTime from filter");
+    //   sortBy(document.getElementById("DeliveryTime1").value);
+    // } else if (document.getElementById("Rating1").checked === true) {
+    //   console.log("rating from filter");
+    //   sortBy(document.getElementById("Rating1").value);
+    // } else if (document.getElementById("Cost:LowtoHigh1").checked === true) {
+    //   console.log("costLowToHigh from filter");
+    //   sortBy(document.getElementById("Cost:LowtoHigh1").value);
+    // } else if (document.getElementById("Cost:HightoLow1").checked === true) {
+    //   console.log("costHightoLow from filter");
+
+    //   sortBy(document.getElementById("Cost:HightoLow1").value);
+    // } else {
+    //   console.log("no checked from filter");
+    // }
+    const radios = document.getElementsByName("flexRadioDefault1");
+    console.log(radios);
+    radios.forEach((radio) => {
+      if (radio.checked === true) {
+        console.log(radio.value);
+        sortBy(radio.value);
+      }
+    });
+    // console.log(e.target.id);
+  };
+
   // setrestaurantList(restaurantData);
   return (
     // method 1
@@ -293,7 +400,7 @@ const CardContainer = () => {
             <div className="col-md-3 ">
               <button
                 type="button"
-                class="btn border rounded-pill mx-3 p-2 px-4"
+                className="btn border rounded-pill mx-3 p-2 px-4"
                 data-bs-toggle="modal"
                 data-bs-target="#myModal"
               >
@@ -301,35 +408,34 @@ const CardContainer = () => {
               </button>
 
               {/* <!-- The Modal --> */}
-              <div class="modal " id="myModal">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
-                  <div class="modal-content">
+              <div className="modal " id="myModal">
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
+                  <div className="modal-content">
                     {/* <!-- Modal Header --> */}
-                    <div class="modal-header">
-                      <h4 class="modal-title">
+                    <div className="modal-header">
+                      <h4 className="modal-title">
                         <strong>Filter</strong>
                       </h4>
                       <button
                         type="button"
-                        class="btn-close"
+                        className="btn-close"
                         data-bs-dismiss="modal"
                       ></button>
                     </div>
 
                     {/* <!-- Modal body --> */}
-                    <div class=" border-1  d-flex justify-content-start">
-                      {/* <div className=""> */}
+                    <div className=" border-1  d-flex justify-content-start">
                       <div className="left  col-4 border-end">
                         <div className="list-group p-3">
-                          <label class="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item  border-0 fw-bold h6">
                             <input
-                              class="form-check-input me-1 filter-radio"
+                              className="form-check-input me-1 filter-radio"
                               type="radio"
                               value=""
                               name="default"
                               id="first-check"
-                              checked
-                              onClick={(e) => {
+                              defaultChecked
+                              onChange={(e) => {
                                 console.log(e.target.checked);
                                 if (e.target.checked === true) {
                                   document.getElementById(
@@ -343,14 +449,14 @@ const CardContainer = () => {
                             />
                             Sort
                           </label>
-                          <label class="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item  border-0 fw-bold h6">
                             <input
-                              class="form-check-input me-1 filter-radio"
+                              className="form-check-input me-1 filter-radio"
                               type="radio"
                               value=""
                               name="default"
                               id="second-check"
-                              onClick={(e) => {
+                              onChange={(e) => {
                                 console.log(e.target.checked);
                                 if (e.target.checked === true) {
                                   document.getElementById(
@@ -364,14 +470,14 @@ const CardContainer = () => {
                             />
                             Delivery Time
                           </label>
-                          <label class="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item  border-0 fw-bold h6">
                             <input
-                              class="form-check-input me-1 filter-radio"
+                              className="form-check-input me-1 filter-radio"
                               type="radio"
                               value=""
                               name="default"
                               id="second-check"
-                              onClick={(e) => {
+                              onChange={(e) => {
                                 console.log(e.target.checked);
                                 if (e.target.checked === true) {
                                   document.getElementById(
@@ -385,14 +491,14 @@ const CardContainer = () => {
                             />
                             Rating
                           </label>
-                          <label class="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item  border-0 fw-bold h6">
                             <input
-                              class="form-check-input me-1 filter-radio"
+                              className="form-check-input me-1 filter-radio"
                               type="radio"
                               value=""
                               name="default"
                               id="second-check"
-                              onClick={(e) => {
+                              onChange={(e) => {
                                 console.log(e.target.checked);
                                 if (e.target.checked === true) {
                                   document.getElementById(
@@ -408,14 +514,14 @@ const CardContainer = () => {
                           </label>
                         </div>
                       </div>
-                      <div className="right  col-8 overflow-auto">
-                        <div className="px-5 py-3">
+                      <div className="right  col-8 ">
+                        <div className="px-5 py-2">
                           <div id="first" className="">
                             <div className="text-secondary">
                               <span>SORT BY</span>
                             </div>
                             <div>
-                              <ul className="list-group overflow-hidden">
+                              <ul className="list-group overflow-hidden filter">
                                 <li className="list-group-item p-0 py-2 border-0">
                                   <div className="d-flex align-items-center  justify-content-start">
                                     <input
@@ -423,10 +529,11 @@ const CardContainer = () => {
                                       type="radio"
                                       name="flexRadioDefault1"
                                       id="Relevance(Default)1"
-                                      onClick={(e) => {
-                                        // console.log("yo");
-                                        setrestaurantList(restaurantCollection);
-                                      }}
+                                      value="Relevance(Default)"
+                                      // onClick={(e) => {
+                                      //   // console.log("yo");
+                                      //   setrestaurantList(restaurantCollection);
+                                      // }}
                                       defaultChecked
                                     />
                                     <label
@@ -437,14 +544,15 @@ const CardContainer = () => {
                                     </label>
                                   </div>
                                 </li>
-                                <li className="list-group-item p-0  py-2">
+                                <li className="list-group-item p-0  py-2  border-0">
                                   <div className="d-flex align-items-center  justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
                                       name="flexRadioDefault1"
                                       id="DeliveryTime1"
-                                      onClick={filterTime}
+                                      value="DeliveryTime"
+                                      // onClick={filterTime}
                                     />
                                     <label
                                       className="d-flex"
@@ -455,31 +563,34 @@ const CardContainer = () => {
                                   </div>
                                 </li>
 
-                                <li className="list-group-item p-0 py-2">
+                                <li className="list-group-item p-0 py-2  border-0">
                                   <div className="d-flex align-items-center  justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
                                       name="flexRadioDefault1"
                                       id="Rating1"
-                                      onClick={filterRating}
+                                      value="Rating"
+
+                                      // onClick={filterRating}
                                     />
                                     <label className="d-flex" htmlFor="Rating1">
                                       Rating
                                     </label>
                                   </div>
                                 </li>
-                                <li className="list-group-item p-0 py-2">
+                                <li className="list-group-item p-0 py-2 border-0">
                                   <div className="d-flex align-items-center  justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
                                       name="flexRadioDefault1"
                                       id="Cost:LowtoHigh1"
-                                      value="ascend"
-                                      onClick={(e) => {
-                                        filterCostLowToHigh(e);
-                                      }}
+                                      value="Cost:LowtoHigh"
+
+                                      // onClick={(e) => {
+                                      //   filterCostLowToHigh(e);
+                                      // }}
                                     />
                                     <label
                                       className="d-flex"
@@ -489,17 +600,18 @@ const CardContainer = () => {
                                     </label>
                                   </div>
                                 </li>
-                                <li className="list-group-item p-0 py-2">
+                                <li className="list-group-item p-0 py-2 border-0">
                                   <div className="d-flex align-items-center  justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
                                       name="flexRadioDefault1"
                                       id="Cost:HightoLow1"
-                                      value="descend"
-                                      onClick={(e) => {
-                                        filterCostLowToHigh(e);
-                                      }}
+                                      value="Cost:HightoLow"
+
+                                      // onClick={(e) => {
+                                      //   filterCostLowToHigh(e);
+                                      // }}
                                     />
                                     <label
                                       className="d-flex"
@@ -521,14 +633,15 @@ const CardContainer = () => {
                     </div>
 
                     {/* <!-- Modal footer --> */}
-                    <div class="modal-footer">
-                      {/* <button
+                    <div className="modal-footer">
+                      <button
                         type="button"
-                        class="btn btn-danger"
+                        className="btn btn-success"
                         data-bs-dismiss="modal"
+                        onClick={filter}
                       >
-                        Close
-                      </button> */}
+                        Filter
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -560,9 +673,9 @@ const CardContainer = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="Relevance(Default)"
-                      onClick={(e) => {
-                        // console.log("yo");
-                        setrestaurantList(restaurantCollection);
+                      value="Relevance(Default)"
+                      onChange={(e) => {
+                        sortBy(e.target.value);
                       }}
                       defaultChecked
                     />
@@ -578,7 +691,10 @@ const CardContainer = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="DeliveryTime"
-                      onClick={filterTime}
+                      value="DeliveryTime"
+                      onChange={(e) => {
+                        sortBy(e.target.value);
+                      }}
                     />
                   </div>
                 </li>
@@ -593,7 +709,10 @@ const CardContainer = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="Rating"
-                      onClick={filterRating}
+                      value="Rating"
+                      onChange={(e) => {
+                        sortBy(e.target.value);
+                      }}
                     />
                   </div>
                 </li>
@@ -607,9 +726,9 @@ const CardContainer = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="Cost:LowtoHigh"
-                      value="ascend"
-                      onClick={(e) => {
-                        filterCostLowToHigh(e);
+                      value="Cost:LowtoHigh"
+                      onChange={(e) => {
+                        sortBy(e.target.value);
                       }}
                     />
                   </div>
@@ -624,9 +743,9 @@ const CardContainer = () => {
                       type="radio"
                       name="flexRadioDefault"
                       id="Cost:HightoLow"
-                      value="descend"
-                      onClick={(e) => {
-                        filterCostLowToHigh(e);
+                      value="Cost:HightoLow"
+                      onChange={(e) => {
+                        sortBy(e.target.value);
                       }}
                     />
                   </div>
@@ -670,11 +789,11 @@ const CardContainer = () => {
                 //   }
                 // }}
               >
-                <i class="fa fa-search" aria-hidden="true"></i>
+                <i className="fa fa-search" aria-hidden="true"></i>
               </input> */}
               {/* <input className="form-control border rounded-pill px-3 m-0">
                 {" "}
-                <i class="fa fa-search" aria-hidden="true"></i>
+                <i className="fa fa-search" aria-hidden="true"></i>
               </input> */}
               {/* <button
                 type="button"
