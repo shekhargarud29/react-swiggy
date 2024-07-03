@@ -7,6 +7,7 @@ const RestaurantCard = ({
   sla,
   cuisines,
   areaName,
+  aggregatedDiscountInfoV3,
 }) => {
   // call directly
   // const RestaurantCard = ({imageUrl, title, rating, time, cuisine, location}) => {
@@ -199,12 +200,21 @@ const RestaurantCard = ({
     // method 4 (2)
     <>
       <div className=" cards m-0 p-3 row col-lg-3 border-0 ">
-        <div className=" col-lg-12 col-3">
+        <div className="card border-0 col-lg-12 p-0 col-3">
           <img
-            className="cards-img rounded-4 shadow p-0 "
+            className="cards-img card-img-top rounded-4 shadow p-0 "
             src={Img_Url + cloudinaryImageId}
             alt="hello"
           ></img>
+          <div className="card-img-overlay rounded-bottom-4 p-2 text-light  ">
+            <strong>
+              <h5 className="fw-bold">
+                {aggregatedDiscountInfoV3?.header +
+                  " " +
+                  aggregatedDiscountInfoV3?.subHeader}
+              </h5>
+            </strong>
+          </div>
         </div>
         <div className=" p-3 col-lg-12 col-8">
           <div>

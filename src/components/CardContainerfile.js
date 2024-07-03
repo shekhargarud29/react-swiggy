@@ -1,10 +1,13 @@
 import RestaurantCard from "./RestaurantCardfile";
+// import { Category } from "./Category";
+import { Dish_Url } from "../const/config";
+
 // import { RestaurantList } from "../const/config";
 // import { Img_Url } from "../const/config";
 import { TextField, InputAdornment } from "@mui/material";
-
 import { useState } from "react";
 import { useEffect } from "react";
+import { Category } from "./Category";
 // import Filter from "./Filter";
 const CardContainer = () => {
   // console.log(RestaurantList);
@@ -60,9 +63,12 @@ const CardContainer = () => {
 
   // method 5
   const [restaurantList, setrestaurantList] = useState([]);
+  const [restaurantDish, setrestaurantDish] = useState([]);
+  const [scrollDish, setScrollDish] = useState(0);
+  const [scrollRes, setScrollRes] = useState(0);
   const [restaurantCollection, setrestaurantCollection] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  // const [loading, setloading] = useState(true);
   useEffect(() => {
     const getRestaurants = async () => {
       try {
@@ -70,10 +76,9 @@ const CardContainer = () => {
           "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.07480&lng=72.88560&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
         );
         const data = await response.json();
-        console.log(
-          data.data.cards[1].card?.card?.gridElements?.infoWithStyle
-            ?.restaurants
-        );
+        // console.log(data.data.cards[0].card?.card?.imageGridCards?.info);
+
+        setrestaurantDish(data.data.cards[0].card?.card?.imageGridCards?.info);
         setrestaurantList(
           data.data.cards[1].card?.card?.gridElements?.infoWithStyle
             ?.restaurants
@@ -89,6 +94,7 @@ const CardContainer = () => {
 
     getRestaurants();
   }, []);
+
   // console.log("restlist", restaurantList);
 
   // const handleSearch = (e) => {
@@ -108,7 +114,7 @@ const CardContainer = () => {
           })
         );
       });
-      console.log(filterData);
+      // console.log(filterData);
 
       setrestaurantList(filterData);
     } else {
@@ -117,31 +123,33 @@ const CardContainer = () => {
   }, [searchTerm, restaurantCollection]);
 
   const sortBy = (id) => {
-    console.log(id + " from sort");
     if (id === "Relevance(Default)") {
       // console.log("done");
-      console.log(restaurantCollection);
       setrestaurantList(restaurantCollection);
     } else if (id === "DeliveryTime") {
-      const filterTime = restaurantCollection.filter((restaurant) => {
-        if (restaurant?.info?.sla?.deliveryTime <= 30) {
-          console.log("time" + restaurant?.info?.sla?.deliveryTime);
-        }
-        return restaurant?.info?.sla?.deliveryTime <= 30;
+      // const filterTime = restaurantCollection.filter((restaurant) => {
+      //   if (restaurant?.info?.sla?.deliveryTime <= 30) {
+      //     console.log("time" + restaurant?.info?.sla?.deliveryTime);
+      //   }
+      //   return restaurant?.info?.sla?.deliveryTime <= 30;
+      // });
+      const filterTime = restaurantCollection.slice().sort((a, b) => {
+        return a.info.sla.deliveryTime - b.info.sla.deliveryTime;
       });
-
       setrestaurantList(filterTime);
     } else if (id === "Rating") {
-      const filterRating = restaurantCollection.filter((restaurant) => {
-        if (restaurant?.info?.avgRating >= 4) {
-          console.log("rating" + restaurant?.info?.avgRating);
-        }
-        return restaurant?.info?.avgRating >= 4;
+      // const filterRating = restaurantCollection.filter((restaurant) => {
+      //   if (restaurant?.info?.avgRating >= 4) {
+      //     console.log("rating" + restaurant?.info?.avgRating);
+      //   }
+      //   return restaurant?.info?.avgRating >= 4;
+      // });
+      const filterRating = restaurantCollection.slice().sort((a, b) => {
+        return b.info.avgRating - a.info.avgRating;
       });
-
       setrestaurantList(filterRating);
     } else if (id === "Cost:LowtoHigh") {
-      const filterCostLowToHigh = restaurantCollection.sort((a, b) => {
+      const filterCostLowToHigh = restaurantCollection.slice().sort((a, b) => {
         // const spl = a.info.costForTwo;
         // console.log(
         //   "cost1" +
@@ -153,10 +161,10 @@ const CardContainer = () => {
           +b.info.costForTwo.match(/\d/g).join("")
         );
       });
-      console.log(filterCostLowToHigh);
+
       setrestaurantList(filterCostLowToHigh);
     } else if (id === "Cost:HightoLow") {
-      const filterCostHightoLow = restaurantCollection.sort((a, b) => {
+      const filterCostHightoLow = restaurantCollection.slice().sort((a, b) => {
         // console.log(
         //   "cost2=" +
         //     (+b.info.costForTwo.match(/\d/g).join("") -
@@ -167,7 +175,7 @@ const CardContainer = () => {
           +a.info.costForTwo.match(/\d/g).join("")
         );
       });
-      console.log(filterCostHightoLow);
+
       setrestaurantList(filterCostHightoLow);
     }
   };
@@ -248,11 +256,19 @@ const CardContainer = () => {
     //   console.log("no checked from filter");
     // }
     const radios = document.getElementsByName("flexRadioDefault1");
-    // console.log(radios);
+
     radios.forEach((radio) => {
       if (radio.checked === true) {
         console.log(radio.value + " from filter");
         sortBy(radio.value);
+      }
+    });
+
+    const checkbox = document.getElementsByName("flexcheckDefault1");
+    checkbox.forEach((checkbox) => {
+      if (checkbox.checked === true) {
+        console.log(checkbox.value + " from filter");
+        sortBy(checkbox.value);
       }
     });
     // console.log(e.target.id);
@@ -395,6 +411,118 @@ const CardContainer = () => {
     // method 5 api calling
     <>
       <div className="container-lg py-3">
+        <div className="mx-lg-5 px-4 py-1 row justify-content-center">
+          <div className="border-bottom pb-5">
+            <div className="d-flex justify-content-between">
+              <div>
+                <h4 className="fw-bolder col-12">What's on your mind?</h4>
+              </div>
+              <div>
+                <button
+                  className="btn btn-warning text-light rounded-pill mx-1 "
+                  onClick={() => {
+                    if (scrollDish >= 3) {
+                      setScrollDish(scrollDish - 3);
+                    } else {
+                      console.log("exceed");
+                    }
+                  }}
+                >
+                  <i className="fa-solid fa-arrow-left "></i>
+                </button>
+                <button
+                  className="btn btn-warning text-light rounded-pill mx-1"
+                  onClick={() => {
+                    if (scrollDish <= 6) {
+                      setScrollDish(scrollDish + 3);
+                    } else {
+                      console.log("exceed");
+                    }
+                  }}
+                >
+                  <i class="fa-solid fa-arrow-right "></i>
+                </button>
+              </div>
+            </div>
+            <div className="d-flex overflow-hidden ">
+              {restaurantDish.map((dish) => {
+                // console.log(dish);
+                return (
+                  <div
+                    className=" col-2"
+                    style={{
+                      transform: `translateX(-${scrollDish * 200}%)`,
+                      transition: "transform 2s",
+                    }}
+                  >
+                    <img
+                      key={dish.id}
+                      className=" pe-5  cards-dish"
+                      src={Dish_Url + dish?.imageId}
+                      alt={dish?.accessibility?.altText}
+                    ></img>
+                    {/* <Category key={dish.id} {...dish} /> */}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="mx-lg-5 px-4 py-1 row justify-content-center">
+          <div className="border-bottom pb-5">
+            <div className="d-flex justify-content-between">
+              <div>
+                <h4 className="fw-bolder col-12">What's on your mind?</h4>
+              </div>
+              <div>
+                <button
+                  className="btn btn-warning text-light rounded-pill mx-1"
+                  onClick={() => {
+                    if (scrollRes >= 3) {
+                      setScrollRes(scrollRes - 3);
+                    } else {
+                      console.log("exceed");
+                    }
+                  }}
+                >
+                  <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <button
+                  className="btn btn-warning text-light rounded-pill mx-1"
+                  onClick={() => {
+                    if (scrollRes <= 9) {
+                      setScrollRes(scrollRes + 3);
+                    } else {
+                      console.log("exceed");
+                    }
+                  }}
+                >
+                  <i class="fa-solid fa-arrow-right "></i>
+                </button>
+              </div>
+            </div>
+            <div className="d-flex overflow-hidden">
+              {restaurantList.map((restaurant) => {
+                // console.log(dish);
+                return (
+                  <div
+                    className=" col-3 py-3 pe-4 border-0 "
+                    style={{
+                      transform: `translateX(-${scrollRes * 134}%) `,
+                      transition: "transform 2s",
+                    }}
+                  >
+                    <Category
+                      key={restaurant?.info?.id}
+                      {...restaurant?.info}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
         <div className="mx-lg-5 p-3  row justify-content-center">
           <div className="col-6 row justify-content-start p-0">
             <div className="col-md-3 ">
@@ -436,13 +564,19 @@ const CardContainer = () => {
                               id="first-check"
                               defaultChecked
                               onChange={(e) => {
-                                console.log(e.target.checked);
+                                // console.log(e.target.checked);
                                 if (e.target.checked === true) {
                                   document.getElementById(
                                     "first"
                                   ).style.display = "block";
                                   document.getElementById(
                                     "second"
+                                  ).style.display = "none";
+                                  document.getElementById(
+                                    "third"
+                                  ).style.display = "none";
+                                  document.getElementById(
+                                    "fourth"
                                   ).style.display = "none";
                                 }
                               }}
@@ -465,6 +599,12 @@ const CardContainer = () => {
                                   document.getElementById(
                                     "first"
                                   ).style.display = "none";
+                                  document.getElementById(
+                                    "third"
+                                  ).style.display = "none";
+                                  document.getElementById(
+                                    "fourth"
+                                  ).style.display = "none";
                                 }
                               }}
                             />
@@ -476,15 +616,21 @@ const CardContainer = () => {
                               type="radio"
                               value=""
                               name="default"
-                              id="second-check"
+                              id="third-check"
                               onChange={(e) => {
                                 console.log(e.target.checked);
                                 if (e.target.checked === true) {
                                   document.getElementById(
-                                    "second"
+                                    "third"
                                   ).style.display = "block";
                                   document.getElementById(
                                     "first"
+                                  ).style.display = "none";
+                                  document.getElementById(
+                                    "second"
+                                  ).style.display = "none";
+                                  document.getElementById(
+                                    "fourth"
                                   ).style.display = "none";
                                 }
                               }}
@@ -497,15 +643,21 @@ const CardContainer = () => {
                               type="radio"
                               value=""
                               name="default"
-                              id="second-check"
+                              id="fourth-check"
                               onChange={(e) => {
                                 console.log(e.target.checked);
                                 if (e.target.checked === true) {
                                   document.getElementById(
-                                    "second"
+                                    "fourth"
                                   ).style.display = "block";
                                   document.getElementById(
                                     "first"
+                                  ).style.display = "none";
+                                  document.getElementById(
+                                    "second"
+                                  ).style.display = "none";
+                                  document.getElementById(
+                                    "third"
                                   ).style.display = "none";
                                 }
                               }}
@@ -562,7 +714,6 @@ const CardContainer = () => {
                                     </label>
                                   </div>
                                 </li>
-
                                 <li className="list-group-item p-0 py-2  border-0">
                                   <div className="d-flex align-items-center  justify-content-start">
                                     <input
@@ -625,7 +776,41 @@ const CardContainer = () => {
                             </div>
                           </div>
                           <div id="second">
-                            <h1>second box</h1>
+                            <div className="text-secondary">
+                              <span>FILTER BY</span>
+                            </div>
+                            <div>
+                              <ul className="list-group list-group-flush">
+                                <li className="list-group-item p-0 py-2 border-0">
+                                  <div className="d-flex align-items-center  justify-content-start">
+                                    <input
+                                      className=" form-check-input me-2"
+                                      type="checkbox"
+                                      name="flexcheckDefault1"
+                                      id="fastdelivery"
+                                      value="DeliveryTime"
+                                      // onClick={(e) => {
+                                      //   // console.log("yo");
+                                      //   setrestaurantList(restaurantCollection);
+                                      // }}
+                                      // defaultChecked
+                                    />
+                                    <label
+                                      className="form-check-label d-flex"
+                                      htmlFor="fastdelivery"
+                                    >
+                                      Fast Delivery
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div id="third">
+                            <h1>third box</h1>
+                          </div>
+                          <div id="fourth">
+                            <h1>fourth box</h1>
                           </div>
                         </div>
                       </div>
@@ -805,7 +990,7 @@ const CardContainer = () => {
             </div>
           </div>
         </div>
-        <div className="mx-lg-5 p-5  row justify-content-center">
+        <div className="mx-lg-5 px-4 py-1  row justify-content-center">
           <h3 className="fw-bold col-12">
             Restaurants with online food delivery in Mumbai
           </h3>
