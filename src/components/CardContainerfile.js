@@ -64,6 +64,7 @@ const CardContainer = () => {
   // method 5
   const [restaurantList, setrestaurantList] = useState([]);
   const [restaurantDish, setrestaurantDish] = useState([]);
+  // const [checkedCheckboxes, setcheckedCheckboxes] = useState([]);
   const [scrollDish, setScrollDish] = useState(0);
   const [scrollRes, setScrollRes] = useState(0);
   const [restaurantCollection, setrestaurantCollection] = useState([]);
@@ -122,9 +123,14 @@ const CardContainer = () => {
     // };
   }, [searchTerm, restaurantCollection]);
 
-  const sortBy = (id) => {
+  const sortBy = (id, ids) => {
+    console.log(ids);
     if (id === "Relevance(Default)") {
-      // console.log("done");
+      document
+        .querySelectorAll("#Relevance\\(Default\\)1, #Relevance\\(Default\\)")
+        .forEach((x) => {
+          x.checked = true;
+        });
       setrestaurantList(restaurantCollection);
     } else if (id === "DeliveryTime") {
       // const filterTime = restaurantCollection.filter((restaurant) => {
@@ -133,22 +139,60 @@ const CardContainer = () => {
       //   }
       //   return restaurant?.info?.sla?.deliveryTime <= 30;
       // });
+      document
+        .querySelectorAll("#DeliveryTime1, #DeliveryTime")
+        .forEach((x) => {
+          x.checked = true;
+        });
       const filterTime = restaurantCollection.slice().sort((a, b) => {
         return a.info.sla.deliveryTime - b.info.sla.deliveryTime;
       });
       setrestaurantList(filterTime);
     } else if (id === "Rating") {
-      // const filterRating = restaurantCollection.filter((restaurant) => {
-      //   if (restaurant?.info?.avgRating >= 4) {
-      //     console.log("rating" + restaurant?.info?.avgRating);
-      //   }
-      //   return restaurant?.info?.avgRating >= 4;
-      // });
-      const filterRating = restaurantCollection.slice().sort((a, b) => {
-        return b.info.avgRating - a.info.avgRating;
+      document.querySelectorAll("#Rating1, #Rating").forEach((x) => {
+        x.checked = true;
       });
-      setrestaurantList(filterRating);
+      if (ids) {
+        if (ids === "Ratings 3.5+") {
+          console.log("filter 3.5");
+          const filterRating = restaurantCollection
+            .slice()
+            .filter((restaurant) => {
+              return restaurant?.info?.avgRating >= 3.5;
+            });
+          setrestaurantList(filterRating);
+        }
+        if (ids === "Ratings 4.5+") {
+          console.log("filter 4.5");
+          const filterRating = restaurantCollection
+            .slice()
+            .filter((restaurant) => {
+              return restaurant?.info?.avgRating >= 4.5;
+            });
+          setrestaurantList(filterRating);
+        }
+        if (ids === "Ratings 4.0+") {
+          console.log("filter 4.0");
+          const filterRating = restaurantCollection
+            .slice()
+            .filter((restaurant) => {
+              return restaurant?.info?.avgRating >= 4.0;
+            });
+          setrestaurantList(filterRating);
+        }
+      } else {
+        console.log("direct filter");
+        const filterRating = restaurantCollection.slice().sort((a, b) => {
+          return b.info.avgRating - a.info.avgRating;
+        });
+        setrestaurantList(filterRating);
+      }
     } else if (id === "Cost:LowtoHigh") {
+      document
+        .querySelectorAll("#Cost\\:LowtoHigh1, #Cost\\:LowtoHigh")
+        .forEach((x) => {
+          x.checked = true;
+        });
       const filterCostLowToHigh = restaurantCollection.slice().sort((a, b) => {
         // const spl = a.info.costForTwo;
         // console.log(
@@ -164,6 +208,12 @@ const CardContainer = () => {
 
       setrestaurantList(filterCostLowToHigh);
     } else if (id === "Cost:HightoLow") {
+      document
+        .querySelectorAll("#Cost\\:HightoLow1, #Cost\\:HightoLow")
+        .forEach((x) => {
+          x.checked = true;
+        });
+
       const filterCostHightoLow = restaurantCollection.slice().sort((a, b) => {
         // console.log(
         //   "cost2=" +
@@ -234,6 +284,9 @@ const CardContainer = () => {
   //   // };
   // }
 
+  var checkedCheckboxes = Array.from(
+    document.querySelectorAll("input[name='flexcheckDefault1']:checked")
+  );
   const filter = () => {
     // if (document.getElementById("Relevance(Default)1").checked === true) {
     //   console.log("relevence from filter");
@@ -255,22 +308,51 @@ const CardContainer = () => {
     // } else {
     //   console.log("no checked from filter");
     // }
-    const radios = document.getElementsByName("flexRadioDefault1");
 
-    radios.forEach((radio) => {
-      if (radio.checked === true) {
-        console.log(radio.value + " from filter");
-        sortBy(radio.value);
-      }
-    });
+    // const radios = document.getElementsByName("flexRadioDefault1");
 
-    const checkbox = document.getElementsByName("flexcheckDefault1");
-    checkbox.forEach((checkbox) => {
-      if (checkbox.checked === true) {
-        console.log(checkbox.value + " from filter");
-        sortBy(checkbox.value);
-      }
-    });
+    // radios.forEach((radio) => {
+    //   if (radio.checked === true) {
+    //     console.log(radio.value + " from filter");
+    //     sortBy(radio.value);
+    //   }
+    // });
+
+    const checkedRadio = document.querySelector(
+      "input[name='flexRadioDefault1']:checked"
+    );
+    if (checkedRadio) {
+      console.log(checkedRadio.value + " from filter (radio button)");
+      sortBy(checkedRadio.value);
+    }
+    checkedCheckboxes = Array.from(
+      document.querySelectorAll("input[name='flexcheckDefault1']:checked")
+    );
+
+    console.log(checkedCheckboxes);
+    if (checkedCheckboxes.length > 0) {
+      const lastCheckedCheckbox =
+        checkedCheckboxes[checkedCheckboxes.length - 1];
+      console.log(lastCheckedCheckbox.value + " from filter (checkbox)");
+      sortBy(lastCheckedCheckbox.value, lastCheckedCheckbox.id);
+    } else {
+      // If no checkboxes are checked, handle this case if needed
+      console.log("No checkboxes checked");
+    }
+
+    // let lastCheckCheckBox = null;
+    // const checkboxes = document.getElementsByName("flexcheckDefault1");
+    // checkboxes.forEach((checkbox) => {
+    //   if (checkbox.checked === true) {
+    //     lastCheckCheckBox = checkbox;
+    //     console.log(lastCheckCheckBox);
+    //   }
+    // });
+    // if (lastCheckCheckBox) {
+    //   console.log(lastCheckCheckBox.value + " from filter");
+    //   // console.log(checkbox.value + " from filter");
+    //   sortBy(lastCheckCheckBox.value, lastCheckCheckBox.id);
+    // }
     // console.log(e.target.id);
   };
 
@@ -419,7 +501,8 @@ const CardContainer = () => {
               </div>
               <div>
                 <button
-                  className="btn btn-warning text-light rounded-pill mx-1 "
+                  className="btn btn-outline-warning  rounded-pill mx-1 "
+                  type="button"
                   onClick={() => {
                     if (scrollDish >= 3) {
                       setScrollDish(scrollDish - 3);
@@ -428,10 +511,10 @@ const CardContainer = () => {
                     }
                   }}
                 >
-                  <i className="fa-solid fa-arrow-left "></i>
+                  <i className="fa-solid fa-arrow-left " />
                 </button>
                 <button
-                  className="btn btn-warning text-light rounded-pill mx-1"
+                  className="btn btn-outline-warning rounded-pill mx-1"
                   onClick={() => {
                     if (scrollDish <= 6) {
                       setScrollDish(scrollDish + 3);
@@ -440,7 +523,7 @@ const CardContainer = () => {
                     }
                   }}
                 >
-                  <i class="fa-solid fa-arrow-right "></i>
+                  <i className="fa-solid fa-arrow-right "></i>
                 </button>
               </div>
             </div>
@@ -476,7 +559,7 @@ const CardContainer = () => {
               </div>
               <div>
                 <button
-                  className="btn btn-warning text-light rounded-pill mx-1"
+                  className="btn btn-outline-warning  rounded-pill mx-1"
                   onClick={() => {
                     if (scrollRes >= 3) {
                       setScrollRes(scrollRes - 3);
@@ -485,10 +568,10 @@ const CardContainer = () => {
                     }
                   }}
                 >
-                  <i class="fa-solid fa-arrow-left"></i>
+                  <i className="fa-solid fa-arrow-left"></i>
                 </button>
                 <button
-                  className="btn btn-warning text-light rounded-pill mx-1"
+                  className="btn btn-outline-warning  rounded-pill mx-1"
                   onClick={() => {
                     if (scrollRes <= 9) {
                       setScrollRes(scrollRes + 3);
@@ -497,12 +580,12 @@ const CardContainer = () => {
                     }
                   }}
                 >
-                  <i class="fa-solid fa-arrow-right "></i>
+                  <i className="fa-solid fa-arrow-right "></i>
                 </button>
               </div>
             </div>
             <div className="d-flex overflow-hidden">
-              {restaurantList.map((restaurant) => {
+              {restaurantCollection.map((restaurant) => {
                 // console.log(dish);
                 return (
                   <div
@@ -552,10 +635,10 @@ const CardContainer = () => {
                     </div>
 
                     {/* <!-- Modal body --> */}
-                    <div className=" border-1  d-flex justify-content-start">
+                    <div className="modal-body border-1  d-flex justify-content-start">
                       <div className="left  col-4 border-end">
                         <div className="list-group p-3">
-                          <label className="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item btn btn-warning  border-0 fw-bold h6">
                             <input
                               className="form-check-input me-1 filter-radio"
                               type="radio"
@@ -583,7 +666,7 @@ const CardContainer = () => {
                             />
                             Sort
                           </label>
-                          <label className="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item btn btn-warning  border-0 fw-bold h6">
                             <input
                               className="form-check-input me-1 filter-radio"
                               type="radio"
@@ -610,7 +693,7 @@ const CardContainer = () => {
                             />
                             Delivery Time
                           </label>
-                          <label className="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item  btn btn-warning border-0 fw-bold h6">
                             <input
                               className="form-check-input me-1 filter-radio"
                               type="radio"
@@ -637,7 +720,7 @@ const CardContainer = () => {
                             />
                             Rating
                           </label>
-                          <label className="list-group-item  border-0 fw-bold h6">
+                          <label className="list-group-item btn btn-warning border-0 fw-bold h6">
                             <input
                               className="form-check-input me-1 filter-radio"
                               type="radio"
@@ -673,9 +756,9 @@ const CardContainer = () => {
                               <span>SORT BY</span>
                             </div>
                             <div>
-                              <ul className="list-group overflow-hidden filter">
+                              <ul className="list-group overflow-hidden ">
                                 <li className="list-group-item p-0 py-2 border-0">
-                                  <div className="d-flex align-items-center  justify-content-start">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
@@ -696,8 +779,8 @@ const CardContainer = () => {
                                     </label>
                                   </div>
                                 </li>
-                                <li className="list-group-item p-0  py-2  border-0">
-                                  <div className="d-flex align-items-center  justify-content-start">
+                                <li className="list-group-item p-0 py-2  border-0">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
@@ -715,7 +798,7 @@ const CardContainer = () => {
                                   </div>
                                 </li>
                                 <li className="list-group-item p-0 py-2  border-0">
-                                  <div className="d-flex align-items-center  justify-content-start">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
@@ -731,7 +814,7 @@ const CardContainer = () => {
                                   </div>
                                 </li>
                                 <li className="list-group-item p-0 py-2 border-0">
-                                  <div className="d-flex align-items-center  justify-content-start">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
@@ -752,7 +835,7 @@ const CardContainer = () => {
                                   </div>
                                 </li>
                                 <li className="list-group-item p-0 py-2 border-0">
-                                  <div className="d-flex align-items-center  justify-content-start">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
                                     <input
                                       className=" input-button me-2"
                                       type="radio"
@@ -780,20 +863,15 @@ const CardContainer = () => {
                               <span>FILTER BY</span>
                             </div>
                             <div>
-                              <ul className="list-group list-group-flush">
+                              <ul className="list-group">
                                 <li className="list-group-item p-0 py-2 border-0">
-                                  <div className="d-flex align-items-center  justify-content-start">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
                                     <input
                                       className=" form-check-input me-2"
                                       type="checkbox"
                                       name="flexcheckDefault1"
                                       id="fastdelivery"
                                       value="DeliveryTime"
-                                      // onClick={(e) => {
-                                      //   // console.log("yo");
-                                      //   setrestaurantList(restaurantCollection);
-                                      // }}
-                                      // defaultChecked
                                     />
                                     <label
                                       className="form-check-label d-flex"
@@ -807,8 +885,66 @@ const CardContainer = () => {
                             </div>
                           </div>
                           <div id="third">
-                            <h1>third box</h1>
+                            <div className="text-secondary">
+                              <span>FILTER BY</span>
+                            </div>
+                            <div>
+                              <ul className="list-group  ">
+                                <li className="list-group-item p-0 py-2 border-0">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
+                                    <input
+                                      className=" form-check-input me-2 "
+                                      type="checkbox"
+                                      name="flexcheckDefault1"
+                                      id="Ratings 3.5+"
+                                      value="Rating"
+                                    />
+                                    <label
+                                      className="form-check-label d-flex"
+                                      htmlFor="Ratings 3.5+"
+                                    >
+                                      Ratings 3.5+
+                                    </label>
+                                  </div>
+                                </li>
+                                <li className="list-group-item p-0 py-2 border-0">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
+                                    <input
+                                      className=" form-check-input me-2"
+                                      type="checkbox"
+                                      name="flexcheckDefault1"
+                                      id="Ratings 4.5+"
+                                      value="Rating"
+                                    />
+                                    <label
+                                      className="form-check-label d-flex"
+                                      htmlFor="Ratings 4.5+"
+                                    >
+                                      Ratings 4.5+
+                                    </label>
+                                  </div>
+                                </li>
+                                <li className="list-group-item p-0 py-2 border-0">
+                                  <div className="d-flex align-items-center  px-1 justify-content-start">
+                                    <input
+                                      className=" form-check-input me-2"
+                                      type="checkbox"
+                                      name="flexcheckDefault1"
+                                      id="Ratings 4.0+"
+                                      value="Rating"
+                                    />
+                                    <label
+                                      className="form-check-label d-flex"
+                                      htmlFor="Ratings 4.0+"
+                                    >
+                                      Ratings 4.0+
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
                           </div>
+
                           <div id="fourth">
                             <h1>fourth box</h1>
                           </div>
@@ -821,7 +957,7 @@ const CardContainer = () => {
                     <div className="modal-footer">
                       <button
                         type="button"
-                        className="btn btn-success"
+                        className="btn btn-warning"
                         data-bs-dismiss="modal"
                         onClick={filter}
                       >

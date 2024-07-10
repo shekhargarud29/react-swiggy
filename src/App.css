@@ -74,3 +74,22 @@
 /* #first-check:checked #first {
   display: block;
 } */
+
+li:hover {
+  color: #ffffff;
+  background-color: rgba(76, 74, 74, 0.996);
+  border-radius: 6px;
+}
+
+.form-check-input:checked {
+  background-color: #f15700;
+}
+
+/*
+.filter:active {
+  background-color: #f15700;
+} */
+
+/* .modal-content {
+  max-height: 50vh !important;
+} */

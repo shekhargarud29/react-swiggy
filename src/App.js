@@ -1,9 +1,12 @@
 // import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Headerfile";
-import Body from "./components/Bodyfile";
+// import Body from "./components/Bodyfile";
 import Footer from "./components/Footerfile";
-
+// import { AppRouter } from "./components/AppRouter";
+// import { RouterProvider } from "react-router-dom";
+import Body from "./components/Bodyfile";
+import { Outlet } from "react-router-dom";
 function App() {
   return (
     // <div className="App">
@@ -25,7 +28,9 @@ function App() {
 
     <>
       <Header />
-      <Body />
+      <Outlet />
+      {/* <RouterProvider router={AppRouter} /> */}
+
       <Footer />
     </>
   );

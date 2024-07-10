@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header className="shadow">
@@ -61,12 +62,12 @@ const Header = () => {
                 >
                   <ul className="navbar-nav ">
                     <li className="nav-item  mx-4">
-                      <a
-                        className="nav-link fs-bold text-dark"
-                        href="/about-us"
-                        target="_blank"
+                      <Link
+                        className="nav-link fs-bold d-block text-dark "
+                        to="/"
+                        // target="_blank"
                       >
-                        <span className="mx-2">
+                        <span className="mx-2 d-inline">
                           <svg
                             className="_1GTCc"
                             viewBox="0 0 20 20"
@@ -94,10 +95,10 @@ const Header = () => {
                           </svg>
                         </span>
                         Swiggy Corporate
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item mx-4">
-                      <a className="nav-link text-dark" href="/search">
+                      <Link className="nav-link text-dark" to="/SearchBar">
                         <span className="mx-2">
                           <svg
                             className="_1GTCc"
@@ -110,10 +111,10 @@ const Header = () => {
                           </svg>
                         </span>
                         <span>Search</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item mx-4">
-                      <a className="nav-link text-dark" href="/offers-near-me">
+                      <Link className="nav-link text-dark" to="/">
                         <span className="mx-2">
                           <svg
                             className="_1GTCc"
@@ -126,10 +127,10 @@ const Header = () => {
                           </svg>
                         </span>
                         Offers<span>NEW</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item mx-4">
-                      <a className="nav-link text-dark" href="/">
+                      <Link className="nav-link text-dark" to="/">
                         <span className="mx-2">
                           <svg
                             className="_1GTCc"
@@ -142,10 +143,10 @@ const Header = () => {
                           </svg>
                         </span>
                         <span>Sign In</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item mx-4 ">
-                      <a className="nav-link text-dark" href="/checkout">
+                      <Link className="nav-link text-dark" to="/cart">
                         <span className="mx-2">
                           <svg
                             className="text-dark"
@@ -158,7 +159,7 @@ const Header = () => {
                           </svg>
                         </span>
                         <span>Cart</span>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
