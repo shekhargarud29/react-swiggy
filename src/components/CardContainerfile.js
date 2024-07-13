@@ -1148,11 +1148,14 @@ const CardContainer = () => {
               // />
 
               // method 2
-
-              <RestaurantCard
-                key={restaurant?.info?.id}
-                {...restaurant?.info}
-              />
+              <>
+                {restaurant?.info && (
+                  <RestaurantCard
+                    key={restaurant?.info?.id}
+                    {...restaurant?.info}
+                  />
+                )}
+              </>
             );
           })}
         </div>

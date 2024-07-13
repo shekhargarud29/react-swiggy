@@ -1,35 +1,85 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+// import { TextField, InputAdornment } from "@mui/material";
 
-export const MenuInfo = ({ name }) => {
+export const MenuInfo = ({ menuItem, menuList }) => {
   const [scrollDeal, setScrollDeal] = useState(0);
 
-  const deals = [
-    {
-      icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/deal-of-day",
-      title1: "Items At ₹169",
-      title2: "ENDS IN 13h : 54m : 13s",
-    },
-    {
-      icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/generic",
-      title1: "Items At ₹169",
-      title2: "ENDS IN 13h : 54m : 13s",
-    },
-    {
-      icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/generic",
-      title1: "Items At ₹169",
-      title2: "ENDS IN 13h : 54m : 13s",
-    },
-    {
-      icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/generic",
-      title1: "Items At ₹169",
-      title2: "ENDS IN 13h : 54m : 13s",
-    },
-    {
-      icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/MARKETING_BANNERS/IMAGES/OFFERS/2024/6/30/21e80364-d187-4037-8298-153e7feee2b0_Kotak.png",
-      title1: "Items At ₹169",
-      title2: "ENDS IN 13h : 54m : 13s",
-    },
-  ];
+  const [offers, setOffers] = useState([]);
+
+  // setMenuItem(data?.data?.cards[2]?.card?.card);
+  // setOffers(data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle);
+
+  // console.log(menuItem?.info);
+  // console.log(menuList?. data);
+  // console.log(offers);
+  useEffect(() => {
+    setOffers(
+      menuList?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers
+    );
+  }, [menuList?.data?.cards]);
+  const {
+    name,
+    avgRating,
+    totalRatingsString,
+    costForTwoMessage,
+    cuisines,
+    areaName,
+    sla,
+    feeDetails,
+  } = menuItem?.info;
+  const deals = offers.map((offer) => {
+    const title = () => {
+      if (offer?.info?.couponCode) {
+        // console.log(offer?.info?.couponCode);
+        return offer?.info?.couponCode;
+      } else {
+        // console.log(offer?.info?.description);
+        return offer?.info?.description;
+      }
+    };
+    const titleResult = title();
+    // console.log(offer);
+    const offerarray = [
+      {
+        icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/deal-of-day",
+        title1: `${offer?.info?.header}`,
+        title2: `${titleResult}`,
+      },
+    ];
+    return offerarray;
+  });
+  // console.log(deals);
+  // console.log(offerarray);
+  // console.log(offers);
+  // console.log(offers[0]?.info?.header);
+
+  // const deals = [
+  //   {
+  //     icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/deal-of-day",
+  //     title1: `${offers[0]?.info?.header}`,
+  //     title2: "ENDS IN 13h : 54m : 13s",
+  //   },
+  //   {
+  //     icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/generic",
+  //     title1: "Items At ₹169",
+  //     title2: "ENDS IN 13h : 54m : 13s",
+  //   },
+  //   {
+  //     icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/generic",
+  //     title1: "Items At ₹169",
+  //     title2: "ENDS IN 13h : 54m : 13s",
+  //   },
+  //   {
+  //     icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/offers/generic",
+  //     title1: "Items At ₹169",
+  //     title2: "ENDS IN 13h : 54m : 13s",
+  //   },
+  //   {
+  //     icon: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_96,h_96/MARKETING_BANNERS/IMAGES/OFFERS/2024/6/30/21e80364-d187-4037-8298-153e7feee2b0_Kotak.png",
+  //     title1: "Items At ₹169",
+  //     title2: "ENDS IN 13h : 54m : 13s",
+  //   },
+  // ];
   return (
     <>
       <div className="border  row justify-content-center">
@@ -89,16 +139,13 @@ export const MenuInfo = ({ name }) => {
                     </svg>
                   </sub>
                   <h5 className="mx-2 fw-bolder">
-                    4.3 (10K+ratings) <sup>.</sup> ₹250 for two
+                    {avgRating} ({totalRatingsString}) <sup>.</sup>{" "}
+                    {costForTwoMessage}
                   </h5>
                 </div>
                 <div className="text-danger fs-6">
                   <a href="/" className="text-danger">
-                    Chinese
-                  </a>
-                  ,{" "}
-                  <a href="/" className="text-danger">
-                    Asian
+                    {cuisines.join(", ")}
                   </a>
                 </div>
                 <div className="d-flex my-2  align-items-center">
@@ -131,11 +178,11 @@ export const MenuInfo = ({ name }) => {
                     <div className="mb-2">
                       <small>
                         Outlet
-                        <span className="text-secondary"> SantacruzEast</span>
+                        <span className="text-secondary"> {areaName}</span>
                       </small>
                     </div>
                     <div className="my-1">
-                      <small>35-40 mins</small>
+                      <small>{sla?.slaString}</small>
                     </div>
                   </div>
                 </div>
@@ -160,7 +207,7 @@ export const MenuInfo = ({ name }) => {
                       className=" me-2"
                       style={{ Width: "25px", height: "25px" }}
                     />
-                    <small>2.8 kms | ₹41 Delivery fee will apply </small>
+                    <small>{feeDetails?.message.replace(/<\/?b>/g, "")}</small>
                   </h6>
                 </div>
               </div>
@@ -199,13 +246,13 @@ export const MenuInfo = ({ name }) => {
                 </button>
               </div>
             </div>
-            <div className="d-flex  border overflow-hidden">
+            <div className="d-flex   overflow-hidden">
               {deals.map((deal, index) => {
-                console.log(index);
+                // console.log(deal[0]);
                 return (
                   <div
                     key={index}
-                    className="me-3   p-2 col-5 d-flex  border rounded-4"
+                    className="me-3   p-2 col-5 d-flex  border border-2 rounded-4"
                     style={{
                       transform: `translateX(-${scrollDeal * 100}%) `,
                       transition: "transform 2s",
@@ -214,7 +261,7 @@ export const MenuInfo = ({ name }) => {
                     <div className="pe-3">
                       <img
                         className=""
-                        src={deal.icon}
+                        src={deal[0].icon}
                         width={48}
                         height={48}
                         alt="Items At ₹169"
@@ -222,15 +269,128 @@ export const MenuInfo = ({ name }) => {
                     </div>
                     <div className="pe-5">
                       <h6 className="fw-bolder">
-                        <strong>{deal.title1}</strong>
+                        <strong>{deal[0].title1}</strong>
                       </h6>
                       <h6 className="text-secondary">
-                        <small>{deal.title2}</small>
+                        <small>{deal[0].title2}</small>
                       </h6>
                     </div>
                   </div>
                 );
               })}
+            </div>
+          </div>
+          <div className="p-2 px-3 pt-4">
+            <div>
+              <div className="text-center text-secondary">
+                <h6>-: MENU :-</h6>
+              </div>
+              <div className=" my-4">
+                <div
+                  className="rounded border p-2 d-flex  align-items-center"
+                  style={{
+                    backgroundColor: "#f2f2f3",
+                    position: "relative",
+                    color: "#6c757d",
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="btn p-1  flex-grow-1 text-center btn-block"
+                    style={{
+                      color: "#6c757d",
+
+                      border: "none",
+                    }}
+                  >
+                    Search for dishes
+                  </button>
+                  <i
+                    className="fa-solid fa-magnifying-glass "
+                    style={{ position: "absolute", top: "35%", right: "2%" }}
+                  ></i>
+                </div>
+              </div>
+              <div className="d-flex  pb-3">
+                <div
+                  className="border border-2 me-2"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: "25px",
+
+                    padding: "10px 16px",
+                    height: "35px",
+                    width: "70px",
+                  }}
+                >
+                  <input type="checkbox" id="VEG" className="shadow" />
+                </div>
+                <div
+                  className="border border-2 mx-2"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: "25px",
+
+                    padding: "10px 16px",
+                    height: "35px",
+                    width: "70px",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    // aria-checked="false"
+                    // aria-label="Enable veg option"
+                    id="NONVEG"
+                    className="shadow"
+                  />
+                </div>
+              </div>
+              <hr
+                style={{
+                  borderTop: "none",
+                  borderRight: "none",
+                  borderLeft: "none",
+                  borderImage: "initial",
+                  borderBottom: "1px solid rgba(2, 6, 12,.75)",
+                  margin: "10px 0px",
+                }}
+              ></hr>
+            </div>
+            <div>
+              <div className="d-flex pt-4 justify-content-between">
+                <div>
+                  <h5 className="fw-bolder col-12">Top picks</h5>
+                </div>
+                <div>
+                  <button
+                    className="btn btn-outline-warning  rounded-pill mx-1"
+                    onClick={() => {
+                      if (scrollDeal >= 2) {
+                        setScrollDeal(scrollDeal - 2);
+                      } else {
+                        console.log("exceed");
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-arrow-left"></i>
+                  </button>
+                  <button
+                    className="btn btn-outline-warning  rounded-pill mx-1"
+                    onClick={() => {
+                      // console.log(scrollDeal);
+                      if (scrollDeal <= 2) {
+                        setScrollDeal(scrollDeal + 2);
+                      } else {
+                        console.log("exceed");
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-arrow-right "></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
