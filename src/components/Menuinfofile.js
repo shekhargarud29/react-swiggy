@@ -1,22 +1,38 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 // import { TextField, InputAdornment } from "@mui/material";
 
 export const MenuInfo = ({ menuItem, menuList }) => {
   const [scrollDeal, setScrollDeal] = useState(0);
+  const [scrollPick, setScrollPick] = useState(0);
 
   const [offers, setOffers] = useState([]);
+  // const [license, setLicense] = useState({});
+  // const [recommended, setRecommended] = useState([]);
+  const [menuDatas, setMenuDatas] = useState([]);
 
   // setMenuItem(data?.data?.cards[2]?.card?.card);
   // setOffers(data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle);
 
   // console.log(menuItem?.info);
-  // console.log(menuList?. data);
+  // console.log(menuList?.data);
   // console.log(offers);
   useEffect(() => {
     setOffers(
       menuList?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers
     );
+
+    setMenuDatas(
+      menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+    );
+    // setLicense(
+    //   menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]
+    //     ?.card?.card || {}
+    // );
   }, [menuList?.data?.cards]);
+
+  // console.log(topPicks?.carousel);
+
   const {
     name,
     avgRating,
@@ -27,6 +43,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
     sla,
     feeDetails,
   } = menuItem?.info;
+
   const deals = offers.map((offer) => {
     const title = () => {
       if (offer?.info?.couponCode) {
@@ -48,6 +65,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
     ];
     return offerarray;
   });
+
   // console.log(deals);
   // console.log(offerarray);
   // console.log(offers);
@@ -82,8 +100,17 @@ export const MenuInfo = ({ menuItem, menuList }) => {
   // ];
   return (
     <>
-      <div className="border  row justify-content-center">
-        <div className="border p-0 col-6">
+      <div className="d-flex justify-content-center">
+        <div className=" p-0 menuInfoWidth" style={{ width: "52%" }}>
+          <div style={{ fontSize: "11px" }} className="py-4">
+            <Link to="/" className="text-secondary text-decoration-none">
+              Home
+            </Link>
+            <span className="text-secondary">
+              {" "}
+              / {menuItem?.info?.city} / {menuItem?.info?.name}
+            </span>
+          </div>
           <div className="p-2 px-3 pt-4">
             <h3 className="fw-bold">{name}</h3>
           </div>
@@ -198,29 +225,34 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                 }}
               ></hr>
               <div className="pt-1 px-3 ">
-                <div>
-                  <h6 className="fs-6 d-flex align-items-center text-secondary">
-                    <img
-                      src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_40,h_40/v1648635511/Delivery_fee_new_cjxumu"
-                      alt="DISTANCE_FEE_NON_FOOD_LM"
-                      aria-hidden="true"
-                      className=" me-2"
-                      style={{ Width: "25px", height: "25px" }}
-                    />
-                    <small>{feeDetails?.message.replace(/<\/?b>/g, "")}</small>
-                  </h6>
-                </div>
+                {feeDetails?.message && (
+                  <div>
+                    <h6 className="fs-6 d-flex align-items-center text-secondary">
+                      <img
+                        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_40,h_40/v1648635511/Delivery_fee_new_cjxumu"
+                        alt="DISTANCE_FEE_NON_FOOD_LM"
+                        aria-hidden="true"
+                        className=" me-2"
+                        style={{ Width: "25px", height: "25px" }}
+                      />
+
+                      <small>
+                        {feeDetails?.message.replace(/<\/?b>/g, "")}
+                      </small>
+                    </h6>
+                  </div>
+                )}
               </div>
             </div>
           </div>
           <div className="p-2 px-3 pt-4">
-            <div className="d-flex justify-content-between">
+            <div className="d-flex pb-3 justify-content-between">
               <div>
                 <h4 className="fw-bolder col-12">Deals for you</h4>
               </div>
               <div>
                 <button
-                  className="btn btn-outline-warning  rounded-pill mx-1"
+                  className="carousal-btn  mx-1"
                   onClick={() => {
                     if (scrollDeal >= 2) {
                       setScrollDeal(scrollDeal - 2);
@@ -228,11 +260,12 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                       console.log("exceed");
                     }
                   }}
+                  disabled={scrollDeal < 2}
                 >
                   <i className="fa-solid fa-arrow-left"></i>
                 </button>
                 <button
-                  className="btn btn-outline-warning  rounded-pill mx-1"
+                  className="carousal-btn mx-1"
                   onClick={() => {
                     console.log(scrollDeal);
                     if (scrollDeal <= 2) {
@@ -241,6 +274,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                       console.log("exceed");
                     }
                   }}
+                  disabled={scrollDeal > 2}
                 >
                   <i className="fa-solid fa-arrow-right "></i>
                 </button>
@@ -280,11 +314,14 @@ export const MenuInfo = ({ menuItem, menuList }) => {
               })}
             </div>
           </div>
+          {/* MEnu */}
           <div className="p-2 px-3 pt-4">
+            {/* Heading */}
             <div>
               <div className="text-center text-secondary">
                 <h6>-: MENU :-</h6>
               </div>
+              {/* Search Bar */}
               <div className=" my-4">
                 <div
                   className="rounded border p-2 d-flex  align-items-center"
@@ -311,6 +348,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                   ></i>
                 </div>
               </div>
+              {/* Filter */}
               <div className="d-flex  pb-3">
                 <div
                   className="border border-2 me-2"
@@ -318,21 +356,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                     display: "flex",
                     alignItems: "center",
                     borderRadius: "25px",
-
-                    padding: "10px 16px",
-                    height: "35px",
-                    width: "70px",
-                  }}
-                >
-                  <input type="checkbox" id="VEG" className="shadow" />
-                </div>
-                <div
-                  className="border border-2 mx-2"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "25px",
-
+                    position: "relative",
                     padding: "10px 16px",
                     height: "35px",
                     width: "70px",
@@ -340,11 +364,84 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                 >
                   <input
                     type="checkbox"
-                    // aria-checked="false"
-                    // aria-label="Enable veg option"
-                    id="NONVEG"
-                    className="shadow"
+                    id="VEG"
+                    className=""
+                    style={{
+                      boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
+                    }}
                   />
+
+                  <div
+                    id="VEGDIV"
+                    className="border border-2 border-success   rounded-1"
+                    style={{
+                      backgroundColor: "white",
+                      width: "max-content",
+                      padding: "2.50px",
+                    }}
+                    onClick={() => {
+                      !document.getElementById("VEG").checked
+                        ? (document.getElementById("VEG").checked = true)
+                        : (document.getElementById("VEG").checked = false);
+                    }}
+                  >
+                    <div
+                      className=""
+                      style={{
+                        width: "9px",
+                        height: "9px",
+                        borderRadius: "50%",
+                        backgroundColor: "#0f8a65",
+                      }}
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  className="border border-2 mx-2"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    borderRadius: "25px",
+                    position: "relative",
+                    padding: "10px 16px",
+                    height: "35px",
+                    width: "70px",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    id="NONVEG"
+                    className=""
+                    style={{
+                      boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
+                    }}
+                  />
+                  <div
+                    id="NONVEGDIV"
+                    className="border border-2 border-danger  rounded-1"
+                    style={{
+                      width: "max-content",
+                      padding: "1.50px",
+                      backgroundColor: "white",
+                    }}
+                    onClick={() => {
+                      !document.getElementById("NONVEG").checked
+                        ? (document.getElementById("NONVEG").checked = true)
+                        : (document.getElementById("NONVEG").checked = false);
+                    }}
+                  >
+                    <div
+                      className=""
+                      style={{
+                        width: "0px",
+                        height: "0px",
+                        borderRadius: "3px",
+                        borderLeft: "7px solid transparent",
+                        borderRight: "7px solid transparent",
+                        borderBottom: "10px solid #e43b4f",
+                      }}
+                    ></div>
+                  </div>
                 </div>
               </div>
               <hr
@@ -358,17 +455,18 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                 }}
               ></hr>
             </div>
-            <div>
+            {/* Top Picks */}
+            {/* <div>
               <div className="d-flex pt-4 justify-content-between">
                 <div>
-                  <h5 className="fw-bolder col-12">Top picks</h5>
+                  <h5 className="fw-bolder col-12">{topPicks?.title}</h5>
                 </div>
                 <div>
                   <button
                     className="btn btn-outline-warning  rounded-pill mx-1"
                     onClick={() => {
-                      if (scrollDeal >= 2) {
-                        setScrollDeal(scrollDeal - 2);
+                      if (scrollPick >= 2) {
+                        setScrollPick(scrollPick - 2);
                       } else {
                         console.log("exceed");
                       }
@@ -380,8 +478,8 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                     className="btn btn-outline-warning  rounded-pill mx-1"
                     onClick={() => {
                       // console.log(scrollDeal);
-                      if (scrollDeal <= 2) {
-                        setScrollDeal(scrollDeal + 2);
+                      if (scrollPick <= 2) {
+                        setScrollPick(scrollPick + 2);
                       } else {
                         console.log("exceed");
                       }
@@ -391,7 +489,824 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                   </button>
                 </div>
               </div>
+              {topPicks?.carousel && (
+                <div className="p-1 d-flex overflow-hidden">
+                  {topPicks?.carousel.map((topPick, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className=" m-0 me-3 my-3 row col-lg-4 "
+                        // key={(index) => {
+                        //   console.log(`a${index}`);
+                        //   return index;
+                        // }}
+                        style={{
+                          transform: `translateX(-${scrollPick * 50}%) `,
+                          transition: "transform 2s",
+                          position: "relative",
+                        }}
+                      >
+                        <img
+                          className=" p-0  rounded"
+                          // style={{ width: "100%" }}
+                          src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${topPick?.creativeId}`}
+                          alt={topPick?.title}
+                        ></img>
+                        <div
+                          className="text-light"
+                          style={{ position: "absolute", bottom: "0%" }}
+                        >
+                          <div className="d-flex py-3 justify-content-between align-items-center">
+                            <span className="fw-medium">
+                              &#8377;
+                              {(topPick?.dish?.info?.defaultPrice ||
+                                topPick?.dish?.info?.price) / 100}
+                            </span>
+                            <button
+                              className="btn btn-light fw-bold text-success px-4"
+                              type="button"
+                            >
+                              ADD
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div> */}
+          </div>
+          {/* gap */}
+          <div style={{ backgroundColor: "#f2f2f3", padding: "9px" }}></div>
+          {/* Recommended */}
+          {/* <div className="p-3">
+            <div>
+              <div className="card border-0 ">
+                <div
+                  className="card-header p-0 py-2 border-0 "
+                  style={{ backgroundColor: "white" }}
+                >
+                  <a
+                    className="btn fw-bold d-block border-0 p-0"
+                    data-bs-toggle="collapse"
+                    href="#Recommended"
+                  >
+                    <h5 className="d-flex justify-content-between">
+                      {recommended?.title}{" "}
+                      <i className="fa-solid fa-chevron-down fw-bold"></i>
+                    </h5>
+                  </a>
+                </div>
+                <div id={recommended?.title} className="collapse show">
+                  <div className="card-body p-0 pt-3">
+                    {recommended?.itemCards &&
+                      // console.log(recommended?.itemCards.length),
+
+                      recommended.itemCards.map((itemCard, index) => {
+                        console.log(recommended?.itemCards.length - 1);
+                        const { name, ratings, description, imageId, isVeg } =
+                          itemCard?.card?.info;
+                        const { rating, ratingCountV2 } =
+                          ratings?.aggregatedRating;
+                       
+                        return (
+                          <div
+                            key={index}
+                            id={`a${index}`}
+                            className="row pt-4 justify-content-between"
+                            style={{
+                              paddingBottom: "40px",
+                              borderBottom:
+                                index < recommended?.itemCards.length - 1
+                                  ? "2px solid #f2f2f3"
+                                  : "",
+                            }}
+                          >
+                            
+                            <div className="left col-8 ">
+                              {isVeg ? (
+                                <div
+                                  className="border border-2 border-success   rounded-1"
+                                  style={{
+                                    width: "max-content",
+                                    padding: "2.50px",
+                                  }}
+                                >
+                                  <div
+                                    className=""
+                                    style={{
+                                      width: "9px",
+                                      height: "9px",
+                                      borderRadius: "50%",
+                                      backgroundColor: "#0f8a65",
+                                      // borderLeft: "7px solid transparent",
+                                      // borderRight: "7px solid transparent",
+                                      // borderBottom: "10px solid #0f8a65",
+                                    }}
+                                  ></div>
+                                </div>
+                              ) : (
+                                <div
+                                  className="border border-2 border-danger  rounded-1"
+                                  style={{
+                                    width: "max-content",
+                                    padding: "1.50px",
+                                  }}
+                                >
+                                  <div
+                                    className=""
+                                    style={{
+                                      width: "0px",
+                                      height: "0px",
+                                      borderRadius: "3px",
+                                      borderLeft: "7px solid transparent",
+                                      borderRight: "7px solid transparent",
+                                      borderBottom: "10px solid #e43b4f",
+                                    }}
+                                  ></div>
+                                </div>
+                              )}
+                              <div className="" style={{ color: "#414449" }}>
+                                <h5 className="m-0">{name}</h5>
+                                <h6> &#8377; 375 </h6>
+                              </div>
+                              {rating ? (
+                                <div
+                                  className="py-1  "
+                                  style={{ fontSize: "16px" }}
+                                >
+                                  <i
+                                    className="fa-solid fa-star fa-xs"
+                                    style={{ color: "#116649" }}
+                                  >
+                                    {" "}
+                                    <span className="fw-bold">{rating} </span>
+                                  </i>
+                                  <span
+                                    className="fw-medium"
+                                    style={{ color: "#414449" }}
+                                  >
+                                    {" "}
+                                    ({ratingCountV2})
+                                  </span>
+                                </div>
+                              ) : null}
+
+                              <div>
+                                <p
+                                  className="fw-medium py-1"
+                                  style={{ color: "#414449" }}
+                                >
+                                  {description}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="right col-3">
+                              <div
+                                className=" ms-3 "
+                                style={{ position: "relative" }}
+                              >
+                                <img
+                                  className="rounded-4 menu-img"
+                                  src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                                  alt="Combo for 1 Non-Veg"
+                                ></img>
+                                <div
+                                  className="px-4 text-center d-flex flex-column justify-content-center"
+                                  style={{
+                                    width: "100%",
+                                    position: "absolute",
+                                    bottom: "-25%",
+                                    left: "0%",
+                                    // paddingInline: "",
+                                  }}
+                                >
+                                  <button
+                                    className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                    type="button"
+                                  >
+                                    <h5 className=" fw-bold m-0 py-1 "> ADD</h5>
+                                  </button>
+                                  <small
+                                    className="text-center m-0 "
+                                    style={{ color: "#8d8f91" }}
+                                  >
+                                    customisable
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              </div>
             </div>
+          </div> */}
+
+          {/* categories */}
+          {menuDatas.map((menuData, index) => {
+            const { carousel, categories, title, itemCards } =
+              menuData?.card?.card;
+
+            return (
+              <div key={`X${index}`}>
+                {carousel ? (
+                  <div key={`A${index}`}>
+                    {/* Top Picks */}
+                    <div>
+                      <div className="d-flex pt-4 justify-content-between">
+                        <div>
+                          <h5 className="fw-bolder col-12">{title}</h5>
+                        </div>
+                        <div>
+                          <button
+                            className="carousal-btn mx-1"
+                            onClick={() => {
+                              if (scrollPick >= 2) {
+                                setScrollPick(scrollPick - 2);
+                              } else {
+                                console.log("exceed");
+                              }
+                            }}
+                            disabled={scrollPick < 2}
+                          >
+                            <i className="fa-solid fa-arrow-left"></i>
+                          </button>
+                          <button
+                            className="carousal-btn mx-1"
+                            onClick={() => {
+                              // console.log(scrollDeal);
+                              if (scrollPick <= 2) {
+                                setScrollPick(scrollPick + 2);
+                              } else {
+                                console.log("exceed");
+                              }
+                            }}
+                            disabled={scrollPick > 2}
+                          >
+                            <i className="fa-solid fa-arrow-right "></i>
+                          </button>
+                        </div>
+                      </div>
+                      {carousel && (
+                        <div className="p-1 d-flex overflow-hidden">
+                          {carousel.map((topPick, index) => {
+                            return (
+                              <div
+                                key={`Q${index}`}
+                                className=" m-0 me-3 my-3 row col-lg-4 "
+                                // key={(index) => {
+                                //   console.log(`a${index}`);
+                                //   return index;
+                                // }}
+                                style={{
+                                  transform: `translateX(-${
+                                    scrollPick * 50
+                                  }%) `,
+                                  transition: "transform 2s",
+                                  position: "relative",
+                                }}
+                              >
+                                <img
+                                  className=" p-0  rounded"
+                                  // style={{ width: "100%" }}
+                                  src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${topPick?.creativeId}`}
+                                  alt={topPick?.title}
+                                ></img>
+                                <div
+                                  className="text-light"
+                                  style={{ position: "absolute", bottom: "0%" }}
+                                >
+                                  <div className="d-flex py-3 justify-content-between align-items-center">
+                                    <span className="fw-medium">
+                                      &#8377;
+                                      {(topPick?.dish?.info?.defaultPrice ||
+                                        topPick?.dish?.info?.price) / 100}
+                                    </span>
+                                    <button
+                                      className="btn btn-light fw-bold text-success px-4"
+                                      type="button"
+                                    >
+                                      ADD
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : categories ? (
+                  <div key={`A${index}`}>
+                    {/* categories */}
+                    <div className="p-3">
+                      <h5>
+                        <b>{title}</b>
+                      </h5>
+
+                      <div>
+                        {categories.map((categoryData, index) => {
+                          // console.log(categoryData?.title.replace(/\s/g, ""));
+                          // console.log(categories.length);
+                          return (
+                            <div
+                              key={`B${index}`}
+                              className="py-2"
+                              style={{
+                                borderBottom:
+                                  index < categories.length - 1
+                                    ? "2px solid #f2f2f3"
+                                    : "",
+                              }}
+                            >
+                              <div
+                                className="card-header p-0 py-2 border-0 "
+                                style={{ backgroundColor: "white" }}
+                              >
+                                <a
+                                  className="btn fw-bold d-block border-0 p-0"
+                                  data-bs-toggle="collapse"
+                                  href={`#${categoryData?.title.replace(
+                                    /\s/g,
+                                    ""
+                                  )}`}
+                                >
+                                  <h5 className="d-flex justify-content-between">
+                                    {categoryData?.title} (
+                                    {categoryData?.itemCards.length})
+                                    <i className="fa-solid fa-chevron-down fw-bold"></i>
+                                  </h5>
+                                </a>
+                              </div>
+                              <div
+                                key={`C${index}`}
+                                id={categoryData?.title.replace(/\s/g, "")}
+                                className="collapse "
+                              >
+                                <div className="card-body p-0 pt-2">
+                                  {categoryData?.itemCards &&
+                                    categoryData.itemCards.map(
+                                      (itemCard, index) => {
+                                        const {
+                                          name,
+                                          ratings,
+                                          description,
+                                          imageId,
+                                          isVeg,
+                                        } = itemCard?.card?.info;
+                                        const { rating, ratingCountV2 } =
+                                          ratings?.aggregatedRating;
+                                        // const{}
+                                        return (
+                                          <div
+                                            key={`D${index}`}
+                                            // id={`a${index}`}
+                                            className="row pt-4 justify-content-between"
+                                            style={{
+                                              paddingBottom: "40px",
+                                              borderBottom:
+                                                index <
+                                                categoryData?.itemCards.length -
+                                                  1
+                                                  ? "2px solid #f2f2f3"
+                                                  : "",
+                                            }}
+                                          >
+                                            <div className="left col-8 ">
+                                              {isVeg ? (
+                                                <div
+                                                  className="border border-2 border-success   rounded-1"
+                                                  style={{
+                                                    width: "max-content",
+                                                    padding: "2.50px",
+                                                  }}
+                                                >
+                                                  <div
+                                                    className=""
+                                                    style={{
+                                                      width: "9px",
+                                                      height: "9px",
+                                                      borderRadius: "50%",
+                                                      backgroundColor:
+                                                        "#0f8a65",
+                                                    }}
+                                                  ></div>
+                                                </div>
+                                              ) : (
+                                                <div
+                                                  className="border border-2 border-danger  rounded-1"
+                                                  style={{
+                                                    width: "max-content",
+                                                    padding: "1.50px",
+                                                  }}
+                                                >
+                                                  <div
+                                                    className=""
+                                                    style={{
+                                                      width: "0px",
+                                                      height: "0px",
+                                                      borderRadius: "3px",
+                                                      borderLeft:
+                                                        "7px solid transparent",
+                                                      borderRight:
+                                                        "7px solid transparent",
+                                                      borderBottom:
+                                                        "10px solid #e43b4f",
+                                                    }}
+                                                  ></div>
+                                                </div>
+                                              )}
+                                              <div
+                                                className=""
+                                                style={{ color: "#414449" }}
+                                              >
+                                                <h5 className="m-0">{name}</h5>
+                                                <h6> &#8377; 375 </h6>
+                                              </div>
+                                              {rating ? (
+                                                <div
+                                                  className="py-1  "
+                                                  style={{
+                                                    fontSize: "16px",
+                                                  }}
+                                                >
+                                                  <i
+                                                    className="fa-solid fa-star fa-xs"
+                                                    style={{
+                                                      color: "#116649",
+                                                    }}
+                                                  >
+                                                    {" "}
+                                                    <span className="fw-bold">
+                                                      {rating}{" "}
+                                                    </span>
+                                                  </i>
+                                                  <span
+                                                    className="fw-medium"
+                                                    style={{
+                                                      color: "#414449",
+                                                    }}
+                                                  >
+                                                    {" "}
+                                                    ({ratingCountV2})
+                                                  </span>
+                                                </div>
+                                              ) : null}
+
+                                              <div>
+                                                <p
+                                                  className="fw-medium py-1"
+                                                  style={{
+                                                    color: "#414449",
+                                                  }}
+                                                >
+                                                  {description}
+                                                </p>
+                                              </div>
+                                            </div>
+                                            <div className="right col-3">
+                                              <div
+                                                className=" ms-3 "
+                                                style={{
+                                                  position: "relative",
+                                                }}
+                                              >
+                                                <img
+                                                  className="rounded-4 menu-img"
+                                                  src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                                                  alt="Combo for 1 Non-Veg"
+                                                ></img>
+                                                <div
+                                                  className="px-4 text-center d-flex flex-column justify-content-center"
+                                                  style={{
+                                                    width: "100%",
+                                                    position: "absolute",
+                                                    bottom: "-25%",
+                                                    left: "0%",
+                                                    // paddingInline: "",
+                                                  }}
+                                                >
+                                                  <button
+                                                    className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                                    type="button"
+                                                  >
+                                                    <h5 className=" fw-bold m-0 py-1 ">
+                                                      {" "}
+                                                      ADD
+                                                    </h5>
+                                                  </button>
+                                                  <small
+                                                    className="text-center m-0 "
+                                                    style={{
+                                                      color: "#8d8f91",
+                                                    }}
+                                                  >
+                                                    customisable
+                                                  </small>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        );
+                                      }
+                                    )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {/* gap */}
+                    <div
+                      style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
+                    ></div>
+                  </div>
+                ) : itemCards ? (
+                  <div key={`A${index}`}>
+                    {/* ItemCards */}
+                    <div className="p-3">
+                      <div className="card border-0 ">
+                        <div
+                          className="card-header p-0 py-2 border-0 "
+                          style={{ backgroundColor: "white" }}
+                        >
+                          <a
+                            className="btn fw-bold d-block border-0 p-0"
+                            data-bs-toggle="collapse"
+                            href={`#${title.replace(/\s/g, "")}`}
+                          >
+                            <h5 className="d-flex justify-content-between">
+                              <strong>
+                                {" "}
+                                {title} ({title.length}){" "}
+                              </strong>
+                              <i className="fa-solid fa-chevron-down fw-bold"></i>
+                            </h5>
+                          </a>
+                        </div>
+                        <div
+                          id={title.replace(/\s/g, "")}
+                          className="collapse show"
+                        >
+                          <div className="card-body p-0 pt-3">
+                            {itemCards &&
+                              // console.log(recommended?.itemCards.length),
+
+                              itemCards.map((itemCard, index) => {
+                                // console.log(itemCards.length - 1);
+                                const {
+                                  name,
+                                  ratings,
+                                  description,
+                                  imageId,
+                                  isVeg,
+                                } = itemCard?.card?.info;
+                                const { rating, ratingCountV2 } =
+                                  ratings?.aggregatedRating;
+                                // const{}
+                                return (
+                                  <div
+                                    key={`Z${index}`}
+                                    id={`a${index}`}
+                                    className="row pt-4 justify-content-between"
+                                    style={{
+                                      paddingBottom: "40px",
+                                      borderBottom:
+                                        index < itemCards.length - 1
+                                          ? "2px solid #f2f2f3"
+                                          : "",
+                                    }}
+                                  >
+                                    <div className="left col-8 ">
+                                      {isVeg ? (
+                                        <div
+                                          className="border border-2 border-success   rounded-1"
+                                          style={{
+                                            width: "max-content",
+                                            padding: "2.50px",
+                                          }}
+                                        >
+                                          <div
+                                            className=""
+                                            style={{
+                                              width: "9px",
+                                              height: "9px",
+                                              borderRadius: "50%",
+                                              backgroundColor: "#0f8a65",
+                                              // borderLeft: "7px solid transparent",
+                                              // borderRight: "7px solid transparent",
+                                              // borderBottom: "10px solid #0f8a65",
+                                            }}
+                                          ></div>
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="border border-2 border-danger  rounded-1"
+                                          style={{
+                                            width: "max-content",
+                                            padding: "1.50px",
+                                          }}
+                                        >
+                                          <div
+                                            className=""
+                                            style={{
+                                              width: "0px",
+                                              height: "0px",
+                                              borderRadius: "3px",
+                                              borderLeft:
+                                                "7px solid transparent",
+                                              borderRight:
+                                                "7px solid transparent",
+                                              borderBottom:
+                                                "10px solid #e43b4f",
+                                            }}
+                                          ></div>
+                                        </div>
+                                      )}
+                                      <div
+                                        className=""
+                                        style={{ color: "#414449" }}
+                                      >
+                                        <h5 className="m-0">{name}</h5>
+                                        <h6> &#8377; 375 </h6>
+                                      </div>
+                                      {rating ? (
+                                        <div
+                                          className="py-1  "
+                                          style={{ fontSize: "16px" }}
+                                        >
+                                          <i
+                                            className="fa-solid fa-star fa-xs"
+                                            style={{ color: "#116649" }}
+                                          >
+                                            {" "}
+                                            <span className="fw-bold">
+                                              {rating}{" "}
+                                            </span>
+                                          </i>
+                                          <span
+                                            className="fw-medium"
+                                            style={{ color: "#414449" }}
+                                          >
+                                            {" "}
+                                            ({ratingCountV2})
+                                          </span>
+                                        </div>
+                                      ) : null}
+
+                                      <div>
+                                        <p
+                                          className="fw-medium py-1"
+                                          style={{ color: "#414449" }}
+                                        >
+                                          {description}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="right col-3">
+                                      <div
+                                        className=" ms-3 "
+                                        style={{ position: "relative" }}
+                                      >
+                                        <img
+                                          className="rounded-4 menu-img"
+                                          src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                                          alt="Combo for 1 Non-Veg"
+                                        ></img>
+                                        <div
+                                          className="px-4 text-center d-flex flex-column justify-content-center"
+                                          style={{
+                                            width: "100%",
+                                            position: "absolute",
+                                            bottom: "-25%",
+                                            left: "0%",
+                                            // paddingInline: "",
+                                          }}
+                                        >
+                                          <button
+                                            className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                            type="button"
+                                          >
+                                            <h5 className=" fw-bold m-0 py-1 ">
+                                              {" "}
+                                              ADD
+                                            </h5>
+                                          </button>
+                                          <small
+                                            className="text-center m-0 "
+                                            style={{ color: "#8d8f91" }}
+                                          >
+                                            customisable
+                                          </small>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* gap */}
+                    <div
+                      style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
+                    ></div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            );
+          })}
+          {/* licence */}
+          <div
+            className="p-4 pt-2 pb-5 d-grid gap-3"
+            style={{ backgroundColor: "#f1f1f6", color: "#93959f" }}
+          >
+            {menuDatas.map((menuData, index) => {
+              const {
+                [`@type`]: types,
+                type,
+                imageId,
+                text,
+                name,
+                completeAddress,
+                area,
+              } = menuData?.card?.card;
+              return (
+                <>
+                  {types ===
+                  "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" ? (
+                    <div key={`P${index}`}>
+                      <div className="d-flex align-items-center">
+                        <div className="me-4" style={{ width: "10%" }}>
+                          <img
+                            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_120,h_60/${imageId}`}
+                            className="w-100"
+                            alt={type}
+                          />
+                        </div>
+                        <p className="m-0 ">{text[0]}</p>
+                      </div>
+                      <hr></hr>
+                    </div>
+                  ) : types ===
+                    "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress" ? (
+                    <div key={`P${index}`}>
+                      <div>
+                        <b>{name}</b>
+                        <p>(Outlet:{area})</p>
+                      </div>
+                      <div>
+                        <p>
+                          <i className="fa-solid fa-location-dot me-2"></i>
+                          {completeAddress}
+                        </p>
+                      </div>
+                      <hr></hr>
+                      <div className="d-flex justify-content-center p-2 pb-5 text-dark fw-bold">
+                        <small>
+                          For better experience, download the Swiggy app now
+                        </small>
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              );
+            })}
+            {/* <div className="d-flex align-items-center">
+              <div className="me-4" style={{ width: "10%" }}>
+                <img
+                  src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_120,h_60/fssai_final_edss9i"
+                  className="w-100"
+                  alt="FSSAI"
+                />
+              </div>
+              <p className="m-0 ">License No. 11519005000992</p>
+            </div>
+            <hr></hr>
+            <div>
+              <b>Wow! Momo</b>
+              <p>(Outlet:Kurla West)</p>
+            </div>
+            <div>
+              <p>
+                <i className="fa-solid fa-location-dot me-2"></i>
+                SG 6, Second floor Foodcourt, Phoenix Marketcity Mall LBS Road
+                Kurla , Mumbai 400070
+              </p>
+            </div>
+            <hr></hr>
+            <div className="d-flex justify-content-center pb-5 text-dark fw-bold">
+              <small>For better experience, download the Swiggy app now</small>
+            </div> */}
           </div>
         </div>
       </div>

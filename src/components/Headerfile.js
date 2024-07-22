@@ -1,8 +1,28 @@
 import { Link } from "react-router-dom";
 const Header = () => {
   return (
-    <header className="shadow">
-      <div className="container fs-6 fw-bolder ">
+    <header
+      className=""
+      style={{
+        boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
+        // position: "fixed",
+        // top: "0",
+        // left: "0",
+        // right: "0",
+        // height: "80px",
+        // background: "#fff",
+        // zIndex: 1000,
+        // willChange: "transform",
+        // transform: "translateZ(0)",
+        // transition: "transform .3s ease",
+        // contain: "size layout style",
+        // padding: "0 20px",
+      }}
+    >
+      <div
+        className="container fs-6 fw-bolder  "
+        // style={{ position: "sticky" }}
+      >
         <nav className="text-lg-center px-lg-5">
           {/* <nav className="p-3"> */}
           <div className=" row  py-1">

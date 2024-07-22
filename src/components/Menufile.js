@@ -10,7 +10,7 @@ export const Menu = () => {
   // const [offers, setOffers] = useState([]);
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     const menu = async () => {
@@ -19,7 +19,7 @@ export const Menu = () => {
           `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=19.07480&lng=72.88560&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setMenuItem(data?.data?.cards[2]?.card?.card || {});
         setMenuList(data);
         // setLoading(false);
@@ -34,14 +34,13 @@ export const Menu = () => {
     menu();
   }, [id]);
 
-  console.log(menuList);
-  console.log(menuItem);
+  // console.log(menuList);
+  // console.log(menuItem);
   // console.log(menuList?.data);
   return (
     <>
-      <h1>Menu page</h1>
       {/* {console.log(MenuList?.cards[2]?.card?.card?.info?.id)} */}
-      {menuItem && menuItem.info && menuList && (
+      {menuItem && menuItem?.info?.id && menuList && (
         <MenuInfo
           key={menuItem?.info?.id}
           menuItem={menuItem}
