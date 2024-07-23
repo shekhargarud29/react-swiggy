@@ -20,10 +20,10 @@ const Header = () => {
       }}
     >
       <div
-        className="container fs-6 fw-bolder  "
+        className="container p-0 fs-6 fw-bolder  "
         // style={{ position: "sticky" }}
       >
-        <nav className="text-lg-center px-lg-5">
+        <nav className="text-lg-center ">
           {/* <nav className="p-3"> */}
           <div className=" row  py-1">
             <div role="button" className="col-3 py-3 d-flex">

@@ -286,7 +286,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                 return (
                   <div
                     key={index}
-                    className="me-3   p-2 col-5 d-flex  border border-2 rounded-4"
+                    className="me-3   p-2 col-5 d-flex  border  rounded-4"
                     style={{
                       transform: `translateX(-${scrollDeal * 100}%) `,
                       transition: "transform 2s",
@@ -351,7 +351,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
               {/* Filter */}
               <div className="d-flex  pb-3">
                 <div
-                  className="border border-2 me-2"
+                  className="border  me-2"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -373,7 +373,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
 
                   <div
                     id="VEGDIV"
-                    className="border border-2 border-success   rounded-1"
+                    className="border  border-success   rounded-1"
                     style={{
                       backgroundColor: "white",
                       width: "max-content",
@@ -397,7 +397,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                   </div>
                 </div>
                 <div
-                  className="border border-2 mx-2"
+                  className="border  mx-2"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -418,7 +418,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                   />
                   <div
                     id="NONVEGDIV"
-                    className="border border-2 border-danger  rounded-1"
+                    className="border  border-danger  rounded-1"
                     style={{
                       width: "max-content",
                       padding: "1.50px",
@@ -880,7 +880,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                                             <div className="left col-8 ">
                                               {isVeg ? (
                                                 <div
-                                                  className="border border-2 border-success   rounded-1"
+                                                  className="border  border-success   rounded-1"
                                                   style={{
                                                     width: "max-content",
                                                     padding: "2.50px",
@@ -899,7 +899,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                                                 </div>
                                               ) : (
                                                 <div
-                                                  className="border border-2 border-danger  rounded-1"
+                                                  className="border  border-danger  rounded-1"
                                                   style={{
                                                     width: "max-content",
                                                     padding: "1.50px",
@@ -1086,7 +1086,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                                     <div className="left col-8 ">
                                       {isVeg ? (
                                         <div
-                                          className="border border-2 border-success   rounded-1"
+                                          className="border  border-success   rounded-1"
                                           style={{
                                             width: "max-content",
                                             padding: "2.50px",
@@ -1107,7 +1107,7 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                                         </div>
                                       ) : (
                                         <div
-                                          className="border border-2 border-danger  rounded-1"
+                                          className="border  border-danger  rounded-1"
                                           style={{
                                             width: "max-content",
                                             padding: "1.50px",

@@ -74,10 +74,10 @@ export const ResFilter = ({ sortBy }) => {
 
   return (
     <>
-      <div className="col-md-3 ">
+      <div className="mx-2 ">
         <button
           type="button"
-          className="btn border rounded-pill mx-3 p-2 px-4"
+          className="btn border rounded-pill  p-2 px-4"
           data-bs-toggle="modal"
           data-bs-target="#myModal"
         >

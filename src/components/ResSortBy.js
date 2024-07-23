@@ -112,10 +112,10 @@ export const ResSortBy = ({ setrestaurantList, restaurantCollection }) => {
     <>
       {<ResFilter sortBy={sortBy} />}
 
-      <div className="dropdown col-md-3  ">
+      <div className="dropdown mx-2 ">
         <button
           type="button"
-          className="btn dropdown-toggle btn border rounded-pill mx-3 p-2 px-4"
+          className="btn dropdown-toggle btn border rounded-pill  p-2 px-4"
           data-bs-toggle="dropdown"
         >
           <strong>Sort By</strong>

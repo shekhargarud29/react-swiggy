@@ -156,15 +156,52 @@ li:hover {
 }
 
 .shimmerLine {
-  height: 10px;
-  background-color: #f0eeee;
-  border-radius: 2px;
+  height: 12px;
+  background-color: #eef0f5;
+  border-radius: 1px;
 }
 
 .shimmerImg {
   width: 100%;
-  height: 200px;
-  background-color: #f0eeee;
+  height: 170px;
+  background-color: #eef0f5;
+}
+
+.loading {
+  width: max-content;
+  position: relative;
+}
+.loading-div {
+  border-radius: 50%;
+
+  background: linear-gradient(
+    180deg,
+    #ecebeb,
+    hsla(0, 3%, 92%, 0.51) 53%,
+    hsla(0, 3%, 92%, 0)
+  ) !important;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  animation: rotate 2s infinite;
+}
+
+.loading-div:after {
+  content: "";
+  background-color: #171a29;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
 @media (max-width: 780px) {

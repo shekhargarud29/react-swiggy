@@ -35,7 +35,7 @@ export const useRestaurant = () => {
     };
     // console.log(resObjectrestaurantList);
     getRestaurants();
-  }, []);
+  }, [resObjectrestaurantList]);
 
   const resObject = {
     restaurantList: resObjectrestaurantList,

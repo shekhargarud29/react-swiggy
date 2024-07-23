@@ -79,11 +79,7 @@ const CardContainer = () => {
   const resObject = useRestaurant();
 
   if (resObject?.Loading) {
-    return (
-      <div className="container d-flex py-5 flex-wrap">
-        <Shimmer />
-      </div>
-    );
+    return <Shimmer />;
   }
   // console.log(resObject?.restaurantList);
 
@@ -520,13 +516,13 @@ const CardContainer = () => {
 
     // method 5 api calling
     <>
-      <div className="container-lg py-3">
-        <div className="mx-lg-5 px-4 py-1 row justify-content-center">
+      <div className="container-lg px-0 py-3">
+        <div className="mx-lg-4  py-1 row justify-content-center">
           {/* Dish Carousal */}
-          <div className="border-bottom pb-5">
+          <div className="border-bottom pb-5 ">
             <div className="d-flex justify-content-between">
               <div>
-                <h4 className="fw-bolder col-12">What's on your mind?</h4>
+                <h4 className="fw-bold col-12">What's on your mind?</h4>
               </div>
               <div className="d-flex">
                 <button
@@ -583,9 +579,9 @@ const CardContainer = () => {
             </div>
           </div>
         </div>
-        <div className="mx-lg-5 px-4 py-1 row justify-content-center">
+        <div className="mx-lg-4 py-1 row justify-content-center">
           {/* Restaurant Carousal */}
-          <div className="border-bottom pb-5">
+          <div className="border-bottom py-5">
             <div className="d-flex justify-content-between">
               <div>
                 <h4 className="fw-bolder col-12">What's on your mind?</h4>
@@ -642,19 +638,24 @@ const CardContainer = () => {
           </div>
         </div>
 
-        <div className="mx-lg-5 p-3  row justify-content-center">
-          <div className="col-6 row justify-content-start p-0">
-            {/* Filter */}
-            {/* {<ResFilter />} */}
+        <div className="mx-lg-3 px-2 py-4  row justify-content-center align-items-center">
+          <h3 className="fw-bold py-2 col-12">
+            Restaurants with online food delivery in Mumbai
+          </h3>
 
-            {/* SortBy */}
-            {
-              <ResSortBy
-                setrestaurantList={resObject?.setrestaurantList}
-                restaurantCollection={resObject?.restaurantCollection}
-              />
-            }
-            {/* <div className="dropdown col-md-3  ">
+          <div className="col-12 row justify-content-center align-items-center py-3">
+            <div className="col-6 d-flex  justify-content-start px-3 ">
+              {/* Filter */}
+              {/* {<ResFilter />} */}
+
+              {/* SortBy */}
+              {
+                <ResSortBy
+                  setrestaurantList={resObject?.setrestaurantList}
+                  restaurantCollection={resObject?.restaurantCollection}
+                />
+              }
+              {/* <div className="dropdown col-md-3  ">
               <button
                 type="button"
                 className="btn dropdown-toggle btn border rounded-pill mx-3 p-2 px-4"
@@ -752,15 +753,15 @@ const CardContainer = () => {
                 </li>
               </ul>
             </div> */}
-          </div>
-          <div className=" col-6 ">
-            {
-              <ResSearchBar
-                setrestaurantList={resObject?.setrestaurantList}
-                restaurantCollection={resObject?.restaurantCollection}
-              />
-            }
-            {/* <div className="searchbar">
+            </div>
+            <div className=" col-6 ">
+              {
+                <ResSearchBar
+                  setrestaurantList={resObject?.setrestaurantList}
+                  restaurantCollection={resObject?.restaurantCollection}
+                />
+              }
+              {/* <div className="searchbar">
               <TextField
                 className=""
                 id="outlined-basic"
@@ -783,41 +784,40 @@ const CardContainer = () => {
                 }}
               />
             </div> */}
+            </div>
           </div>
-        </div>
-        <div className="mx-lg-5 px-4 py-1  row justify-content-start">
-          <h3 className="fw-bold col-12">
-            Restaurants with online food delivery in Mumbai
-          </h3>
-          {/* {console.log(
+
+          <div className="col-12 py-1  row justify-content-start">
+            {/* {console.log(
             RestaurantList[1]?.card?.card?.gridElements?.infoWithStyle
               ?.restaurants[0]
           )} */}
-          {resObject?.restaurantList &&
-            resObject?.restaurantList.map((restaurant) => {
-              // console.log(restaurant);
-              return (
-                // method 1
-                // <RestaurantCard
-                //   imageUrl={Img_Url + restaurant?.info?.cloudinaryImageId}
-                //   title={restaurant?.info?.name}
-                //   rating={restaurant?.info?.avgRating}
-                //   time={restaurant?.info?.sla?.slaString}
-                //   cuisine={restaurant?.info?.cuisines.join(", ")}
-                //   location={restaurant?.info?.areaName}
-                // />
+            {resObject?.restaurantList &&
+              resObject?.restaurantList.map((restaurant) => {
+                // console.log(restaurant);
+                return (
+                  // method 1
+                  // <RestaurantCard
+                  //   imageUrl={Img_Url + restaurant?.info?.cloudinaryImageId}
+                  //   title={restaurant?.info?.name}
+                  //   rating={restaurant?.info?.avgRating}
+                  //   time={restaurant?.info?.sla?.slaString}
+                  //   cuisine={restaurant?.info?.cuisines.join(", ")}
+                  //   location={restaurant?.info?.areaName}
+                  // />
 
-                // method 2
-                <>
-                  {restaurant?.info && (
-                    <RestaurantCard
-                      key={restaurant?.info?.id}
-                      {...restaurant?.info}
-                    />
-                  )}
-                </>
-              );
-            })}
+                  // method 2
+                  <>
+                    {restaurant?.info && (
+                      <RestaurantCard
+                        key={restaurant?.info?.id}
+                        {...restaurant?.info}
+                      />
+                    )}
+                  </>
+                );
+              })}
+          </div>
         </div>
       </div>
     </>
