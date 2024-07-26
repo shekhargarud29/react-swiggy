@@ -1,19 +1,20 @@
 import RestaurantCard from "./RestaurantCardfile";
 // import { Category } from "./Category";
-import { Dish_Url } from "../const/config";
+// import { Dish_Url } from "../const/config";
 
 // import { RestaurantList } from "../const/config";
 // import { Img_Url } from "../const/config";
 // import { TextField, InputAdornment } from "@mui/material";
-import { useState } from "react";
+// import { useState } from "react";
 // import { useEffect } from "react";
-import { Category } from "./Category";
+// import { Category } from "./Category";
 import { useRestaurant } from "../hooks/useReastaurant";
 import { ResSearchBar } from "./ResSearchBar";
 // import { ResFilter } from "./ResFilter";
 import { ResSortBy } from "./ResSortBy";
 // import Filter from "./Filter";
 import { Shimmer } from "./Shimmerfile";
+import { Carousal } from "./Carouselfile";
 
 const CardContainer = () => {
   // console.log(RestaurantList);
@@ -72,15 +73,17 @@ const CardContainer = () => {
   // const [restaurantList, setrestaurantList] = useState([]);
   // const [restaurantDish, setrestaurantDish] = useState([]);
   // const [checkedCheckboxes, setcheckedCheckboxes] = useState([]);
-  const [scrollDish, setScrollDish] = useState(0);
-  const [scrollRes, setScrollRes] = useState(0);
+  // const [scrollDish, setScrollDish] = useState(0);
+  // const [scrollRes, setScrollRes] = useState(0);
   // const [restaurantCollection, setrestaurantCollection] = useState([]);
   // const [searchTerm, setSearchTerm] = useState("");
   const resObject = useRestaurant();
+  console.log(resObject?.error);
 
   if (resObject?.Loading) {
     return <Shimmer />;
   }
+
   // console.log(resObject?.restaurantList);
 
   // const [loading, setloading] = useState(true);
@@ -515,147 +518,163 @@ const CardContainer = () => {
     // </>
 
     // method 5 api calling
-    <>
-      <div className="container-lg px-0 py-3">
-        <div className="mx-lg-4  py-1 row justify-content-center">
-          {/* Dish Carousal */}
-          <div className="border-bottom pb-5 ">
-            <div className="d-flex justify-content-between">
-              <div>
-                <h4 className="fw-bold col-12">What's on your mind?</h4>
-              </div>
-              <div className="d-flex">
-                <button
-                  className="carousal-btn mx-1"
-                  type="button"
-                  onClick={() => {
-                    if (scrollDish >= 3) {
-                      setScrollDish(scrollDish - 3);
-                    } else {
-                      console.log("exceed");
-                    }
-                  }}
-                  disabled={scrollDish < 3}
-                >
-                  <i className="fa-solid fa-arrow-left " />
-                </button>
-                <button
-                  className="carousal-btn mx-1"
-                  onClick={() => {
-                    if (scrollDish <= 6) {
-                      setScrollDish(scrollDish + 3);
-                    } else {
-                      console.log("exceed");
-                    }
-                  }}
-                  disabled={scrollDish > 6}
-                >
-                  <i className="fa-solid fa-arrow-right "></i>
-                </button>
-              </div>
-            </div>
-            <div className="d-flex overflow-hidden ">
-              {resObject?.restaurantDish &&
-                resObject?.restaurantDish.map((dish) => {
-                  // console.log(dish);
-                  return (
-                    <div
-                      className=" col-2"
-                      style={{
-                        transform: `translateX(-${scrollDish * 200}%)`,
-                        transition: "transform 2s",
-                      }}
-                    >
-                      <img
-                        key={dish.id}
-                        className=" pe-5  cards-dish"
-                        src={Dish_Url + dish?.imageId}
-                        alt={dish?.accessibility?.altText}
-                      ></img>
-                      {/* <Category key={dish.id} {...dish} /> */}
-                    </div>
-                  );
-                })}
+    resObject?.error != null ? (
+      <>
+        <div style={{ height: "100vh" }}>
+          <div className="bg-secondary p-5">
+            <div
+              className="mx-auto p-5 text-light"
+              style={{ width: "max-content" }}
+            >
+              <h4>{resObject?.error}</h4>
             </div>
           </div>
         </div>
-        <div className="mx-lg-4 py-1 row justify-content-center">
-          {/* Restaurant Carousal */}
-          <div className="border-bottom py-5">
-            <div className="d-flex justify-content-between">
-              <div>
-                <h4 className="fw-bolder col-12">What's on your mind?</h4>
+      </>
+    ) : (
+      <>
+        <div className="container-lg px-0 py-3">
+          <div className="mx-lg-4  py-1 row justify-content-center">
+            {/* Dish Carousal */}
+            <Carousal restaurantDish={resObject?.restaurantDish} />
+            {/* <div className="border-bottom pb-5 ">
+              <div className="d-flex justify-content-between">
+                <div>
+                  <h4 className="fw-bold col-12">What's on your mind?</h4>
+                </div>
+                <div className="d-flex">
+                  <button
+                    className="carousal-btn mx-1"
+                    type="button"
+                    onClick={() => {
+                      if (scrollDish >= 3) {
+                        setScrollDish(scrollDish - 3);
+                      } else {
+                        console.log("exceed");
+                      }
+                    }}
+                    disabled={scrollDish < 3}
+                  >
+                    <i className="fa-solid fa-arrow-left " />
+                  </button>
+                  <button
+                    className="carousal-btn mx-1"
+                    onClick={() => {
+                      if (scrollDish <= 6) {
+                        setScrollDish(scrollDish + 3);
+                      } else {
+                        console.log("exceed");
+                      }
+                    }}
+                    disabled={scrollDish > 6}
+                  >
+                    <i className="fa-solid fa-arrow-right "></i>
+                  </button>
+                </div>
               </div>
-              <div>
-                <button
-                  className="carousal-btn mx-1"
-                  onClick={() => {
-                    if (scrollRes >= 3) {
-                      setScrollRes(scrollRes - 3);
-                    } else {
-                      console.log("exceed");
-                    }
-                  }}
-                  disabled={scrollRes < 3}
-                >
-                  <i className="fa-solid fa-arrow-left"></i>
-                </button>
-                <button
-                  className="carousal-btn mx-1"
-                  onClick={() => {
-                    if (scrollRes <= 9) {
-                      setScrollRes(scrollRes + 3);
-                    } else {
-                      console.log("exceed");
-                    }
-                  }}
-                  disabled={scrollRes > 9}
-                >
-                  <i className="fa-solid fa-arrow-right "></i>
-                </button>
+              <div className="d-flex overflow-hidden ">
+                {resObject?.restaurantDish &&
+                  resObject?.restaurantDish.map((dish, index) => {
+                    // console.log(dish);
+                    return (
+                      <div
+                        key={`O${index}`}
+                        className=" col-2"
+                        style={{
+                          transform: `translateX(-${scrollDish * 200}%)`,
+                          transition: "transform 2s",
+                        }}
+                      >
+                        <img
+                          key={dish.id}
+                          className=" pe-5  cards-dish"
+                          src={Dish_Url + dish?.imageId}
+                          alt={dish?.accessibility?.altText}
+                        ></img>
+                      </div>
+                    );
+                  })}
               </div>
-            </div>
-            <div className="d-flex overflow-hidden">
-              {resObject?.restaurantCollection &&
-                resObject?.restaurantCollection.map((restaurant) => {
-                  // console.log(dish);
-                  return (
-                    <div
-                      className=" col-3 py-3 pe-4 border-0 "
-                      style={{
-                        transform: `translateX(-${scrollRes * 134}%) `,
-                        transition: "transform 2s",
-                      }}
-                    >
-                      <Category
-                        key={restaurant?.info?.id}
-                        {...restaurant?.info}
-                      />
-                    </div>
-                  );
-                })}
-            </div>
+            </div> */}
           </div>
-        </div>
+          <div className="mx-lg-4 py-1 row justify-content-center">
+            {/* Restaurant Carousal */}
+            <Carousal restaurantCollection={resObject?.restaurantCollection} />
+            {/* <div className="border-bottom py-5">
+              <div className="d-flex justify-content-between">
+                <div>
+                  <h4 className="fw-bolder col-12">What's on your mind?</h4>
+                </div>
+                <div>
+                  <button
+                    className="carousal-btn mx-1"
+                    onClick={() => {
+                      if (scrollRes >= 3) {
+                        setScrollRes(scrollRes - 3);
+                      } else {
+                        console.log("exceed");
+                      }
+                    }}
+                    disabled={scrollRes < 3}
+                  >
+                    <i className="fa-solid fa-arrow-left"></i>
+                  </button>
+                  <button
+                    className="carousal-btn mx-1"
+                    onClick={() => {
+                      if (scrollRes <= 9) {
+                        setScrollRes(scrollRes + 3);
+                      } else {
+                        console.log("exceed");
+                      }
+                    }}
+                    disabled={scrollRes > 9}
+                  >
+                    <i className="fa-solid fa-arrow-right "></i>
+                  </button>
+                </div>
+              </div>
+              <div className="d-flex overflow-hidden">
+                {restaurantCollection &&
+                  restaurantCollection.map((restaurant) => {
+                    // console.log(dish);
+                    return (
+                      <div
+                        className=" col-3 py-3 pe-4 border-0 "
+                        style={{
+                          transform: `translateX(-${scrollRes * 134}%) `,
+                          transition: "transform 2s",
+                        }}
+                      >
+                        <Category
+                          key={restaurant?.info?.id}
+                          {...restaurant?.info}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div> */}
+          </div>
 
-        <div className="mx-lg-3 px-2 py-4  row justify-content-center align-items-center">
-          <h3 className="fw-bold py-2 col-12">
-            Restaurants with online food delivery in Mumbai
-          </h3>
+          <div className="mx-lg-3 px-2 py-4  row justify-content-center align-items-center">
+            <h3 className="fw-bold py-2 col-12">
+              Restaurants with online food delivery in Mumbai
+            </h3>
 
-          <div className="col-12 row justify-content-center align-items-center py-3">
-            <div className="col-6 d-flex  justify-content-start px-3 ">
-              {/* Filter */}
-              {/* {<ResFilter />} */}
+            <div className="col-12 row justify-content-center align-items-center py-3">
+              <div className="col-6 d-flex  justify-content-start px-3 ">
+                {/* Filter */}
+                {/* {<ResFilter />} */}
 
-              {/* SortBy */}
-              {
-                <ResSortBy
-                  setrestaurantList={resObject?.setrestaurantList}
-                  restaurantCollection={resObject?.restaurantCollection}
-                />
-              }
-              {/* <div className="dropdown col-md-3  ">
+                {/* SortBy */}
+                {
+                  <ResSortBy
+                    setrestaurantList={resObject?.setrestaurantList}
+                    restaurantCollection={resObject?.restaurantCollection}
+                  />
+                }
+                {/* <div className="dropdown col-md-3  ">
               <button
                 type="button"
                 className="btn dropdown-toggle btn border rounded-pill mx-3 p-2 px-4"
@@ -753,15 +772,15 @@ const CardContainer = () => {
                 </li>
               </ul>
             </div> */}
-            </div>
-            <div className=" col-6 ">
-              {
-                <ResSearchBar
-                  setrestaurantList={resObject?.setrestaurantList}
-                  restaurantCollection={resObject?.restaurantCollection}
-                />
-              }
-              {/* <div className="searchbar">
+              </div>
+              <div className=" col-6 ">
+                {
+                  <ResSearchBar
+                    setrestaurantList={resObject?.setrestaurantList}
+                    restaurantCollection={resObject?.restaurantCollection}
+                  />
+                }
+                {/* <div className="searchbar">
               <TextField
                 className=""
                 id="outlined-basic"
@@ -784,43 +803,44 @@ const CardContainer = () => {
                 }}
               />
             </div> */}
+              </div>
             </div>
-          </div>
 
-          <div className="col-12 py-1  row justify-content-start">
-            {/* {console.log(
+            <div className="col-12 py-1  row justify-content-start">
+              {/* {console.log(
             RestaurantList[1]?.card?.card?.gridElements?.infoWithStyle
               ?.restaurants[0]
           )} */}
-            {resObject?.restaurantList &&
-              resObject?.restaurantList.map((restaurant) => {
-                // console.log(restaurant);
-                return (
-                  // method 1
-                  // <RestaurantCard
-                  //   imageUrl={Img_Url + restaurant?.info?.cloudinaryImageId}
-                  //   title={restaurant?.info?.name}
-                  //   rating={restaurant?.info?.avgRating}
-                  //   time={restaurant?.info?.sla?.slaString}
-                  //   cuisine={restaurant?.info?.cuisines.join(", ")}
-                  //   location={restaurant?.info?.areaName}
-                  // />
+              {resObject?.restaurantList &&
+                resObject?.restaurantList.map((restaurant) => {
+                  // console.log(restaurant);
+                  return (
+                    // method 1
+                    // <RestaurantCard
+                    //   imageUrl={Img_Url + restaurant?.info?.cloudinaryImageId}
+                    //   title={restaurant?.info?.name}
+                    //   rating={restaurant?.info?.avgRating}
+                    //   time={restaurant?.info?.sla?.slaString}
+                    //   cuisine={restaurant?.info?.cuisines.join(", ")}
+                    //   location={restaurant?.info?.areaName}
+                    // />
 
-                  // method 2
-                  <>
-                    {restaurant?.info && (
-                      <RestaurantCard
-                        key={restaurant?.info?.id}
-                        {...restaurant?.info}
-                      />
-                    )}
-                  </>
-                );
-              })}
+                    // method 2
+                    <>
+                      {restaurant?.info && (
+                        <RestaurantCard
+                          key={restaurant?.info?.id}
+                          {...restaurant?.info}
+                        />
+                      )}
+                    </>
+                  );
+                })}
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
+    )
   );
 };
 

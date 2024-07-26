@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+// import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Carousal } from "./Carouselfile";
+// import { useState } from "react";
+import { MenuItemcards } from "./MenuItemcards";
 // import { TextField, InputAdornment } from "@mui/material";
 
-export const MenuInfo = ({ menuItem, menuList }) => {
-  const [scrollDeal, setScrollDeal] = useState(0);
-  const [scrollPick, setScrollPick] = useState(0);
+export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
+  // const [scrollDeal, setScrollDeal] = useState(0);
+  // const [scrollPick, setScrollPick] = useState(0);
 
-  const [offers, setOffers] = useState([]);
+  // const [offers, setOffers] = useState([]);
   // const [license, setLicense] = useState({});
   // const [recommended, setRecommended] = useState([]);
-  const [menuDatas, setMenuDatas] = useState([]);
+  // const [menuDatas, setMenuDatas] = useState([]);
 
   // setMenuItem(data?.data?.cards[2]?.card?.card);
   // setOffers(data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle);
@@ -17,22 +20,20 @@ export const MenuInfo = ({ menuItem, menuList }) => {
   // console.log(menuItem?.info);
   // console.log(menuList?.data);
   // console.log(offers);
-  useEffect(() => {
-    setOffers(
-      menuList?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers
-    );
-
-    setMenuDatas(
-      menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-    );
-    // setLicense(
-    //   menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]
-    //     ?.card?.card || {}
-    // );
-  }, [menuList?.data?.cards]);
+  // useEffect(() => {
+  // setOffers(
+  //   menuList?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers
+  // );
+  // setMenuDatas(
+  //   menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+  // );
+  // setLicense(
+  //   menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]
+  //     ?.card?.card || {}
+  // );
+  // }, [menuList?.data?.cards]);
 
   // console.log(topPicks?.carousel);
-
   const {
     name,
     avgRating,
@@ -100,8 +101,9 @@ export const MenuInfo = ({ menuItem, menuList }) => {
   // ];
   return (
     <>
-      <div className="d-flex justify-content-center">
-        <div className=" p-0 menuInfoWidth" style={{ width: "52%" }}>
+      <div>
+        {/* menu Description */}
+        <div>
           <div style={{ fontSize: "11px" }} className="py-4">
             <Link to="/" className="text-secondary text-decoration-none">
               Home
@@ -245,218 +247,221 @@ export const MenuInfo = ({ menuItem, menuList }) => {
               </div>
             </div>
           </div>
-          <div className="p-2 px-3 pt-4">
-            <div className="d-flex pb-3 justify-content-between">
-              <div>
-                <h4 className="fw-bolder col-12">Deals for you</h4>
-              </div>
-              <div>
-                <button
-                  className="carousal-btn  mx-1"
-                  onClick={() => {
-                    if (scrollDeal >= 2) {
-                      setScrollDeal(scrollDeal - 2);
-                    } else {
-                      console.log("exceed");
-                    }
-                  }}
-                  disabled={scrollDeal < 2}
-                >
-                  <i className="fa-solid fa-arrow-left"></i>
-                </button>
-                <button
-                  className="carousal-btn mx-1"
-                  onClick={() => {
-                    console.log(scrollDeal);
-                    if (scrollDeal <= 2) {
-                      setScrollDeal(scrollDeal + 2);
-                    } else {
-                      console.log("exceed");
-                    }
-                  }}
-                  disabled={scrollDeal > 2}
-                >
-                  <i className="fa-solid fa-arrow-right "></i>
-                </button>
-              </div>
+        </div>
+        {/* Deals */}
+        <Carousal deals={deals} />
+        {/* <div className="p-2 px-3 pt-4">
+          <div className="d-flex pb-3 justify-content-between">
+            <div>
+              <h4 className="fw-bolder col-12">Deals for you</h4>
             </div>
-            <div className="d-flex   overflow-hidden">
-              {deals.map((deal, index) => {
-                // console.log(deal[0]);
-                return (
-                  <div
-                    key={index}
-                    className="me-3   p-2 col-5 d-flex  border  rounded-4"
-                    style={{
-                      transform: `translateX(-${scrollDeal * 100}%) `,
-                      transition: "transform 2s",
-                    }}
-                  >
-                    <div className="pe-3">
-                      <img
-                        className=""
-                        src={deal[0].icon}
-                        width={48}
-                        height={48}
-                        alt="Items At ₹169"
-                      />
-                    </div>
-                    <div className="pe-5">
-                      <h6 className="fw-bolder">
-                        <strong>{deal[0].title1}</strong>
-                      </h6>
-                      <h6 className="text-secondary">
-                        <small>{deal[0].title2}</small>
-                      </h6>
-                    </div>
-                  </div>
-                );
-              })}
+            <div>
+              <button
+                className="carousal-btn  mx-1"
+                onClick={() => {
+                  if (scrollDeal >= 2) {
+                    setScrollDeal(scrollDeal - 2);
+                  } else {
+                    console.log("exceed");
+                  }
+                }}
+                disabled={scrollDeal < 2}
+              >
+                <i className="fa-solid fa-arrow-left"></i>
+              </button>
+              <button
+                className="carousal-btn mx-1"
+                onClick={() => {
+                  console.log(scrollDeal);
+                  if (scrollDeal <= 2) {
+                    setScrollDeal(scrollDeal + 2);
+                  } else {
+                    console.log("exceed");
+                  }
+                }}
+                disabled={scrollDeal > 2}
+              >
+                <i className="fa-solid fa-arrow-right "></i>
+              </button>
             </div>
           </div>
-          {/* MEnu */}
-          <div className="p-2 px-3 pt-4">
-            {/* Heading */}
-            <div>
-              <div className="text-center text-secondary">
-                <h6>-: MENU :-</h6>
-              </div>
-              {/* Search Bar */}
-              <div className=" my-4">
+          <div className="d-flex   overflow-hidden">
+            {deals.map((deal, index) => {
+              // console.log(deal[0]);
+              return (
                 <div
-                  className="rounded border p-2 d-flex  align-items-center"
+                  key={index}
+                  className="me-3   p-2 col-5 d-flex  border  rounded-4"
                   style={{
-                    backgroundColor: "#f2f2f3",
-                    position: "relative",
-                    color: "#6c757d",
+                    transform: `translateX(-${scrollDeal * 100}%) `,
+                    transition: "transform 2s",
                   }}
                 >
-                  <button
-                    type="button"
-                    className="btn p-1  flex-grow-1 text-center btn-block"
-                    style={{
-                      color: "#6c757d",
-
-                      border: "none",
-                    }}
-                  >
-                    Search for dishes
-                  </button>
-                  <i
-                    className="fa-solid fa-magnifying-glass "
-                    style={{ position: "absolute", top: "35%", right: "2%" }}
-                  ></i>
-                </div>
-              </div>
-              {/* Filter */}
-              <div className="d-flex  pb-3">
-                <div
-                  className="border  me-2"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "25px",
-                    position: "relative",
-                    padding: "10px 16px",
-                    height: "35px",
-                    width: "70px",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    id="VEG"
-                    className=""
-                    style={{
-                      boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
-                    }}
-                  />
-
-                  <div
-                    id="VEGDIV"
-                    className="border  border-success   rounded-1"
-                    style={{
-                      backgroundColor: "white",
-                      width: "max-content",
-                      padding: "2.50px",
-                    }}
-                    onClick={() => {
-                      !document.getElementById("VEG").checked
-                        ? (document.getElementById("VEG").checked = true)
-                        : (document.getElementById("VEG").checked = false);
-                    }}
-                  >
-                    <div
+                  <div className="pe-3">
+                    <img
                       className=""
-                      style={{
-                        width: "9px",
-                        height: "9px",
-                        borderRadius: "50%",
-                        backgroundColor: "#0f8a65",
-                      }}
-                    ></div>
+                      src={deal[0].icon}
+                      width={48}
+                      height={48}
+                      alt="Items At ₹169"
+                    />
+                  </div>
+                  <div className="pe-5">
+                    <h6 className="fw-bolder">
+                      <strong>{deal[0].title1}</strong>
+                    </h6>
+                    <h6 className="text-secondary">
+                      <small>{deal[0].title2}</small>
+                    </h6>
                   </div>
                 </div>
-                <div
-                  className="border  mx-2"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: "25px",
-                    position: "relative",
-                    padding: "10px 16px",
-                    height: "35px",
-                    width: "70px",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    id="NONVEG"
-                    className=""
-                    style={{
-                      boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
-                    }}
-                  />
-                  <div
-                    id="NONVEGDIV"
-                    className="border  border-danger  rounded-1"
-                    style={{
-                      width: "max-content",
-                      padding: "1.50px",
-                      backgroundColor: "white",
-                    }}
-                    onClick={() => {
-                      !document.getElementById("NONVEG").checked
-                        ? (document.getElementById("NONVEG").checked = true)
-                        : (document.getElementById("NONVEG").checked = false);
-                    }}
-                  >
-                    <div
-                      className=""
-                      style={{
-                        width: "0px",
-                        height: "0px",
-                        borderRadius: "3px",
-                        borderLeft: "7px solid transparent",
-                        borderRight: "7px solid transparent",
-                        borderBottom: "10px solid #e43b4f",
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-              <hr
-                style={{
-                  borderTop: "none",
-                  borderRight: "none",
-                  borderLeft: "none",
-                  borderImage: "initial",
-                  borderBottom: "1px solid rgba(2, 6, 12,.75)",
-                  margin: "10px 0px",
-                }}
-              ></hr>
+              );
+            })}
+          </div>
+        </div> */}
+        {/* MEnu */}
+        <div className="p-2 px-3 pt-4">
+          {/* Heading */}
+          <div>
+            <div className="text-center text-secondary">
+              <h6>-: MENU :-</h6>
             </div>
-            {/* Top Picks */}
-            {/* <div>
+            {/* Search Bar */}
+            <div className=" my-4">
+              <div
+                className="rounded border p-2 d-flex  align-items-center"
+                style={{
+                  backgroundColor: "#f2f2f3",
+                  position: "relative",
+                  color: "#6c757d",
+                }}
+              >
+                <button
+                  type="button"
+                  className="btn p-1  flex-grow-1 text-center btn-block"
+                  style={{
+                    color: "#6c757d",
+
+                    border: "none",
+                  }}
+                >
+                  Search for dishes
+                </button>
+                <i
+                  className="fa-solid fa-magnifying-glass "
+                  style={{ position: "absolute", top: "35%", right: "2%" }}
+                ></i>
+              </div>
+            </div>
+            {/* Filter */}
+            <div className="d-flex  pb-3">
+              <div
+                className="border  me-2"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "25px",
+                  position: "relative",
+                  padding: "10px 16px",
+                  height: "35px",
+                  width: "70px",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  id="VEG"
+                  className=""
+                  style={{
+                    boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
+                  }}
+                />
+
+                <div
+                  id="VEGDIV"
+                  className="border  border-success   rounded-1"
+                  style={{
+                    backgroundColor: "white",
+                    width: "max-content",
+                    padding: "2.50px",
+                  }}
+                  onClick={() => {
+                    !document.getElementById("VEG").checked
+                      ? (document.getElementById("VEG").checked = true)
+                      : (document.getElementById("VEG").checked = false);
+                  }}
+                >
+                  <div
+                    className=""
+                    style={{
+                      width: "9px",
+                      height: "9px",
+                      borderRadius: "50%",
+                      backgroundColor: "#0f8a65",
+                    }}
+                  ></div>
+                </div>
+              </div>
+              <div
+                className="border  mx-2"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "25px",
+                  position: "relative",
+                  padding: "10px 16px",
+                  height: "35px",
+                  width: "70px",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  id="NONVEG"
+                  className=""
+                  style={{
+                    boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
+                  }}
+                />
+                <div
+                  id="NONVEGDIV"
+                  className="border  border-danger  rounded-1"
+                  style={{
+                    width: "max-content",
+                    padding: "1.50px",
+                    backgroundColor: "white",
+                  }}
+                  onClick={() => {
+                    !document.getElementById("NONVEG").checked
+                      ? (document.getElementById("NONVEG").checked = true)
+                      : (document.getElementById("NONVEG").checked = false);
+                  }}
+                >
+                  <div
+                    className=""
+                    style={{
+                      width: "0px",
+                      height: "0px",
+                      borderRadius: "3px",
+                      borderLeft: "7px solid transparent",
+                      borderRight: "7px solid transparent",
+                      borderBottom: "10px solid #e43b4f",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <hr
+              style={{
+                borderTop: "none",
+                borderRight: "none",
+                borderLeft: "none",
+                borderImage: "initial",
+                borderBottom: "1px solid rgba(2, 6, 12,.75)",
+                margin: "10px 0px",
+              }}
+            ></hr>
+          </div>
+          {/* Top Picks */}
+          {/* <div>
               <div className="d-flex pt-4 justify-content-between">
                 <div>
                   <h5 className="fw-bolder col-12">{topPicks?.title}</h5>
@@ -536,11 +541,11 @@ export const MenuInfo = ({ menuItem, menuList }) => {
                 </div>
               )}
             </div> */}
-          </div>
-          {/* gap */}
-          <div style={{ backgroundColor: "#f2f2f3", padding: "9px" }}></div>
-          {/* Recommended */}
-          {/* <div className="p-3">
+        </div>
+        {/* gap */}
+        <div style={{ backgroundColor: "#f2f2f3", padding: "9px" }}></div>
+        {/* Recommended */}
+        {/* <div className="p-3">
             <div>
               <div className="card border-0 ">
                 <div
@@ -706,582 +711,605 @@ export const MenuInfo = ({ menuItem, menuList }) => {
             </div>
           </div> */}
 
-          {/* categories */}
-          {menuDatas.map((menuData, index) => {
-            const { carousel, categories, title, itemCards } =
-              menuData?.card?.card;
+        {/* categories */}
+        {menuDatas.map((menuData, index) => {
+          const { carousel, categories, title, itemCards } =
+            menuData?.card?.card;
 
-            return (
-              <div key={`X${index}`}>
-                {carousel ? (
-                  <div key={`A${index}`}>
-                    {/* Top Picks */}
-                    <div>
-                      <div className="d-flex pt-4 justify-content-between">
-                        <div>
-                          <h5 className="fw-bolder col-12">{title}</h5>
-                        </div>
-                        <div>
-                          <button
-                            className="carousal-btn mx-1"
-                            onClick={() => {
-                              if (scrollPick >= 2) {
-                                setScrollPick(scrollPick - 2);
-                              } else {
-                                console.log("exceed");
-                              }
-                            }}
-                            disabled={scrollPick < 2}
-                          >
-                            <i className="fa-solid fa-arrow-left"></i>
-                          </button>
-                          <button
-                            className="carousal-btn mx-1"
-                            onClick={() => {
-                              // console.log(scrollDeal);
-                              if (scrollPick <= 2) {
-                                setScrollPick(scrollPick + 2);
-                              } else {
-                                console.log("exceed");
-                              }
-                            }}
-                            disabled={scrollPick > 2}
-                          >
-                            <i className="fa-solid fa-arrow-right "></i>
-                          </button>
-                        </div>
-                      </div>
-                      {carousel && (
-                        <div className="p-1 d-flex overflow-hidden">
-                          {carousel.map((topPick, index) => {
-                            return (
-                              <div
-                                key={`Q${index}`}
-                                className=" m-0 me-3 my-3 row col-lg-4 "
-                                // key={(index) => {
-                                //   console.log(`a${index}`);
-                                //   return index;
-                                // }}
-                                style={{
-                                  transform: `translateX(-${
-                                    scrollPick * 50
-                                  }%) `,
-                                  transition: "transform 2s",
-                                  position: "relative",
-                                }}
-                              >
-                                <img
-                                  className=" p-0  rounded"
-                                  // style={{ width: "100%" }}
-                                  src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${topPick?.creativeId}`}
-                                  alt={topPick?.title}
-                                ></img>
-                                <div
-                                  className="text-light"
-                                  style={{ position: "absolute", bottom: "0%" }}
-                                >
-                                  <div className="d-flex py-3 justify-content-between align-items-center">
-                                    <span className="fw-medium">
-                                      &#8377;
-                                      {(topPick?.dish?.info?.defaultPrice ||
-                                        topPick?.dish?.info?.price) / 100}
-                                    </span>
-                                    <button
-                                      className="btn btn-light fw-bold text-success px-4"
-                                      type="button"
-                                    >
-                                      ADD
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ) : categories ? (
-                  <div key={`A${index}`}>
-                    {/* categories */}
-                    <div className="p-3">
-                      <h5>
-                        <b>{title}</b>
-                      </h5>
-
+          return (
+            <div key={`X${index}`}>
+              {carousel ? (
+                <div key={`A${index}`}>
+                  {/* Top Picks */}
+                  <Carousal carousel={carousel} title={title} />
+                  {/* <div>
+                    <div className="d-flex pt-4 justify-content-between">
                       <div>
-                        {categories.map((categoryData, index) => {
-                          // console.log(categoryData?.title.replace(/\s/g, ""));
-                          // console.log(categories.length);
+                        <h5 className="fw-bolder col-12">{title}</h5>
+                      </div>
+                      <div>
+                        <button
+                          className="carousal-btn mx-1"
+                          onClick={() => {
+                            if (scrollPick >= 2) {
+                              setScrollPick(scrollPick - 2);
+                            } else {
+                              console.log("exceed");
+                            }
+                          }}
+                          disabled={scrollPick < 2}
+                        >
+                          <i className="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button
+                          className="carousal-btn mx-1"
+                          onClick={() => {
+                            // console.log(scrollDeal);
+                            if (scrollPick <= 2) {
+                              setScrollPick(scrollPick + 2);
+                            } else {
+                              console.log("exceed");
+                            }
+                          }}
+                          disabled={scrollPick > 2}
+                        >
+                          <i className="fa-solid fa-arrow-right "></i>
+                        </button>
+                      </div>
+                    </div>
+                    {carousel && (
+                      <div className="p-1 d-flex overflow-hidden">
+                        {carousel.map((topPick, index) => {
                           return (
                             <div
-                              key={`B${index}`}
-                              className="py-2"
+                              key={`Q${index}`}
+                              className=" m-0 me-3 my-3 row col-lg-4 "
+                              // key={(index) => {
+                              //   console.log(`a${index}`);
+                              //   return index;
+                              // }}
                               style={{
-                                borderBottom:
-                                  index < categories.length - 1
-                                    ? "2px solid #f2f2f3"
-                                    : "",
+                                transform: `translateX(-${scrollPick * 50}%) `,
+                                transition: "transform 2s",
+                                position: "relative",
                               }}
                             >
+                              <img
+                                className=" p-0  rounded"
+                                // style={{ width: "100%" }}
+                                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${topPick?.creativeId}`}
+                                alt={topPick?.title}
+                              ></img>
                               <div
-                                className="card-header p-0 py-2 border-0 "
-                                style={{ backgroundColor: "white" }}
+                                className="text-light"
+                                style={{
+                                  position: "absolute",
+                                  bottom: "0%",
+                                }}
                               >
-                                <a
-                                  className="btn fw-bold d-block border-0 p-0"
-                                  data-bs-toggle="collapse"
-                                  href={`#${categoryData?.title.replace(
-                                    /\s/g,
-                                    ""
-                                  )}`}
-                                >
-                                  <h5 className="d-flex justify-content-between">
-                                    {categoryData?.title} (
-                                    {categoryData?.itemCards.length})
-                                    <i className="fa-solid fa-chevron-down fw-bold"></i>
-                                  </h5>
-                                </a>
-                              </div>
-                              <div
-                                key={`C${index}`}
-                                id={categoryData?.title.replace(/\s/g, "")}
-                                className="collapse "
-                              >
-                                <div className="card-body p-0 pt-2">
-                                  {categoryData?.itemCards &&
-                                    categoryData.itemCards.map(
-                                      (itemCard, index) => {
-                                        const {
-                                          name,
-                                          ratings,
-                                          description,
-                                          imageId,
-                                          isVeg,
-                                        } = itemCard?.card?.info;
-                                        const { rating, ratingCountV2 } =
-                                          ratings?.aggregatedRating;
-                                        // const{}
-                                        return (
-                                          <div
-                                            key={`D${index}`}
-                                            // id={`a${index}`}
-                                            className="row pt-4 justify-content-between"
-                                            style={{
-                                              paddingBottom: "40px",
-                                              borderBottom:
-                                                index <
-                                                categoryData?.itemCards.length -
-                                                  1
-                                                  ? "2px solid #f2f2f3"
-                                                  : "",
-                                            }}
-                                          >
-                                            <div className="left col-8 ">
-                                              {isVeg ? (
-                                                <div
-                                                  className="border  border-success   rounded-1"
-                                                  style={{
-                                                    width: "max-content",
-                                                    padding: "2.50px",
-                                                  }}
-                                                >
-                                                  <div
-                                                    className=""
-                                                    style={{
-                                                      width: "9px",
-                                                      height: "9px",
-                                                      borderRadius: "50%",
-                                                      backgroundColor:
-                                                        "#0f8a65",
-                                                    }}
-                                                  ></div>
-                                                </div>
-                                              ) : (
-                                                <div
-                                                  className="border  border-danger  rounded-1"
-                                                  style={{
-                                                    width: "max-content",
-                                                    padding: "1.50px",
-                                                  }}
-                                                >
-                                                  <div
-                                                    className=""
-                                                    style={{
-                                                      width: "0px",
-                                                      height: "0px",
-                                                      borderRadius: "3px",
-                                                      borderLeft:
-                                                        "7px solid transparent",
-                                                      borderRight:
-                                                        "7px solid transparent",
-                                                      borderBottom:
-                                                        "10px solid #e43b4f",
-                                                    }}
-                                                  ></div>
-                                                </div>
-                                              )}
-                                              <div
-                                                className=""
-                                                style={{ color: "#414449" }}
-                                              >
-                                                <h5 className="m-0">{name}</h5>
-                                                <h6> &#8377; 375 </h6>
-                                              </div>
-                                              {rating ? (
-                                                <div
-                                                  className="py-1  "
-                                                  style={{
-                                                    fontSize: "16px",
-                                                  }}
-                                                >
-                                                  <i
-                                                    className="fa-solid fa-star fa-xs"
-                                                    style={{
-                                                      color: "#116649",
-                                                    }}
-                                                  >
-                                                    {" "}
-                                                    <span className="fw-bold">
-                                                      {rating}{" "}
-                                                    </span>
-                                                  </i>
-                                                  <span
-                                                    className="fw-medium"
-                                                    style={{
-                                                      color: "#414449",
-                                                    }}
-                                                  >
-                                                    {" "}
-                                                    ({ratingCountV2})
-                                                  </span>
-                                                </div>
-                                              ) : null}
-
-                                              <div>
-                                                <p
-                                                  className="fw-medium py-1"
-                                                  style={{
-                                                    color: "#414449",
-                                                  }}
-                                                >
-                                                  {description}
-                                                </p>
-                                              </div>
-                                            </div>
-                                            <div className="right col-3">
-                                              <div
-                                                className=" ms-3 "
-                                                style={{
-                                                  position: "relative",
-                                                }}
-                                              >
-                                                <img
-                                                  className="rounded-4 menu-img"
-                                                  src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
-                                                  alt="Combo for 1 Non-Veg"
-                                                ></img>
-                                                <div
-                                                  className="px-4 text-center d-flex flex-column justify-content-center"
-                                                  style={{
-                                                    width: "100%",
-                                                    position: "absolute",
-                                                    bottom: "-25%",
-                                                    left: "0%",
-                                                    // paddingInline: "",
-                                                  }}
-                                                >
-                                                  <button
-                                                    className="btn btn-light fs-h1 text-success w-100  shadow-sm"
-                                                    type="button"
-                                                  >
-                                                    <h5 className=" fw-bold m-0 py-1 ">
-                                                      {" "}
-                                                      ADD
-                                                    </h5>
-                                                  </button>
-                                                  <small
-                                                    className="text-center m-0 "
-                                                    style={{
-                                                      color: "#8d8f91",
-                                                    }}
-                                                  >
-                                                    customisable
-                                                  </small>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        );
-                                      }
-                                    )}
+                                <div className="d-flex py-3 justify-content-between align-items-center">
+                                  <span className="fw-medium">
+                                    &#8377;
+                                    {(topPick?.dish?.info?.defaultPrice ||
+                                      topPick?.dish?.info?.price) / 100}
+                                  </span>
+                                  <button
+                                    className="btn btn-light fw-bold text-success px-4"
+                                    type="button"
+                                  >
+                                    ADD
+                                  </button>
                                 </div>
                               </div>
                             </div>
                           );
                         })}
                       </div>
-                    </div>
-                    {/* gap */}
-                    <div
-                      style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
-                    ></div>
-                  </div>
-                ) : itemCards ? (
-                  <div key={`A${index}`}>
-                    {/* ItemCards */}
-                    <div className="p-3">
-                      <div className="card border-0 ">
-                        <div
-                          className="card-header p-0 py-2 border-0 "
-                          style={{ backgroundColor: "white" }}
-                        >
-                          <a
-                            className="btn fw-bold d-block border-0 p-0"
-                            data-bs-toggle="collapse"
-                            href={`#${title.replace(/\s/g, "")}`}
+                    )}
+                  </div> */}
+                </div>
+              ) : categories ? (
+                <div key={`A${index}`}>
+                  {/* categories */}
+                  <div className="p-3">
+                    <h5>
+                      <b>{title}</b>
+                    </h5>
+
+                    <div>
+                      {categories.map((categoryData, index) => {
+                        // console.log(categoryData?.title.replace(/\s/g, ""));
+                        // console.log(categories.length);
+                        return (
+                          <div
+                            key={`B${index}`}
+                            className="py-2"
+                            style={{
+                              borderBottom:
+                                index < categories.length - 1
+                                  ? "2px solid #f2f2f3"
+                                  : "",
+                            }}
                           >
-                            <h5 className="d-flex justify-content-between">
-                              <strong>
-                                {" "}
-                                {title} ({title.length}){" "}
-                              </strong>
-                              <i className="fa-solid fa-chevron-down fw-bold"></i>
-                            </h5>
-                          </a>
-                        </div>
-                        <div
-                          id={title.replace(/\s/g, "")}
-                          className="collapse show"
+                            <div
+                              className="card-header p-0 py-2 border-0 "
+                              style={{ backgroundColor: "white" }}
+                            >
+                              <a
+                                className="btn fw-bold d-block border-0 p-0"
+                                data-bs-toggle="collapse"
+                                href={`#${categoryData?.title
+                                  .replace(/\s/g, "")
+                                  .replace(/'/g, "")}`}
+                              >
+                                <h5 className="d-flex justify-content-between">
+                                  {categoryData?.title} (
+                                  {categoryData?.itemCards.length})
+                                  <i className="fa-solid fa-chevron-down fw-bold"></i>
+                                </h5>
+                              </a>
+                            </div>
+                            <div
+                              key={`C${index}`}
+                              id={categoryData?.title
+                                .replace(/\s/g, "")
+                                .replace(/'/g, "")}
+                              className="collapse"
+                            >
+                              <div className="card-body p-0 pt-2">
+                                {categoryData?.itemCards &&
+                                  categoryData.itemCards.map(
+                                    (itemCard, index) => {
+                                      const {
+                                        name,
+                                        ratings,
+                                        description,
+                                        imageId,
+                                        isVeg,
+                                      } = itemCard?.card?.info;
+                                      const { rating, ratingCountV2 } =
+                                        ratings?.aggregatedRating;
+                                      // const{}
+                                      return (
+                                        <div
+                                          key={`D${index}`}
+                                          // id={`a${index}`}
+                                          className="row pt-4 justify-content-between"
+                                          style={{
+                                            paddingBottom: "40px",
+                                            borderBottom:
+                                              index <
+                                              categoryData?.itemCards.length - 1
+                                                ? "2px solid #f2f2f3"
+                                                : "",
+                                          }}
+                                        >
+                                          <div className="left col-8 ">
+                                            {isVeg ? (
+                                              <div
+                                                className="border  border-success   rounded-1"
+                                                style={{
+                                                  width: "max-content",
+                                                  padding: "2.50px",
+                                                }}
+                                              >
+                                                <div
+                                                  className=""
+                                                  style={{
+                                                    width: "9px",
+                                                    height: "9px",
+                                                    borderRadius: "50%",
+                                                    backgroundColor: "#0f8a65",
+                                                  }}
+                                                ></div>
+                                              </div>
+                                            ) : (
+                                              <div
+                                                className="border  border-danger  rounded-1"
+                                                style={{
+                                                  width: "max-content",
+                                                  padding: "1.50px",
+                                                }}
+                                              >
+                                                <div
+                                                  className=""
+                                                  style={{
+                                                    width: "0px",
+                                                    height: "0px",
+                                                    borderRadius: "3px",
+                                                    borderLeft:
+                                                      "7px solid transparent",
+                                                    borderRight:
+                                                      "7px solid transparent",
+                                                    borderBottom:
+                                                      "10px solid #e43b4f",
+                                                  }}
+                                                ></div>
+                                              </div>
+                                            )}
+                                            <div
+                                              className=""
+                                              style={{ color: "#414449" }}
+                                            >
+                                              <h5 className="m-0">{name}</h5>
+                                              <h6> &#8377; 375 </h6>
+                                            </div>
+                                            {rating ? (
+                                              <div
+                                                className="py-1  "
+                                                style={{
+                                                  fontSize: "16px",
+                                                }}
+                                              >
+                                                <i
+                                                  className="fa-solid fa-star fa-xs"
+                                                  style={{
+                                                    color: "#116649",
+                                                  }}
+                                                >
+                                                  {" "}
+                                                  <span className="fw-bold">
+                                                    {rating}{" "}
+                                                  </span>
+                                                </i>
+                                                <span
+                                                  className="fw-medium"
+                                                  style={{
+                                                    color: "#414449",
+                                                  }}
+                                                >
+                                                  {" "}
+                                                  ({ratingCountV2})
+                                                </span>
+                                              </div>
+                                            ) : null}
+
+                                            <div>
+                                              <p
+                                                className="fw-medium py-1 textflow"
+                                                style={{
+                                                  color: "#414449",
+                                                }}
+                                              >
+                                                {description}
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <div className="right col-3">
+                                            <div
+                                              className=" ms-3 "
+                                              style={{
+                                                position: "relative",
+                                              }}
+                                            >
+                                              <img
+                                                className="rounded-4 menu-img"
+                                                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                                                alt="Combo for 1 Non-Veg"
+                                              ></img>
+                                              <div
+                                                className="px-4 text-center d-flex flex-column justify-content-center"
+                                                style={{
+                                                  width: "100%",
+                                                  position: "absolute",
+                                                  bottom: "-25%",
+                                                  left: "0%",
+                                                  // paddingInline: "",
+                                                }}
+                                              >
+                                                <button
+                                                  className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                                  type="button"
+                                                >
+                                                  <h5 className=" fw-bold m-0 py-1 ">
+                                                    {" "}
+                                                    ADD
+                                                  </h5>
+                                                </button>
+                                                <small
+                                                  className="text-center m-0 "
+                                                  style={{
+                                                    color: "#8d8f91",
+                                                  }}
+                                                >
+                                                  customisable
+                                                </small>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      );
+                                    }
+                                  )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  {/* gap */}
+                  <div
+                    style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
+                  ></div>
+                </div>
+              ) : itemCards ? (
+                <div key={`A${index}`}>
+                  {/* ItemCards */}
+                  <MenuItemcards title={title} itemCards={itemCards} />
+                  {/* <div className="p-3">
+                    <div className="card border-0 ">
+                      <div
+                        className="card-header p-0 py-2 border-0 "
+                        style={{ backgroundColor: "white" }}
+                        onClick={() => {
+                          setArrow(!arrow);
+                          console.log(arrow);
+                        }}
+                      >
+                        <a
+                          className="btn fw-bold d-block border-0 p-0"
+                          data-bs-toggle="collapse"
+                          href={`#${title
+                            .replace(/\s/g, "")
+                            .replace(/'/g, "")}`}
                         >
-                          <div className="card-body p-0 pt-3">
-                            {itemCards &&
-                              // console.log(recommended?.itemCards.length),
+                          <h5 className="d-flex justify-content-between">
+                            <strong>
+                              {" "}
+                              {title} ({title.length}){" "}
+                            </strong>
+                            {arrow ? (
+                              <i className="fa-solid fa-chevron-up fw-bold"></i>
+                            ) : (
+                              <i className="fa-solid fa-chevron-down fw-bold"></i>
+                            )}
+                          </h5>
+                        </a>
+                      </div>
+                      <div
+                        id={title.replace(/\s/g, "").replace(/'/g, "")}
+                        className="collapse"
+                      >
+                        <div className="card-body p-0 pt-3">
+                          {itemCards &&
+                            // console.log(recommended?.itemCards.length),
 
-                              itemCards.map((itemCard, index) => {
-                                // console.log(itemCards.length - 1);
-                                const {
-                                  name,
-                                  ratings,
-                                  description,
-                                  imageId,
-                                  isVeg,
-                                } = itemCard?.card?.info;
-                                const { rating, ratingCountV2 } =
-                                  ratings?.aggregatedRating;
-                                // const{}
-                                return (
-                                  <div
-                                    key={`Z${index}`}
-                                    id={`a${index}`}
-                                    className="row pt-4 justify-content-between"
-                                    style={{
-                                      paddingBottom: "40px",
-                                      borderBottom:
-                                        index < itemCards.length - 1
-                                          ? "2px solid #f2f2f3"
-                                          : "",
-                                    }}
-                                  >
-                                    <div className="left col-8 ">
-                                      {isVeg ? (
-                                        <div
-                                          className="border  border-success   rounded-1"
-                                          style={{
-                                            width: "max-content",
-                                            padding: "2.50px",
-                                          }}
-                                        >
-                                          <div
-                                            className=""
-                                            style={{
-                                              width: "9px",
-                                              height: "9px",
-                                              borderRadius: "50%",
-                                              backgroundColor: "#0f8a65",
-                                              // borderLeft: "7px solid transparent",
-                                              // borderRight: "7px solid transparent",
-                                              // borderBottom: "10px solid #0f8a65",
-                                            }}
-                                          ></div>
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="border  border-danger  rounded-1"
-                                          style={{
-                                            width: "max-content",
-                                            padding: "1.50px",
-                                          }}
-                                        >
-                                          <div
-                                            className=""
-                                            style={{
-                                              width: "0px",
-                                              height: "0px",
-                                              borderRadius: "3px",
-                                              borderLeft:
-                                                "7px solid transparent",
-                                              borderRight:
-                                                "7px solid transparent",
-                                              borderBottom:
-                                                "10px solid #e43b4f",
-                                            }}
-                                          ></div>
-                                        </div>
-                                      )}
+                            itemCards.map((itemCard, index) => {
+                              // console.log(itemCards.length - 1);
+                              const {
+                                name,
+                                ratings,
+                                description,
+                                imageId,
+                                isVeg,
+                              } = itemCard?.card?.info;
+                              const { rating, ratingCountV2 } =
+                                ratings?.aggregatedRating;
+                              // const{}
+                              return (
+                                <div
+                                  key={`Z${index}`}
+                                  id={`a${index}`}
+                                  className="row pt-4 justify-content-between"
+                                  style={{
+                                    paddingBottom: "40px",
+                                    borderBottom:
+                                      index < itemCards.length - 1
+                                        ? "2px solid #f2f2f3"
+                                        : "",
+                                  }}
+                                >
+                                  <div className="left col-8 ">
+                                    {isVeg ? (
                                       <div
-                                        className=""
-                                        style={{ color: "#414449" }}
+                                        className="border  border-success   rounded-1"
+                                        style={{
+                                          width: "max-content",
+                                          padding: "2.50px",
+                                        }}
                                       >
-                                        <h5 className="m-0">{name}</h5>
-                                        <h6> &#8377; 375 </h6>
-                                      </div>
-                                      {rating ? (
                                         <div
-                                          className="py-1  "
-                                          style={{ fontSize: "16px" }}
+                                          className=""
+                                          style={{
+                                            width: "9px",
+                                            height: "9px",
+                                            borderRadius: "50%",
+                                            backgroundColor: "#0f8a65",
+                                            // borderLeft: "7px solid transparent",
+                                            // borderRight: "7px solid transparent",
+                                            // borderBottom: "10px solid #0f8a65",
+                                          }}
+                                        ></div>
+                                      </div>
+                                    ) : (
+                                      <div
+                                        className="border  border-danger  rounded-1"
+                                        style={{
+                                          width: "max-content",
+                                          padding: "1.50px",
+                                        }}
+                                      >
+                                        <div
+                                          className=""
+                                          style={{
+                                            width: "0px",
+                                            height: "0px",
+                                            borderRadius: "3px",
+                                            borderLeft: "7px solid transparent",
+                                            borderRight:
+                                              "7px solid transparent",
+                                            borderBottom: "10px solid #e43b4f",
+                                          }}
+                                        ></div>
+                                      </div>
+                                    )}
+                                    <div
+                                      className=""
+                                      style={{ color: "#414449" }}
+                                    >
+                                      <h5 className="m-0">{name}</h5>
+                                      <h6> &#8377; 375 </h6>
+                                    </div>
+                                    {rating ? (
+                                      <div
+                                        className="py-1  "
+                                        style={{ fontSize: "16px" }}
+                                      >
+                                        <i
+                                          className="fa-solid fa-star fa-xs"
+                                          style={{ color: "#116649" }}
                                         >
-                                          <i
-                                            className="fa-solid fa-star fa-xs"
-                                            style={{ color: "#116649" }}
-                                          >
-                                            {" "}
-                                            <span className="fw-bold">
-                                              {rating}{" "}
-                                            </span>
-                                          </i>
-                                          <span
-                                            className="fw-medium"
-                                            style={{ color: "#414449" }}
-                                          >
-                                            {" "}
-                                            ({ratingCountV2})
+                                          {" "}
+                                          <span className="fw-bold">
+                                            {rating}{" "}
                                           </span>
-                                        </div>
-                                      ) : null}
-
-                                      <div>
-                                        <p
-                                          className="fw-medium py-1"
+                                        </i>
+                                        <span
+                                          className="fw-medium"
                                           style={{ color: "#414449" }}
                                         >
-                                          {description}
-                                        </p>
+                                          {" "}
+                                          ({ratingCountV2})
+                                        </span>
                                       </div>
-                                    </div>
-                                    <div className="right col-3">
-                                      <div
-                                        className=" ms-3 "
-                                        style={{ position: "relative" }}
+                                    ) : null}
+
+                                    <div className="d-flex align-items-end">
+                                      <p
+                                        className="fw-medium description py-1 m-0 "
+                                        style={{
+                                          color: "#414449",
+                                          overflow: "hidden",
+                                          // textOverflow: {if (document.getElementsByClassName("description")[0].innerHTML) {
+                                          //   <>
+
+                                          // } else {
+
+                                          // }
+                                          // },
+                                        }}
                                       >
-                                        <img
-                                          className="rounded-4 menu-img"
-                                          src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
-                                          alt="Combo for 1 Non-Veg"
-                                        ></img>
-                                        <div
-                                          className="px-4 text-center d-flex flex-column justify-content-center"
-                                          style={{
-                                            width: "100%",
-                                            position: "absolute",
-                                            bottom: "-25%",
-                                            left: "0%",
-                                            // paddingInline: "",
-                                          }}
+                                        {description}
+                                      </p>
+                                      <strong className="text-secondary">
+                                        More
+                                      </strong>
+                                    </div>
+                                  </div>
+                                  <div className="right col-3">
+                                    <div
+                                      className=" ms-3 "
+                                      style={{ position: "relative" }}
+                                    >
+                                      <img
+                                        className="rounded-4 menu-img"
+                                        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                                        alt="Combo for 1 Non-Veg"
+                                      ></img>
+                                      <div
+                                        className="px-4 text-center d-flex flex-column justify-content-center"
+                                        style={{
+                                          width: "100%",
+                                          position: "absolute",
+                                          bottom: "-25%",
+                                          left: "0%",
+                                          // paddingInline: "",
+                                        }}
+                                      >
+                                        <button
+                                          className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                          type="button"
                                         >
-                                          <button
-                                            className="btn btn-light fs-h1 text-success w-100  shadow-sm"
-                                            type="button"
-                                          >
-                                            <h5 className=" fw-bold m-0 py-1 ">
-                                              {" "}
-                                              ADD
-                                            </h5>
-                                          </button>
-                                          <small
-                                            className="text-center m-0 "
-                                            style={{ color: "#8d8f91" }}
-                                          >
-                                            customisable
-                                          </small>
-                                        </div>
+                                          <h5 className=" fw-bold m-0 py-1 ">
+                                            {" "}
+                                            ADD
+                                          </h5>
+                                        </button>
+                                        <small
+                                          className="text-center m-0 "
+                                          style={{ color: "#8d8f91" }}
+                                        >
+                                          customisable
+                                        </small>
                                       </div>
                                     </div>
                                   </div>
-                                );
-                              })}
-                          </div>
+                                </div>
+                              );
+                            })}
                         </div>
                       </div>
                     </div>
-                    {/* gap */}
-                    <div
-                      style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
-                    ></div>
+                  </div> */}
+                  {/* gap */}
+                  <div
+                    style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
+                  ></div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          );
+        })}
+        {/* licence */}
+        <div
+          className="p-4 pt-2 pb-5 d-grid gap-3"
+          style={{ backgroundColor: "#f1f1f6", color: "#93959f" }}
+        >
+          {menuDatas.map((menuData, index) => {
+            const {
+              [`@type`]: types,
+              type,
+              imageId,
+              text,
+              name,
+              completeAddress,
+              area,
+            } = menuData?.card?.card;
+            return (
+              <>
+                {types ===
+                "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" ? (
+                  <div key={`P${index}`}>
+                    <div className="d-flex align-items-center">
+                      <div className="me-4" style={{ width: "10%" }}>
+                        <img
+                          src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_120,h_60/${imageId}`}
+                          className="w-100"
+                          alt={type}
+                        />
+                      </div>
+                      <p className="m-0 ">{text[0]}</p>
+                    </div>
+                    <hr></hr>
                   </div>
-                ) : (
-                  ""
-                )}
-              </div>
+                ) : types ===
+                  "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress" ? (
+                  <div key={`P${index}`}>
+                    <div>
+                      <b>{name}</b>
+                      <p>(Outlet:{area})</p>
+                    </div>
+                    <div>
+                      <p>
+                        <i className="fa-solid fa-location-dot me-2"></i>
+                        {completeAddress}
+                      </p>
+                    </div>
+                    <hr></hr>
+                    <div className="d-flex justify-content-center p-2 pb-5 text-dark fw-bold">
+                      <small>
+                        For better experience, download the Swiggy app now
+                      </small>
+                    </div>
+                  </div>
+                ) : null}
+              </>
             );
           })}
-          {/* licence */}
-          <div
-            className="p-4 pt-2 pb-5 d-grid gap-3"
-            style={{ backgroundColor: "#f1f1f6", color: "#93959f" }}
-          >
-            {menuDatas.map((menuData, index) => {
-              const {
-                [`@type`]: types,
-                type,
-                imageId,
-                text,
-                name,
-                completeAddress,
-                area,
-              } = menuData?.card?.card;
-              return (
-                <>
-                  {types ===
-                  "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" ? (
-                    <div key={`P${index}`}>
-                      <div className="d-flex align-items-center">
-                        <div className="me-4" style={{ width: "10%" }}>
-                          <img
-                            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_120,h_60/${imageId}`}
-                            className="w-100"
-                            alt={type}
-                          />
-                        </div>
-                        <p className="m-0 ">{text[0]}</p>
-                      </div>
-                      <hr></hr>
-                    </div>
-                  ) : types ===
-                    "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress" ? (
-                    <div key={`P${index}`}>
-                      <div>
-                        <b>{name}</b>
-                        <p>(Outlet:{area})</p>
-                      </div>
-                      <div>
-                        <p>
-                          <i className="fa-solid fa-location-dot me-2"></i>
-                          {completeAddress}
-                        </p>
-                      </div>
-                      <hr></hr>
-                      <div className="d-flex justify-content-center p-2 pb-5 text-dark fw-bold">
-                        <small>
-                          For better experience, download the Swiggy app now
-                        </small>
-                      </div>
-                    </div>
-                  ) : null}
-                </>
-              );
-            })}
-            {/* <div className="d-flex align-items-center">
+          {/* <div className="d-flex align-items-center">
               <div className="me-4" style={{ width: "10%" }}>
                 <img
                   src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_120,h_60/fssai_final_edss9i"
@@ -1307,7 +1335,6 @@ export const MenuInfo = ({ menuItem, menuList }) => {
             <div className="d-flex justify-content-center pb-5 text-dark fw-bold">
               <small>For better experience, download the Swiggy app now</small>
             </div> */}
-          </div>
         </div>
       </div>
     </>

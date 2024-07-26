@@ -52,8 +52,11 @@ export const Shimmer = () => {
                     style={{ width: "35%", backgroundColor: "white" }}
                   ></div>
                 </div>
-                {new Array(6).fill(0).map(() => (
-                  <div className="mb-3 py-3 d-flex align-items-center ">
+                {new Array(6).fill(0).map((_, index) => (
+                  <div
+                    className="mb-3 py-3 d-flex align-items-center "
+                    key={`k${index}`}
+                  >
                     <div
                       className="shimmerProfile p-4 mx-4  rounded-pill"
                       style={{ backgroundColor: "#eef0f5" }}
@@ -73,8 +76,9 @@ export const Shimmer = () => {
                 style={{ width: "13%" }}
               ></div>
               <div className=" d-flex py-1 flex-wrap">
-                {new Array(6).fill(0).map(() => (
+                {new Array(6).fill(0).map((_, index) => (
                   <div
+                    key={`g${index}`}
                     className="custom-card col-4"
                     style={{ padding: "45px 25px 20px 46px" }}
                   >
