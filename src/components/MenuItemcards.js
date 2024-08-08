@@ -1,37 +1,52 @@
 import { useState } from "react";
 
-export const MenuItemcards = (title, itemCards) => {
+export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
   //   const id = title.replace(/\s/g, "").replace(/'/g, "");
-  console.log(title);
+  // console.log(title);
   const [arrow, setArrow] = useState(false);
-  return (
+  return itemCards ? (
     <>
-      <div className="p-3">
+      <div className={currentComponent === "MenuCategory" ? "p-0 py-3" : "p-3"}>
         <div className="card border-0 ">
           <div
             className="card-header p-0 py-2 border-0 "
             style={{ backgroundColor: "white" }}
-            onClick={() => {
-              setArrow(!arrow);
-              console.log(arrow);
-            }}
           >
             <a
               className="btn fw-bold d-block border-0 p-0"
               data-bs-toggle="collapse"
               href={`#${title.replace(/\s/g, "").replace(/'/g, "")}`}
+              onClick={() => {
+                setArrow(!arrow);
+                console.log(arrow);
+              }}
             >
-              <h5 className="d-flex justify-content-between">
-                <strong>
-                  {" "}
-                  {title} ({title.length}){" "}
-                </strong>
-                {arrow ? (
-                  <i className="fa-solid fa-chevron-up fw-bold"></i>
-                ) : (
-                  <i className="fa-solid fa-chevron-down fw-bold"></i>
-                )}
-              </h5>
+              {currentComponent === "MenuCategory" ? (
+                <>
+                  <h5 className="d-flex justify-content-between">
+                    {title} ({title?.length})
+                    {arrow ? (
+                      <i className="fa-solid fa-chevron-up fw-bold"></i>
+                    ) : (
+                      <i className="fa-solid fa-chevron-down fw-bold"></i>
+                    )}
+                  </h5>
+                </>
+              ) : (
+                <>
+                  <h5 className="d-flex justify-content-between">
+                    <strong>
+                      {" "}
+                      {title} ({title.length}){" "}
+                    </strong>
+                    {arrow ? (
+                      <i className="fa-solid fa-chevron-up fw-bold"></i>
+                    ) : (
+                      <i className="fa-solid fa-chevron-down fw-bold"></i>
+                    )}
+                  </h5>
+                </>
+              )}
             </a>
           </div>
           <div
@@ -43,7 +58,7 @@ export const MenuItemcards = (title, itemCards) => {
                 // console.log(recommended?.itemCards.length),
 
                 itemCards.map((itemCard, index) => {
-                  // console.log(itemCards.length - 1);
+                  // console.log(itemCards);
                   const { name, ratings, description, imageId, isVeg } =
                     itemCard?.card?.info;
                   const { rating, ratingCountV2 } = ratings?.aggregatedRating;
@@ -152,11 +167,26 @@ export const MenuItemcards = (title, itemCards) => {
                           className=" ms-3 "
                           style={{ position: "relative" }}
                         >
-                          <img
+                          {imageId != undefined ? (
+                            <>
+                              <img
+                                className="rounded-4 menu-img"
+                                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                                alt="Combo for 1 Non-Veg"
+                              ></img>
+                            </>
+                          ) : (
+                            <>
+                              <div className="rounded-4 menu-img">
+                                <img src=" " alt={name}></img>
+                              </div>
+                            </>
+                          )}
+                          {/* <img
                             className="rounded-4 menu-img"
                             src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
                             alt="Combo for 1 Non-Veg"
-                          ></img>
+                          ></img> */}
                           <div
                             className="px-4 text-center d-flex flex-column justify-content-center"
                             style={{
@@ -190,5 +220,7 @@ export const MenuItemcards = (title, itemCards) => {
         </div>
       </div>
     </>
+  ) : (
+    ""
   );
 };

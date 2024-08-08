@@ -12,7 +12,11 @@ export const Category = ({
 }) => {
   return (
     <>
-      <Link to={`menu/${id}`} className="text-decoration-none text-dark">
+      <Link
+        key={id}
+        to={`menu/${id}`}
+        className="text-decoration-none text-dark"
+      >
         <div className=" card cards border-0">
           <img
             className="cards-img card-img-top rounded-4 shadow p-0 "
@@ -76,7 +80,7 @@ export const Category = ({
             </span>
           </div>
           <div className=" ">
-            <p className="m-0 fw-light textflow">{cuisines.join(", ")}</p>
+            <p className="m-0 fw-light textflow">{cuisines?.join(" ,")}</p>
             <p className="m-0 fw-light">{areaName}</p>
           </div>
         </div>

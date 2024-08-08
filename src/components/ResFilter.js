@@ -393,7 +393,47 @@ export const ResFilter = ({ sortBy }) => {
                     </div>
 
                     <div id="fourth">
-                      <h1>fourth box</h1>
+                      <div className="text-secondary">
+                        <span>FILTER BY</span>
+                      </div>
+                      <div>
+                        <ul className="list-group">
+                          <li className="list-group-item p-0 py-2 border-0">
+                            <div className="d-flex align-items-center  px-1 justify-content-start">
+                              <input
+                                className=" form-check-input me-2"
+                                type="checkbox"
+                                name="flexcheckDefault1"
+                                id="PureVeg"
+                                value="PureVeg"
+                              />
+                              <label
+                                className="form-check-label d-flex"
+                                htmlFor="PureVeg"
+                              >
+                                Pure Veg
+                              </label>
+                            </div>
+                          </li>
+                          <li className="list-group-item p-0 py-2 border-0">
+                            <div className="d-flex align-items-center  px-1 justify-content-start">
+                              <input
+                                className=" form-check-input me-2"
+                                type="checkbox"
+                                name="flexcheckDefault1"
+                                id="NonVeg"
+                                value="NonVeg"
+                              />
+                              <label
+                                className="form-check-label d-flex"
+                                htmlFor="NonVeg"
+                              >
+                                Non Veg
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>

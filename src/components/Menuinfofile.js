@@ -3,11 +3,22 @@ import { Link } from "react-router-dom";
 import { Carousal } from "./Carouselfile";
 // import { useState } from "react";
 import { MenuItemcards } from "./MenuItemcards";
+// import { useMenuSortBy } from "../hooks/useMenuSortBy";
+import { MenuCategory } from "./MenuCategory";
+import { MenuSortBy } from "./MenuSortBy";
+
 // import { TextField, InputAdornment } from "@mui/material";
 
-export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
+export const MenuInfo = ({
+  menuItem,
+  offers,
+  menuDatas,
+  setMenuDatas,
+  cloneMenuDatas,
+}) => {
   // const [scrollDeal, setScrollDeal] = useState(0);
   // const [scrollPick, setScrollPick] = useState(0);
+  // const [arrow, setArrow] = useState(false);
 
   // const [offers, setOffers] = useState([]);
   // const [license, setLicense] = useState({});
@@ -328,127 +339,39 @@ export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
             </div>
             {/* Search Bar */}
             <div className=" my-4">
-              <div
-                className="rounded border p-2 d-flex  align-items-center"
-                style={{
-                  backgroundColor: "#f2f2f3",
-                  position: "relative",
-                  color: "#6c757d",
-                }}
-              >
-                <button
-                  type="button"
-                  className="btn p-1  flex-grow-1 text-center btn-block"
+              <Link to="/searchbar" className="text-decoration-none text-dark">
+                <div
+                  className="rounded border p-2 d-flex  align-items-center"
                   style={{
+                    backgroundColor: "#f2f2f3",
+                    position: "relative",
                     color: "#6c757d",
-
-                    border: "none",
                   }}
                 >
-                  Search for dishes
-                </button>
-                <i
-                  className="fa-solid fa-magnifying-glass "
-                  style={{ position: "absolute", top: "35%", right: "2%" }}
-                ></i>
-              </div>
+                  <button
+                    type="button"
+                    className="btn p-1  flex-grow-1 text-center btn-block"
+                    style={{
+                      color: "#6c757d",
+
+                      border: "none",
+                    }}
+                  >
+                    Search for dishes
+                  </button>
+                  <i
+                    className="fa-solid fa-magnifying-glass "
+                    style={{ position: "absolute", top: "35%", right: "2%" }}
+                  ></i>
+                </div>
+              </Link>
             </div>
             {/* Filter */}
-            <div className="d-flex  pb-3">
-              <div
-                className="border  me-2"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "25px",
-                  position: "relative",
-                  padding: "10px 16px",
-                  height: "35px",
-                  width: "70px",
-                }}
-              >
-                <input
-                  type="checkbox"
-                  id="VEG"
-                  className=""
-                  style={{
-                    boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
-                  }}
-                />
-
-                <div
-                  id="VEGDIV"
-                  className="border  border-success   rounded-1"
-                  style={{
-                    backgroundColor: "white",
-                    width: "max-content",
-                    padding: "2.50px",
-                  }}
-                  onClick={() => {
-                    !document.getElementById("VEG").checked
-                      ? (document.getElementById("VEG").checked = true)
-                      : (document.getElementById("VEG").checked = false);
-                  }}
-                >
-                  <div
-                    className=""
-                    style={{
-                      width: "9px",
-                      height: "9px",
-                      borderRadius: "50%",
-                      backgroundColor: "#0f8a65",
-                    }}
-                  ></div>
-                </div>
-              </div>
-              <div
-                className="border  mx-2"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "25px",
-                  position: "relative",
-                  padding: "10px 16px",
-                  height: "35px",
-                  width: "70px",
-                }}
-              >
-                <input
-                  type="checkbox"
-                  id="NONVEG"
-                  className=""
-                  style={{
-                    boxShadow: "0 15px 40px -20px rgba(40, 44, 63, .15)",
-                  }}
-                />
-                <div
-                  id="NONVEGDIV"
-                  className="border  border-danger  rounded-1"
-                  style={{
-                    width: "max-content",
-                    padding: "1.50px",
-                    backgroundColor: "white",
-                  }}
-                  onClick={() => {
-                    !document.getElementById("NONVEG").checked
-                      ? (document.getElementById("NONVEG").checked = true)
-                      : (document.getElementById("NONVEG").checked = false);
-                  }}
-                >
-                  <div
-                    className=""
-                    style={{
-                      width: "0px",
-                      height: "0px",
-                      borderRadius: "3px",
-                      borderLeft: "7px solid transparent",
-                      borderRight: "7px solid transparent",
-                      borderBottom: "10px solid #e43b4f",
-                    }}
-                  ></div>
-                </div>
-              </div>
-            </div>
+            <MenuSortBy
+              menuDatas={menuDatas}
+              setMenuDatas={setMenuDatas}
+              cloneMenuDatas={cloneMenuDatas}
+            />
             <hr
               style={{
                 borderTop: "none",
@@ -712,17 +635,20 @@ export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
           </div> */}
 
         {/* categories */}
+
         {menuDatas.map((menuData, index) => {
           const { carousel, categories, title, itemCards } =
             menuData?.card?.card;
 
           return (
-            <div key={`X${index}`}>
-              {carousel ? (
-                <div key={`A${index}`}>
-                  {/* Top Picks */}
-                  <Carousal carousel={carousel} title={title} />
-                  {/* <div>
+            <>
+              <div>
+                {carousel ? (
+                  <div key={`A${index}`}>
+                    {/* Top Picks */}
+                    {/* <SortBy carousel={carousel} /> */}
+                    <Carousal topPicks={carousel} title={title} />
+                    {/* <div>
                     <div className="d-flex pt-4 justify-content-between">
                       <div>
                         <h5 className="fw-bolder col-12">{title}</h5>
@@ -807,11 +733,14 @@ export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
                       </div>
                     )}
                   </div> */}
-                </div>
-              ) : categories ? (
-                <div key={`A${index}`}>
-                  {/* categories */}
-                  <div className="p-3">
+                  </div>
+                ) : categories ? (
+                  <div key={`A${index}`}>
+                    {/* categories */}
+
+                    <MenuCategory title={title} categories={categories} />
+
+                    {/* <div className="p-3">
                     <h5>
                       <b>{title}</b>
                     </h5>
@@ -1027,17 +956,18 @@ export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
                         );
                       })}
                     </div>
+                  </div> */}
+                    {/* gap */}
+                    <div
+                      style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
+                    ></div>
                   </div>
-                  {/* gap */}
-                  <div
-                    style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
-                  ></div>
-                </div>
-              ) : itemCards ? (
-                <div key={`A${index}`}>
-                  {/* ItemCards */}
-                  <MenuItemcards title={title} itemCards={itemCards} />
-                  {/* <div className="p-3">
+                ) : itemCards ? (
+                  <div key={`A${index}`}>
+                    {/* <MenuSortBy itemCards={itemCards} /> */}
+                    {/* ItemCards */}
+                    <MenuItemcards title={title} itemCards={itemCards} />
+                    {/* <div className="p-3">
                     <div className="card border-0 ">
                       <div
                         className="card-header p-0 py-2 border-0 "
@@ -1242,15 +1172,16 @@ export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
                       </div>
                     </div>
                   </div> */}
-                  {/* gap */}
-                  <div
-                    style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
-                  ></div>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+                    {/* gap */}
+                    <div
+                      style={{ backgroundColor: "#f2f2f3", padding: "9px" }}
+                    ></div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </>
           );
         })}
         {/* licence */}
@@ -1269,7 +1200,7 @@ export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
               area,
             } = menuData?.card?.card;
             return (
-              <>
+              <div key={`f${index}`}>
                 {types ===
                 "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" ? (
                   <div key={`P${index}`}>
@@ -1306,7 +1237,7 @@ export const MenuInfo = ({ menuItem, offers, menuDatas }) => {
                     </div>
                   </div>
                 ) : null}
-              </>
+              </div>
             );
           })}
           {/* <div className="d-flex align-items-center">

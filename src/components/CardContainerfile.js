@@ -15,6 +15,8 @@ import { ResSortBy } from "./ResSortBy";
 // import Filter from "./Filter";
 import { Shimmer } from "./Shimmerfile";
 import { Carousal } from "./Carouselfile";
+import { ResFilter } from "./ResFilter";
+import { SortBy } from "./SortBy";
 
 const CardContainer = () => {
   // console.log(RestaurantList);
@@ -78,7 +80,7 @@ const CardContainer = () => {
   // const [restaurantCollection, setrestaurantCollection] = useState([]);
   // const [searchTerm, setSearchTerm] = useState("");
   const resObject = useRestaurant();
-  console.log(resObject?.error);
+  console.log(resObject?.restaurantCollection);
 
   if (resObject?.Loading) {
     return <Shimmer />;
@@ -536,7 +538,10 @@ const CardContainer = () => {
         <div className="container-lg px-0 py-3">
           <div className="mx-lg-4  py-1 row justify-content-center">
             {/* Dish Carousal */}
-            <Carousal restaurantDish={resObject?.restaurantDish} />
+            <Carousal
+              restaurantDish={resObject?.restaurantDish}
+              key={"restaurantDish"}
+            />
             {/* <div className="border-bottom pb-5 ">
               <div className="d-flex justify-content-between">
                 <div>
@@ -599,7 +604,10 @@ const CardContainer = () => {
           </div>
           <div className="mx-lg-4 py-1 row justify-content-center">
             {/* Restaurant Carousal */}
-            <Carousal restaurantCollection={resObject?.restaurantCollection} />
+            <Carousal
+              restaurantCollection={resObject?.restaurantCollection}
+              key={"restaurantCollection"}
+            />
             {/* <div className="border-bottom py-5">
               <div className="d-flex justify-content-between">
                 <div>
@@ -669,10 +677,12 @@ const CardContainer = () => {
 
                 {/* SortBy */}
                 {
-                  <ResSortBy
-                    setrestaurantList={resObject?.setrestaurantList}
-                    restaurantCollection={resObject?.restaurantCollection}
-                  />
+                  <>
+                    <SortBy
+                      setrestaurantList={resObject?.setrestaurantList}
+                      restaurantCollection={resObject?.restaurantCollection}
+                    />
+                  </>
                 }
                 {/* <div className="dropdown col-md-3  ">
               <button
@@ -778,6 +788,7 @@ const CardContainer = () => {
                   <ResSearchBar
                     setrestaurantList={resObject?.setrestaurantList}
                     restaurantCollection={resObject?.restaurantCollection}
+                    key={"ResSearchBar"}
                   />
                 }
                 {/* <div className="searchbar">
@@ -811,8 +822,9 @@ const CardContainer = () => {
             RestaurantList[1]?.card?.card?.gridElements?.infoWithStyle
               ?.restaurants[0]
           )} */}
-              {resObject?.restaurantList &&
-                resObject?.restaurantList.map((restaurant) => {
+              <RestaurantCard restaurantList={resObject?.restaurantList} />
+              {/* {restaurantList &&
+                restaurantList.map((restaurant, index) => {
                   // console.log(restaurant);
                   return (
                     // method 1
@@ -829,13 +841,13 @@ const CardContainer = () => {
                     <>
                       {restaurant?.info && (
                         <RestaurantCard
-                          key={restaurant?.info?.id}
+                          key={`K${index}`}
                           {...restaurant?.info}
                         />
                       )}
                     </>
                   );
-                })}
+                })} */}
             </div>
           </div>
         </div>

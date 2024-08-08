@@ -84,10 +84,18 @@
   display: block;
 } */
 
-li:hover {
+.list-group-item:hover {
   color: #ffffff;
   background-color: rgba(76, 74, 74, 0.996);
   border-radius: 6px;
+}
+
+.header:hover,
+.header rect:hover,
+path:hover {
+  color: #f15700;
+  stroke: #f15700;
+  fill: #f15700;
 }
 
 .form-check-input:checked {
@@ -134,13 +142,16 @@ li:hover {
 }
 
 #VEG:checked {
+  transition: 0.3s;
   background-color: #1ba672;
 }
 #VEG:checked ~ #VEGDIV {
+  /* transition: 1s; */
   left: auto;
   right: 15%;
 }
 #NONVEG:checked {
+  transition: 0.3s;
   background-color: #e43b4f;
 }
 #NONVEG:checked ~ #NONVEGDIV {
@@ -193,6 +204,11 @@ li:hover {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 @keyframes rotate {

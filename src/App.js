@@ -5,9 +5,14 @@ import Header from "./components/Headerfile";
 import Footer from "./components/Footerfile";
 // import { AppRouter } from "./components/AppRouter";
 // import { RouterProvider } from "react-router-dom";
-import Body from "./components/Bodyfile";
+// import Body from "./components/Bodyfile";
 import { Outlet } from "react-router-dom";
+// import { menuIdContext } from "./utils/userContext";
+
+// import { useState } from "react";
+// import { provider } from "react";
 function App() {
+  // const [menuId, setMenuId] = useState("");
   return (
     // <div className="App">
     //   <header className="App-header">
@@ -28,7 +33,9 @@ function App() {
 
     <>
       <Header />
+      {/* <menuIdContext.Provider value={{ menuId: { menuId }, setMenuId }}> */}
       <Outlet />
+      {/* </menuIdContext.Provider> */}
       {/* <RouterProvider router={AppRouter} /> */}
 
       <Footer />

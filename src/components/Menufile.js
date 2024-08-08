@@ -2,6 +2,7 @@
 // import { useEffect } from "react";
 import { MenuInfo } from "./Menuinfofile";
 import { useMenu } from "../hooks/useMenu";
+
 // import { useState } from "react";
 
 export const Menu = () => {
@@ -41,6 +42,8 @@ export const Menu = () => {
 
   const menuObject = useMenu();
   // console.log(menuObject?.menuItem);
+
+  // console.log(location);
 
   return (
     <>
@@ -87,14 +90,19 @@ export const Menu = () => {
             </>
           ) : (
             menuObject?.menuItem?.info?.id && (
-              <MenuInfo
-                key={menuObject?.menuItem?.info?.id}
-                menuItem={menuObject?.menuItem}
-                offers={menuObject?.offers}
-                setOffers={menuObject?.setOffers}
-                menuDatas={menuObject?.menuDatas}
-                setMenuDatas={menuObject?.setMenuDatas}
-              />
+              <>
+                <MenuInfo
+                  key={menuObject?.menuItem?.info?.id}
+                  id={menuObject?.menuItem?.info?.id}
+                  menuItem={menuObject?.menuItem}
+                  offers={menuObject?.offers}
+                  setOffers={menuObject?.setOffers}
+                  menuDatas={menuObject?.menuDatas}
+                  setMenuDatas={menuObject?.setMenuDatas}
+                  cloneMenuDatas={menuObject?.cloneMenuDatas}
+                  setCloneMenuDatas={menuObject?.setCloneMenuDatas}
+                />
+              </>
             )
           )}
         </div>

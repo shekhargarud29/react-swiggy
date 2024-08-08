@@ -7,8 +7,11 @@ export const useMenu = () => {
   const [menuLoading, setMenuLoading] = useState(true);
 
   const [menuDatas, setMenuDatas] = useState([]);
+  const [cloneMenuDatas, setCloneMenuDatas] = useState([]);
 
   const { id } = useParams();
+
+  // console.log(menuId);
   useEffect(() => {
     const menu = async () => {
       try {
@@ -24,6 +27,9 @@ export const useMenu = () => {
         );
 
         setMenuDatas(
+          data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+        );
+        setCloneMenuDatas(
           data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
         );
         setMenuLoading(false);
@@ -45,6 +51,8 @@ export const useMenu = () => {
     setOffers: setOffers,
     menuDatas: menuDatas,
     setMenuDatas: setMenuDatas,
+    cloneMenuDatas: cloneMenuDatas,
+    setCloneMenuDatas: setCloneMenuDatas,
   };
 
   // console.log(menuObject?.menuItem);

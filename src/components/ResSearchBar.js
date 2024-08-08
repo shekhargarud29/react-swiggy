@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { TextField, InputAdornment } from "@mui/material";
+// import { TextField, InputAdornment } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const ResSearchBar = ({ setrestaurantList, restaurantCollection }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,8 +28,37 @@ export const ResSearchBar = ({ setrestaurantList, restaurantCollection }) => {
 
   return (
     <>
-      <div className="searchbar">
-        <TextField
+      <div className="searchbar ">
+        {/* Search Bar */}
+        <div className=" my-4">
+          <Link to="/searchbar" className="text-decoration-none text-dark">
+            <div
+              className="rounded border p-2 d-flex  align-items-center"
+              style={{
+                backgroundColor: "#f2f2f3",
+                position: "relative",
+                color: "#6c757d",
+              }}
+            >
+              <button
+                type="button"
+                className="btn p-1  flex-grow-1 text-center btn-block"
+                style={{
+                  color: "#6c757d",
+
+                  border: "none",
+                }}
+              >
+                Search for dishes
+              </button>
+              <i
+                className="fa-solid fa-magnifying-glass "
+                style={{ position: "absolute", top: "35%", right: "2%" }}
+              ></i>
+            </div>
+          </Link>
+        </div>
+        {/* <TextField
           className=""
           id="outlined-basic"
           value={searchTerm}
@@ -48,7 +78,7 @@ export const ResSearchBar = ({ setrestaurantList, restaurantCollection }) => {
               </InputAdornment>
             ),
           }}
-        />
+        /> */}
         {/* <input
           className="form-control border rounded-pill px-3 m-0 "
           type="search"

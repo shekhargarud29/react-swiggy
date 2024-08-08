@@ -6,7 +6,7 @@ export const Carousal = ({
   restaurantDish,
   restaurantCollection,
   deals,
-  carousel,
+  topPicks,
   title,
 }) => {
   const [scrollDish, setScrollDish] = useState(0);
@@ -118,17 +118,18 @@ export const Carousal = ({
         </div>
         <div className="d-flex overflow-hidden">
           {restaurantCollection &&
-            restaurantCollection.map((restaurant) => {
+            restaurantCollection.map((restaurant, index) => {
               // console.log(dish);
               return (
                 <div
+                  key={`T${index}`}
                   className=" col-3 py-3 pe-4 border-0 "
                   style={{
                     transform: `translateX(-${scrollRes * 134}%) `,
                     transition: "transform 2s",
                   }}
                 >
-                  <Category key={restaurant?.info?.id} {...restaurant?.info} />
+                  <Category key={`H${index}`} {...restaurant?.info} />
                 </div>
               );
             })}
@@ -146,6 +147,7 @@ export const Carousal = ({
             <button
               className="carousal-btn  mx-1"
               onClick={() => {
+                // console.log(deals?.length);
                 if (scrollDeal >= 2) {
                   setScrollDeal(scrollDeal - 2);
                 } else {
@@ -159,12 +161,13 @@ export const Carousal = ({
             <button
               className="carousal-btn mx-1"
               onClick={() => {
-                console.log(scrollDeal);
+                // console.log(scrollDeal);
                 if (scrollDeal <= 2) {
                   setScrollDeal(scrollDeal + 2);
                 } else {
                   console.log("exceed");
                 }
+                // console.log(scrollDeal);
               }}
               disabled={scrollDeal > 2}
             >
@@ -207,7 +210,7 @@ export const Carousal = ({
         </div>
       </div>
     </>
-  ) : carousel ? (
+  ) : topPicks ? (
     <>
       <div>
         <div className="d-flex pt-4 justify-content-between">
@@ -244,9 +247,10 @@ export const Carousal = ({
             </button>
           </div>
         </div>
-        {carousel && (
+        {topPicks && (
           <div className="p-1 d-flex overflow-hidden">
-            {carousel.map((topPick, index) => {
+            {topPicks.map((topPick, index) => {
+              // console.log(topPick);
               return (
                 <div
                   key={`Q${index}`}

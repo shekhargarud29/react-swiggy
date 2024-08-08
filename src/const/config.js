@@ -6551,3 +6551,6 @@ export const Img_Url =
 
 export const Dish_Url =
   "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/";
+
+export const Search_Url =
+  "https://www.swiggy.com/dapi/landing/PRE_SEARCH?lat=19.07480&lng=72.88560";
