@@ -11,11 +11,11 @@ import RestaurantCard from "./RestaurantCardfile";
 import { useRestaurant } from "../hooks/useReastaurant";
 import { ResSearchBar } from "./ResSearchBar";
 // import { ResFilter } from "./ResFilter";
-import { ResSortBy } from "./ResSortBy";
+// import { ResSortBy } from "./ResSortBy";
 // import Filter from "./Filter";
 import { Shimmer } from "./Shimmerfile";
 import { Carousal } from "./Carouselfile";
-import { ResFilter } from "./ResFilter";
+// import { ResFilter } from "./ResFilter";
 import { SortBy } from "./SortBy";
 
 const CardContainer = () => {
@@ -80,7 +80,7 @@ const CardContainer = () => {
   // const [restaurantCollection, setrestaurantCollection] = useState([]);
   // const [searchTerm, setSearchTerm] = useState("");
   const resObject = useRestaurant();
-  console.log(resObject?.restaurantCollection);
+  // console.log(resObject?.restaurantCollection);
 
   if (resObject?.Loading) {
     return <Shimmer />;
