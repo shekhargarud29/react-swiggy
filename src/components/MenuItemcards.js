@@ -1,6 +1,12 @@
 import { useState } from "react";
+// import { addItem } from "../utils/cartSlice";
 
-export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
+export const MenuItemcards = ({
+  title,
+  itemCards,
+  currentComponent,
+  addingItem,
+}) => {
   //   const id = title.replace(/\s/g, "").replace(/'/g, "");
   // console.log(title);
   const [arrow, setArrow] = useState(false);
@@ -18,7 +24,7 @@ export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
               href={`#${title.replace(/\s/g, "").replace(/'/g, "")}`}
               onClick={() => {
                 setArrow(!arrow);
-                console.log(arrow);
+                // console.log(arrow);
               }}
             >
               {currentComponent === "MenuCategory" ? (
@@ -59,7 +65,7 @@ export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
 
                 itemCards.map((itemCard, index) => {
                   // console.log(itemCards);
-                  const { name, ratings, description, imageId, isVeg } =
+                  const { name, ratings, description, imageId, isVeg, price } =
                     itemCard?.card?.info;
                   const { rating, ratingCountV2 } = ratings?.aggregatedRating;
                   // const{}
@@ -121,7 +127,7 @@ export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
                         )}
                         <div className="" style={{ color: "#414449" }}>
                           <h5 className="m-0">{name}</h5>
-                          <h6> &#8377; 375 </h6>
+                          <h6>&#8377; {price / 100} </h6>
                         </div>
                         {rating ? (
                           <div className="py-1  " style={{ fontSize: "16px" }}>
@@ -148,13 +154,6 @@ export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
                             style={{
                               color: "#414449",
                               overflow: "hidden",
-                              // textOverflow: {if (document.getElementsByClassName("description")[0].innerHTML) {
-                              //   <>
-
-                              // } else {
-
-                              // }
-                              // },
                             }}
                           >
                             {description}
@@ -167,7 +166,7 @@ export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
                           className=" ms-3 "
                           style={{ position: "relative" }}
                         >
-                          {imageId != undefined ? (
+                          {imageId !== undefined ? (
                             <>
                               <img
                                 className="rounded-4 menu-img"
@@ -200,6 +199,7 @@ export const MenuItemcards = ({ title, itemCards, currentComponent }) => {
                             <button
                               className="btn btn-light fs-h1 text-success w-100  shadow-sm"
                               type="button"
+                              onClick={() => addingItem(itemCard)}
                             >
                               <h5 className=" fw-bold m-0 py-1 "> ADD</h5>
                             </button>

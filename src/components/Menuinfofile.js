@@ -6,6 +6,8 @@ import { MenuItemcards } from "./MenuItemcards";
 // import { useMenuSortBy } from "../hooks/useMenuSortBy";
 import { MenuCategory } from "./MenuCategory";
 import { MenuSortBy } from "./MenuSortBy";
+import { addItem } from "../utils/cartSlice";
+import { useDispatch } from "react-redux";
 
 // import { TextField, InputAdornment } from "@mui/material";
 
@@ -75,8 +77,13 @@ export const MenuInfo = ({
         title2: `${titleResult}`,
       },
     ];
+
     return offerarray;
   });
+  const dispatch = useDispatch();
+  const addingItem = (val) => {
+    dispatch(addItem(val));
+  };
 
   // console.log(deals);
   // console.log(offerarray);
@@ -647,7 +654,11 @@ export const MenuInfo = ({
                   <div key={`A${index}`}>
                     {/* Top Picks */}
                     {/* <SortBy carousel={carousel} /> */}
-                    <Carousal topPicks={carousel} title={title} />
+                    <Carousal
+                      topPicks={carousel}
+                      title={title}
+                      addingItem={addingItem}
+                    />
                     {/* <div>
                     <div className="d-flex pt-4 justify-content-between">
                       <div>
@@ -738,7 +749,11 @@ export const MenuInfo = ({
                   <div key={`A${index}`}>
                     {/* categories */}
 
-                    <MenuCategory title={title} categories={categories} />
+                    <MenuCategory
+                      title={title}
+                      categories={categories}
+                      addingItem={addingItem}
+                    />
 
                     {/* <div className="p-3">
                     <h5>
@@ -966,7 +981,11 @@ export const MenuInfo = ({
                   <div key={`A${index}`}>
                     {/* <MenuSortBy itemCards={itemCards} /> */}
                     {/* ItemCards */}
-                    <MenuItemcards title={title} itemCards={itemCards} />
+                    <MenuItemcards
+                      title={title}
+                      itemCards={itemCards}
+                      addingItem={addingItem}
+                    />
                     {/* <div className="p-3">
                     <div className="card border-0 ">
                       <div

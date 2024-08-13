@@ -8,6 +8,8 @@ import Footer from "./components/Footerfile";
 // import Body from "./components/Bodyfile";
 import { Outlet } from "react-router-dom";
 // import { menuIdContext } from "./utils/userContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/store";
 
 // import { useState } from "react";
 // import { provider } from "react";
@@ -32,13 +34,15 @@ function App() {
     // </div>
 
     <>
-      <Header />
-      {/* <menuIdContext.Provider value={{ menuId: { menuId }, setMenuId }}> */}
-      <Outlet />
-      {/* </menuIdContext.Provider> */}
-      {/* <RouterProvider router={AppRouter} /> */}
+      <Provider store={appStore}>
+        <Header />
+        {/* <menuIdContext.Provider value={{ menuId: { menuId }, setMenuId }}> */}
+        <Outlet />
+        {/* </menuIdContext.Provider> */}
+        {/* <RouterProvider router={AppRouter} /> */}
 
-      <Footer />
+        <Footer />
+      </Provider>
     </>
   );
 }

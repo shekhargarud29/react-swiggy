@@ -8,6 +8,7 @@ export const Carousal = ({
   deals,
   topPicks,
   title,
+  addingItem,
 }) => {
   const [scrollDish, setScrollDish] = useState(0);
   const [scrollDeal, setScrollDeal] = useState(0);
@@ -287,6 +288,7 @@ export const Carousal = ({
                       <button
                         className="btn btn-light fw-bold text-success px-4"
                         type="button"
+                        onClick={() => addingItem(topPick)}
                       >
                         ADD
                       </button>

@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const Header = () => {
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
+
   const headers = [
     {
       logo: (
@@ -84,7 +89,7 @@ const Header = () => {
         </svg>
       ),
       name: "Cart",
-      link: "/",
+      link: "/Cart",
     },
   ];
   return (
@@ -194,7 +199,22 @@ const Header = () => {
                             // target="_blank"
                           >
                             {logo}
-                            <h6 className="m-0 mx-2 fw-bold header">{name}</h6>
+                            {name === "Cart" ? (
+                              <>
+                                <h6 className="m-0 mx-2 fw-bold header">
+                                  {name}
+                                  <sup className="px-1">
+                                    ({cartItems.length})
+                                  </sup>
+                                </h6>
+                              </>
+                            ) : (
+                              <>
+                                <h6 className="m-0 mx-2 fw-bold header">
+                                  {name}
+                                </h6>
+                              </>
+                            )}
                           </Link>
                         </li>
                       </>
