@@ -2,10 +2,13 @@
 // import { useEffect } from "react";
 import { MenuInfo } from "./Menuinfofile";
 import { useMenu } from "../hooks/useMenu";
-
+// import { useLocation } from "react-router-dom";
 // import { useState } from "react";
 
 export const Menu = () => {
+  // const location = useLocation();
+  // console.log(location);
+
   // const [menuList, setMenuList] = useState([]);
   // const [menuItem, setMenuItem] = useState([]);
   // const [loading, setLoading] = true;

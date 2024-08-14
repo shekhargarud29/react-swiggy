@@ -1,37 +1,37 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 // import { TextField, InputAdornment } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ResSearchBar = ({ setrestaurantList, restaurantCollection }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    // const filterSearch = () => {
-    if (searchTerm !== "") {
-      const filterData = restaurantCollection.filter((restaurant) => {
-        return (
-          restaurant?.info?.name
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
-          restaurant?.info?.cuisines.some((cuisine) => {
-            return cuisine.toLowerCase().includes(searchTerm.toLowerCase());
-          })
-        );
-      });
-      // console.log(filterData);
+  // useEffect(() => {
+  //   // const filterSearch = () => {
+  //   if (searchTerm !== "") {
+  //     const filterData = restaurantCollection.filter((restaurant) => {
+  //       return (
+  //         restaurant?.info?.name
+  //           .toLowerCase()
+  //           .includes(searchTerm.toLowerCase()) ||
+  //         restaurant?.info?.cuisines.some((cuisine) => {
+  //           return cuisine.toLowerCase().includes(searchTerm.toLowerCase());
+  //         })
+  //       );
+  //     });
+  //     // console.log(filterData);
 
-      setrestaurantList(filterData);
-    } else {
-    }
-    // };
-  }, [searchTerm, restaurantCollection, setrestaurantList]);
+  //     setrestaurantList(filterData);
+  //   } else {
+  //   }
+  //   // };
+  // }, [searchTerm, restaurantCollection, setrestaurantList]);
 
   return (
     <>
       <div className="searchbar ">
         {/* Search Bar */}
         <div className=" my-4">
-          <Link to="/searchbar" className="text-decoration-none text-dark">
+          <Link to="/SearchBar" className="text-decoration-none text-dark">
             <div
               className="rounded border p-2 d-flex  align-items-center"
               style={{

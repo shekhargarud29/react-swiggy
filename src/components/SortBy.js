@@ -41,7 +41,7 @@ export const SortBy = ({ setrestaurantList, restaurantCollection }) => {
       });
       if (ids) {
         if (ids === "Ratings 3.5+") {
-          console.log("filter 3.5");
+          // console.log("filter 3.5");
           const filterRating = restaurantCollection
             .slice()
             .filter((restaurant) => {
@@ -50,7 +50,7 @@ export const SortBy = ({ setrestaurantList, restaurantCollection }) => {
           setrestaurantList(filterRating);
         }
         if (ids === "Ratings 4.5+") {
-          console.log("filter 4.5");
+          // console.log("filter 4.5");
           const filterRating = restaurantCollection
             .slice()
             .filter((restaurant) => {
@@ -59,7 +59,7 @@ export const SortBy = ({ setrestaurantList, restaurantCollection }) => {
           setrestaurantList(filterRating);
         }
         if (ids === "Ratings 4.0+") {
-          console.log("filter 4.0");
+          // console.log("filter 4.0");
           const filterRating = restaurantCollection
             .slice()
             .filter((restaurant) => {
@@ -115,7 +115,7 @@ export const SortBy = ({ setrestaurantList, restaurantCollection }) => {
 
       setrestaurantList(filterCostHightoLow);
     } else if (id === "PureVeg") {
-      console.log("pure");
+      // console.log("pure");
       const filterPureVeg = restaurantCollection
         .slice()
         .filter((restaurant) => {
@@ -123,11 +123,11 @@ export const SortBy = ({ setrestaurantList, restaurantCollection }) => {
         });
       setrestaurantList(filterPureVeg);
     } else if (id === "NonVeg") {
-      console.log("notpure");
+      // console.log("notpure");
       const filterPureVeg = restaurantCollection
         .slice()
         .filter((restaurant) => {
-          console.log(!restaurant.info.veg);
+          // console.log(!restaurant.info.veg);
           return !restaurant.info.veg;
         });
       setrestaurantList(filterPureVeg);

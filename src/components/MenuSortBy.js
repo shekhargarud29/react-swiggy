@@ -147,7 +147,7 @@ export const MenuSortBy = ({ menuDatas, setMenuDatas, cloneMenuDatas }) => {
               cursor: "pointer",
             }}
             onChange={(e) => {
-              console.log(e.target.id);
+              // console.log(e.target.id);
               if (e.target.checked) {
                 menuSortBy(e.target.id);
                 document.getElementById("NONVEG").checked = false;

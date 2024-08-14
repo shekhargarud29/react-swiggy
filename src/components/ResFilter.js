@@ -38,22 +38,22 @@ export const ResFilter = ({ sortBy }) => {
       "input[name='flexRadioDefault1']:checked"
     );
     if (checkedRadio) {
-      console.log(checkedRadio.value + " from filter (radio button)");
+      // console.log(checkedRadio.value + " from filter (radio button)");
       sortBy(checkedRadio.value);
     }
     const checkedCheckboxes = Array.from(
       document.querySelectorAll("input[name='flexcheckDefault1']:checked")
     );
 
-    console.log(checkedCheckboxes);
+    // console.log(checkedCheckboxes);
     if (checkedCheckboxes.length > 0) {
       const lastCheckedCheckbox =
         checkedCheckboxes[checkedCheckboxes.length - 1];
-      console.log(lastCheckedCheckbox.value + " from filter (checkbox)");
+      // console.log(lastCheckedCheckbox.value + " from filter (checkbox)");
       sortBy(lastCheckedCheckbox.value, lastCheckedCheckbox.id);
     } else {
       // If no checkboxes are checked, handle this case if needed
-      console.log("No checkboxes checked");
+      // console.log("No checkboxes checked");
     }
 
     // let lastCheckCheckBox = null;
@@ -136,7 +136,7 @@ export const ResFilter = ({ sortBy }) => {
                         name="default"
                         id="second-check"
                         onChange={(e) => {
-                          console.log(e.target.checked);
+                          // console.log(e.target.checked);
                           if (e.target.checked === true) {
                             document.getElementById("second").style.display =
                               "block";
@@ -159,7 +159,7 @@ export const ResFilter = ({ sortBy }) => {
                         name="default"
                         id="third-check"
                         onChange={(e) => {
-                          console.log(e.target.checked);
+                          // console.log(e.target.checked);
                           if (e.target.checked === true) {
                             document.getElementById("third").style.display =
                               "block";
@@ -182,7 +182,7 @@ export const ResFilter = ({ sortBy }) => {
                         name="default"
                         id="fourth-check"
                         onChange={(e) => {
-                          console.log(e.target.checked);
+                          // console.log(e.target.checked);
                           if (e.target.checked === true) {
                             document.getElementById("fourth").style.display =
                               "block";

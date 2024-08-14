@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useSearchBar } from "../hooks/useSearchBar";
+// import { useLocation } from "react-router-dom";
 
 export const SearchBar = () => {
+  // const location = useLocation();
+  // console.log(location);
+
   // const [searchHeader, setSearchHeader] = useState("");
   // const [searchData, setSearchData] = useState([]);
   // const [searchTerm, setSearchTerm] = useState("");
@@ -39,7 +43,7 @@ export const SearchBar = () => {
   // }, [searchTerm, setSearchDish]);
 
   const searchObject = useSearchBar();
-  console.log(searchObject?.searchDish);
+  // console.log(searchObject?.searchDish);
   if (searchObject?.Loading) {
     return (
       <>
@@ -139,7 +143,7 @@ export const SearchBar = () => {
                   onChange={(e) => {
                     // console.log(e.target.value);
                     setSearchTerm(e.target.value);
-                    console.log(searchTerm);
+                    // console.log(searchTerm);
                   }}
                 />
 
@@ -152,7 +156,7 @@ export const SearchBar = () => {
           </div>
         </div>
         <div className="mx-auto " style={{ width: "54%" }}>
-          <div className="p-2 py-5 " style={{ height: "100vh" }}>
+          <div className="p-2 py-5" style={{ height: "100vh" }}>
             {!searchDish?.suggestions ? (
               <>
                 <div>
@@ -165,11 +169,11 @@ export const SearchBar = () => {
                     {searchData &&
                       searchData?.info?.map((image, index) => {
                         const { imageId, entityId } = image;
-                        console.log(
-                          new URLSearchParams(entityId.split("?")[1]).get(
-                            "query"
-                          )
-                        );
+                        // console.log(
+                        //   new URLSearchParams(entityId.split("?")[1]).get(
+                        //     "query"
+                        //   )
+                        // );
 
                         return (
                           <>
@@ -217,6 +221,7 @@ export const SearchBar = () => {
                         <img
                           style={{ width: "100%" }}
                           src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/3_0_assets/EmptyStates/search_not_found"
+                          alt="No match found"
                         ></img>
                       </div>
                     </>
@@ -235,6 +240,7 @@ export const SearchBar = () => {
                           <div key={`w${index}`} className="d-flex">
                             <div className="py-3">
                               <img
+                                alt="No match found"
                                 className="rounded"
                                 style={{ width: "100%", height: "80px" }}
                                 src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/${cloudinaryId}`}

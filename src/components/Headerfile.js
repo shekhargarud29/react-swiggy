@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const cartItems = useSelector((store) => store.cart.items);
-  console.log(cartItems);
+  // console.log(cartItems);
 
   const headers = [
     {
@@ -173,6 +173,7 @@ const Header = () => {
             ></i>
             {/* </h6> */}
           </div>
+
           <div className="navbar navbar-expand-lg align-items-center col-9">
             <div className="container-fluid d-flex justify-content-end">
               <button

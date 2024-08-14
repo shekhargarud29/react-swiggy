@@ -21,7 +21,7 @@ export const useSearchBar = () => {
         .then((data) => {
           if (data) {
             setSearchData(data?.data?.cards[1]?.card?.card?.imageGridCards);
-            console.log(searchData);
+            // console.log(searchData);
 
             setSearchHeader(data?.data?.cards[1]?.card?.card?.header?.title);
             setSearchLoading(false);
@@ -50,14 +50,14 @@ export const useSearchBar = () => {
   }, []);
 
   useEffect(() => {
-    console.log(searchTerm);
+    // console.log(searchTerm);
     if (searchTerm !== "" && searchTerm.length > 1) {
       const searchFun = async () => {
         const response = await fetch(
           `https://www.swiggy.com/dapi/restaurants/search/suggest?lat=19.07480&lng=72.88560&str=${searchTerm}&trackingId=undefined&includeIMItem=true`
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setSearchDish(data?.data);
         // console.log(searchDish);
       };

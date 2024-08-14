@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { menuIdContext } from "../utils/userContext";
 
 export const useMenu = () => {
   const [menuItem, setMenuItem] = useState([]);
@@ -10,6 +12,9 @@ export const useMenu = () => {
   const [cloneMenuDatas, setCloneMenuDatas] = useState([]);
 
   const { id } = useParams();
+  const { setMenuId } = useContext(menuIdContext);
+  setMenuId(id);
+  // console.log(menuId);
 
   // console.log(menuId);
   useEffect(() => {

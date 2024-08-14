@@ -1,5 +1,6 @@
 // import logo from "./logo.svg";
 import "./App.css";
+import { useState } from "react";
 import Header from "./components/Headerfile";
 // import Body from "./components/Bodyfile";
 import Footer from "./components/Footerfile";
@@ -7,14 +8,23 @@ import Footer from "./components/Footerfile";
 // import { RouterProvider } from "react-router-dom";
 // import Body from "./components/Bodyfile";
 import { Outlet } from "react-router-dom";
-// import { menuIdContext } from "./utils/userContext";
+import { menuIdContext } from "./utils/userContext";
 import { Provider } from "react-redux";
 import appStore from "./utils/store";
+import { useLocation } from "react-router-dom";
 
 // import { useState } from "react";
 // import { provider } from "react";
 function App() {
-  // const [menuId, setMenuId] = useState("");
+  const [menuId, setMenuId] = useState("");
+  // console.log(menuId);
+
+  const location = useLocation();
+  // console.log(location.pathname);
+
+  const noFooter = ["/SearchBar", "/searchbar", `/menu/${menuId}`];
+  const hideFooter = noFooter.includes(location.pathname);
+
   return (
     // <div className="App">
     //   <header className="App-header">
@@ -36,12 +46,12 @@ function App() {
     <>
       <Provider store={appStore}>
         <Header />
-        {/* <menuIdContext.Provider value={{ menuId: { menuId }, setMenuId }}> */}
-        <Outlet />
-        {/* </menuIdContext.Provider> */}
+        <menuIdContext.Provider value={{ menuId: { menuId }, setMenuId }}>
+          <Outlet />
+        </menuIdContext.Provider>
         {/* <RouterProvider router={AppRouter} /> */}
 
-        <Footer />
+        {!hideFooter && <Footer />}
       </Provider>
     </>
   );
