@@ -18,4 +18,5 @@ root.render(
 
 // If you want to start measuring perhtmlFormance in your app, pass a function
 // to log results (htmlFor example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitalsreportWebVitals();
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

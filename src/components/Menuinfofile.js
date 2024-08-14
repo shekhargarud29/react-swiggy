@@ -1255,7 +1255,9 @@ export const MenuInfo = ({
                       </small>
                     </div>
                   </div>
-                ) : null}
+                ) : (
+                  <></>
+                )}
               </div>
             );
           })}
