@@ -73,7 +73,7 @@ export const MenuItemcards = ({
                     <div
                       key={`Z${index}`}
                       id={`a${index}`}
-                      className="row pt-4 justify-content-between"
+                      className="d-flex flex-md-row flex-column-reverse pt-4 justify-content-md-between justify-content-center"
                       style={{
                         paddingBottom: "40px",
                         borderBottom:
@@ -82,7 +82,7 @@ export const MenuItemcards = ({
                             : "",
                       }}
                     >
-                      <div className="left col-8 ">
+                      <div className="left col-md-8 col-12  me-3  pe-md-4 pt-md-0 pt-5">
                         {isVeg ? (
                           <div
                             className="border  border-success   rounded-1"
@@ -161,10 +161,10 @@ export const MenuItemcards = ({
                           <strong className="text-secondary">More</strong>
                         </div>
                       </div>
-                      <div className="right col-3">
+                      <div className="right col-md-3 col-sm-6 py-md-0 mx-md-0 mx-sm-auto">
                         <div
-                          className=" ms-3 "
-                          style={{ position: "relative" }}
+                          className=" "
+                          style={{ position: "relative", minWidth: "150px" }}
                         >
                           {imageId !== undefined ? (
                             <>

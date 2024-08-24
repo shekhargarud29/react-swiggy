@@ -7,6 +7,7 @@ import { Cart } from "./Cartfile";
 import { SearchBar } from "./SearchBarfile";
 import { ErrorPage } from "./ErrorPagefile";
 import { Menu } from "./Menufile";
+// import{Lazy,}
 
 export const AppRouter = createBrowserRouter([
   {

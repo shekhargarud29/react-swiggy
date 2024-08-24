@@ -536,7 +536,7 @@ const CardContainer = () => {
     ) : (
       <>
         <div className="container-lg px-0 py-3">
-          <div className="mx-lg-4  py-1 row justify-content-center">
+          <div className="mx-4  py-1 row justify-content-center">
             {/* Dish Carousal */}
             <Carousal
               restaurantDish={resObject?.restaurantDish}
@@ -602,7 +602,7 @@ const CardContainer = () => {
               </div>
             </div> */}
           </div>
-          <div className="mx-lg-4 py-1 row justify-content-center">
+          <div className="mx-4 py-1 row justify-content-center">
             {/* Restaurant Carousal */}
             <Carousal
               restaurantCollection={resObject?.restaurantCollection}

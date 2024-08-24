@@ -3,10 +3,10 @@ const Footer = () => {
   return (
     <>
       <footer
-        className="footer bg-dark text-light mt-5 px-5"
+        className="footer bg-dark text-light mt-5 py-5 px-lg-5"
         // style={{ position: "sticky", bottom: 0, left: 0 }}
       >
-        <div className="footer__addr px-5 ms-5">
+        <div className="footer__addr px-md-5 px-4 ms-lg-5">
           <h1 className="footer__logo">Something</h1>
           <h2>Contact</h2>
           <address>
@@ -20,7 +20,7 @@ const Footer = () => {
             </a>
           </address>
         </div>
-        <ul className="footer__nav px-5 me-5">
+        <ul className="footer__nav px-md-5 px-4 me-lg-5">
           <li className="nav__item">
             <h2 className="nav__title">Media</h2>
             <ul className="nav__ul">
@@ -73,7 +73,7 @@ const Footer = () => {
             </ul>
           </li>
         </ul>
-        <div className="legal px-5 ">
+        <div className="legal px-md-5 px-4 ">
           <p>© 2019 Something. All rights reserved.</p>
           <div className="legal__links">
             <span>

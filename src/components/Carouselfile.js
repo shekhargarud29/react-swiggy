@@ -55,14 +55,14 @@ export const Carousal = ({
               </button>
             </div>
           </div>
-          <div className="d-flex overflow-hidden ">
+          <div className="d-flex flex-nowrap overflow-hidden ">
             {restaurantDish &&
               restaurantDish.map((dish, index) => {
                 // console.log(dish);
                 return (
                   <div
                     key={`O${index}`}
-                    className=" col-2"
+                    className=" col-2-lg"
                     style={{
                       transform: `translateX(-${scrollDish * 200}%)`,
                       transition: "transform 2s",
@@ -83,7 +83,7 @@ export const Carousal = ({
     </>
   ) : restaurantCollection ? (
     <>
-      <div className="border-bottom py-5">
+      <div className="border-bottom py-5 px-0">
         <div className="d-flex justify-content-between">
           <div>
             <h4 className="fw-bolder col-12">What's on your mind?</h4>
@@ -117,17 +117,18 @@ export const Carousal = ({
             </button>
           </div>
         </div>
-        <div className="d-flex overflow-hidden">
+        <div className="d-flex  overflow-hidden" style={{ minWidth: "auto" }}>
           {restaurantCollection &&
             restaurantCollection.map((restaurant, index) => {
               // console.log(dish);
               return (
                 <div
                   key={`T${index}`}
-                  className=" col-3 py-3 pe-4 border-0 "
+                  className="  py-3 pe-4 border-0 "
                   style={{
                     transform: `translateX(-${scrollRes * 134}%) `,
                     transition: "transform 2s",
+                    minWidth: "275px",
                   }}
                 >
                   <Category key={`H${index}`} {...restaurant?.info} />

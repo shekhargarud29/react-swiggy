@@ -13,13 +13,13 @@
   object-position: 50% 50%;
 }
 .menu-img {
-  width: 100%;
+  min-width: 100%;
   height: 150px;
   object-fit: cover;
   object-position: 50% 50%;
 }
 .cards-dish {
-  width: 100%;
+  min-width: 100%;
   height: 180px;
 }
 
@@ -239,7 +239,7 @@ a {
 .footer {
   display: flex;
   flex-flow: row wrap;
-  padding: 30px 30px 20px 30px;
+  /* padding: 30px 30px 20px 30px; */
   color: #2f2f2f;
   background-color: #fff;
   border-top: 1px solid #e5e5e5;
@@ -361,4 +361,71 @@ a {
   .footer__nav {
     flex: 2 0px;
   }
+}
+
+.p-dialog-mask {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.p-dialog-header {
+  border-bottom: 0 none;
+  background: #ffffff;
+  color: #374151;
+  padding: 1.5rem;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.p-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #4b5563;
+  padding: 0 1.5rem 2rem 1.5rem;
+}
+
+.p-confirm-dialog .p-dialog-content {
+  display: flex;
+  align-items: center;
+}
+
+.p-dialog .p-dialog-footer {
+  border-top: 0 none;
+  background: #ffffff;
+  color: #4b5563;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  text-align: right;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  font-weight: 900;
+}
+.p-button {
+  color: #ffffff;
+  background: #06b6d4;
+  border: 1px solid #06b6d4;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    box-shadow 0.2s;
+  border-radius: 6px;
+  margin: 0;
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  vertical-align: bottom;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.p-button.p-button-text {
+  background-color: transparent;
+  color: #06b6d4;
+  border-color: transparent;
+}
+
+.p-dialog .p-dialog-footer button {
+  margin: 0 0.5rem 0 0;
+  width: auto;
+}
+.p-button-label {
+  font-weight: 700;
 }

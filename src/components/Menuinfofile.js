@@ -8,6 +8,7 @@ import { MenuCategory } from "./MenuCategory";
 import { MenuSortBy } from "./MenuSortBy";
 import { addItem } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 // import { TextField, InputAdornment } from "@mui/material";
 
@@ -82,6 +83,15 @@ export const MenuInfo = ({
   });
   const dispatch = useDispatch();
   const addingItem = (val) => {
+    toast.success("Added succesfully", {
+      position: "bottom-right",
+      autoClose: 500,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
     dispatch(addItem(val));
   };
 

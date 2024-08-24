@@ -16,6 +16,7 @@ export const Category = ({
         key={id}
         to={`menu/${id}`}
         className="text-decoration-none text-dark"
+        style={{ minWidth: "100%" }}
       >
         <div className=" card cards border-0">
           <img

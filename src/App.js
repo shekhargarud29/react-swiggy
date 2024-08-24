@@ -12,6 +12,7 @@ import { menuIdContext } from "./utils/userContext";
 import { Provider } from "react-redux";
 import appStore from "./utils/store";
 import { useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 // import { useState } from "react";
 // import { provider } from "react";
@@ -45,6 +46,7 @@ function App() {
 
     <>
       <Provider store={appStore}>
+        <Toaster />
         <Header />
         <menuIdContext.Provider value={{ menuId: { menuId }, setMenuId }}>
           <Outlet />
