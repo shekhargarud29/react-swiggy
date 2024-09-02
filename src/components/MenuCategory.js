@@ -1,7 +1,7 @@
 import { MenuItemcards } from "./MenuItemcards";
 
 // import { useState } from "react";
-export const MenuCategory = ({ categories, title, addingItem }) => {
+export const MenuCategory = ({ categories, title, countObj, handleAdd }) => {
   //   console.log(categories);
   //   console.log(title?.categories);
   return (
@@ -23,7 +23,8 @@ export const MenuCategory = ({ categories, title, addingItem }) => {
                     title={categoryData?.title}
                     itemCards={categoryData?.itemCards}
                     currentComponent="MenuCategory"
-                    addingItem={addingItem}
+                    countObj={countObj}
+                    handleAdd={handleAdd}
                   />
                 </div>
                 // <div

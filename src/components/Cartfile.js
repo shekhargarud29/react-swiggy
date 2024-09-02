@@ -2,20 +2,30 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { removeItem } from "../utils/cartSlice";
 import { clearItem } from "../utils/cartSlice";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 // import { Toast } from "primereact/toast";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Cart = () => {
   const items = useSelector((store) => store.cart.items);
+  const countObj = useSelector((store) => store.cart.countsObj);
+  console.log(items);
+
+  console.log(Object.values(countObj));
+
   // console.log(items.length);
   // localStorage.setItem("items",s)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   // const toast = useRef(null);
+  // useEffect(() => {
+  //   const data = localStorage.getItem("countObj");
+  //   const rel = JSON.parse(data);
+  //   console.log(rel);
+  // }, []);
 
   const accept = () => {
     dispatch(clearItem());
@@ -89,7 +99,7 @@ export const Cart = () => {
     <>
       {/* <Toast ref={toast} /> */}
       <ConfirmDialog group="templating" />
-      {items && items.length === 0 ? (
+      {items && countObj && items.length === 0 ? (
         <>
           <div
             className="d-flex flex-column align-items-center justify-content-center p-md-5 p-3 m-md-5"
@@ -120,140 +130,218 @@ export const Cart = () => {
                 </button>
               </div>
             </div>
-            {items.map((item, index) => {
-              const { name, ratings, description, imageId, isVeg, price } =
-                item?.card?.info || item?.dish?.info;
+            {Object.values(countObj)
+              .filter((val) => val.count > 0)
+              .map((obj, index) => {
+                const {
+                  name,
+                  ratings,
+                  description,
+                  imageId,
+                  isVeg,
+                  price,
+                  id,
+                } = obj?.itemCard?.card?.info || obj?.itemCard?.dish?.info;
 
-              const { rating, ratingCountV2 } = ratings?.aggregatedRating || {};
+                const { rating, ratingCountV2 } =
+                  ratings?.aggregatedRating || {};
 
-              // if(item?.card){
-              //   const { name, ratings, description, imageId, isVeg } =item?.card?.info;
-              //   const { rating, ratingCountV2 } = ratings?.aggregatedRating
-              //   return(<></>)}
-              //   else{
-              //     const { name, ratings, description, imageId, isVeg } =
-              //       item?.card?.info;
-              //     const { rating, ratingCountV2 } = ratings?.aggregatedRating;
-              //     return(<></>)
-              //   }
+                // if(item?.card){
+                //   const { name, ratings, description, imageId, isVeg } =item?.card?.info;
+                //   const { rating, ratingCountV2 } = ratings?.aggregatedRating
+                //   return(<></>)}
+                //   else{
+                //     const { name, ratings, description, imageId, isVeg } =
+                //       item?.card?.info;
+                //     const { rating, ratingCountV2 } = ratings?.aggregatedRating;
+                //     return(<></>)
+                //   }
 
-              return (
-                <>
-                  <div className="d-flex flex-column  pt-3 px-4 align-items-center">
-                    <div
-                      key={`Z${index}`}
-                      // id={`a${index}`}
-                      className="d-flex col-8 pb-4 justify-content-between"
-                      style={{
-                        paddingTop: "40px",
-                        borderTop: "2px solid #f2f2f3",
-                      }}
-                    >
-                      <div className="left col-8 ">
-                        {isVeg ? (
-                          <div
-                            className="border  border-success   rounded-1"
-                            style={{
-                              width: "max-content",
-                              padding: "2.50px",
-                            }}
-                          >
+                return (
+                  <>
+                    <div className="d-flex flex-column  pt-3 px-4 align-items-center">
+                      <div
+                        key={`Z${index}`}
+                        // id={`a${index}`}
+                        className="d-flex col-8 pb-4 justify-content-between"
+                        style={{
+                          paddingTop: "40px",
+                          borderTop: "2px solid #f2f2f3",
+                        }}
+                      >
+                        <div className="left col-8 ">
+                          {isVeg ? (
                             <div
-                              className=""
+                              className="border  border-success   rounded-1"
                               style={{
-                                width: "9px",
-                                height: "9px",
-                                borderRadius: "50%",
-                                backgroundColor: "#0f8a65",
-                                // borderLeft: "7px solid transparent",
-                                // borderRight: "7px solid transparent",
-                                // borderBottom: "10px solid #0f8a65",
+                                width: "max-content",
+                                padding: "2.50px",
                               }}
-                            ></div>
-                          </div>
-                        ) : (
-                          <div
-                            className="border  border-danger  rounded-1"
-                            style={{
-                              width: "max-content",
-                              padding: "1.50px",
-                            }}
-                          >
-                            <div
-                              className=""
-                              style={{
-                                width: "0px",
-                                height: "0px",
-                                borderRadius: "3px",
-                                borderLeft: "7px solid transparent",
-                                borderRight: "7px solid transparent",
-                                borderBottom: "10px solid #e43b4f",
-                              }}
-                            ></div>
-                          </div>
-                        )}
-                        <div className="" style={{ color: "#414449" }}>
-                          <h5 className="m-0">{name}</h5>
-                          <h6>&#8377; {price / 100} </h6>
-                        </div>
-                        {rating ? (
-                          <div className="py-1  " style={{ fontSize: "16px" }}>
-                            <i
-                              className="fa-solid fa-star fa-xs"
-                              style={{ color: "#116649" }}
                             >
-                              {" "}
-                              <span className="fw-bold">{rating} </span>
-                            </i>
-                            <span
-                              className="fw-medium"
-                              style={{ color: "#414449" }}
-                            >
-                              {" "}
-                              ({ratingCountV2})
-                            </span>
-                          </div>
-                        ) : null}
-
-                        <div className="d-flex align-items-end">
-                          <p
-                            className="fw-medium description py-1 m-0 "
-                            style={{
-                              color: "#414449",
-                              overflow: "hidden",
-                            }}
-                          >
-                            {description}
-                          </p>
-                          <strong className="text-secondary">More</strong>
-                        </div>
-                      </div>
-                      <div className="right col-3">
-                        <div
-                          className=" ms-3 "
-                          style={{ position: "relative" }}
-                        >
-                          {imageId !== undefined ? (
-                            <>
-                              <img
-                                className="rounded-4 menu-img"
-                                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
-                                alt="Combo for 1 Non-Veg"
-                              ></img>
-                            </>
+                              <div
+                                className=""
+                                style={{
+                                  width: "9px",
+                                  height: "9px",
+                                  borderRadius: "50%",
+                                  backgroundColor: "#0f8a65",
+                                  // borderLeft: "7px solid transparent",
+                                  // borderRight: "7px solid transparent",
+                                  // borderBottom: "10px solid #0f8a65",
+                                }}
+                              ></div>
+                            </div>
                           ) : (
-                            <>
-                              <div className="rounded-4 menu-img">
-                                <img src=" " alt={name}></img>
-                              </div>
-                            </>
+                            <div
+                              className="border  border-danger  rounded-1"
+                              style={{
+                                width: "max-content",
+                                padding: "1.50px",
+                              }}
+                            >
+                              <div
+                                className=""
+                                style={{
+                                  width: "0px",
+                                  height: "0px",
+                                  borderRadius: "3px",
+                                  borderLeft: "7px solid transparent",
+                                  borderRight: "7px solid transparent",
+                                  borderBottom: "10px solid #e43b4f",
+                                }}
+                              ></div>
+                            </div>
                           )}
-                          {/* <img
+                          <div className="" style={{ color: "#414449" }}>
+                            <h5 className="m-0">{name}</h5>
+                            <h6>&#8377; {price / 100} </h6>
+                          </div>
+                          {rating ? (
+                            <div
+                              className="py-1  "
+                              style={{ fontSize: "16px" }}
+                            >
+                              <i
+                                className="fa-solid fa-star fa-xs"
+                                style={{ color: "#116649" }}
+                              >
+                                {" "}
+                                <span className="fw-bold">{rating} </span>
+                              </i>
+                              <span
+                                className="fw-medium"
+                                style={{ color: "#414449" }}
+                              >
+                                {" "}
+                                ({ratingCountV2})
+                              </span>
+                            </div>
+                          ) : null}
+
+                          <div className="d-flex align-items-end">
+                            <p
+                              className="fw-medium description py-1 m-0 "
+                              style={{
+                                color: "#414449",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {description}
+                            </p>
+                            <strong className="text-secondary">More</strong>
+                          </div>
+                        </div>
+                        <div className="right col-3">
+                          <div
+                            className=" ms-3 "
+                            style={{ position: "relative" }}
+                          >
+                            {imageId !== undefined ? (
+                              <>
+                                <img
+                                  className="rounded-4 menu-img"
+                                  src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
+                                  alt="Combo for 1 Non-Veg"
+                                ></img>
+                              </>
+                            ) : (
+                              <>
+                                <div className="rounded-4 menu-img">
+                                  <img src=" " alt={name}></img>
+                                </div>
+                              </>
+                            )}
+                            {/* <img
                             className="rounded-4 menu-img"
                             src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
                             alt="Combo for 1 Non-Veg"
                           ></img> */}
-                          <div
+                            <div
+                              className=" text-center d-flex flex-column justify-content-center"
+                              style={{
+                                width: "100%",
+                                padding: "0px 2.5rem ",
+                                position: "absolute",
+                                bottom: "-25%",
+                                left: "0%",
+                                // paddingInline: "",
+                              }}
+                            >
+                              {countObj[id] &&
+                              countObj[id]?.count > 0 &&
+                              Object.keys(countObj).includes(id) ? (
+                                <>
+                                  <div className=" bg-light fs-h1 text-success w-100  rounded d-flex justify-content-evenly align-items-center shadow-sm">
+                                    <button
+                                      className="btn btn-light fw-bold text-success rounded-end-0 border-0"
+                                      style={{ padding: "12.5px" }}
+                                      // onClick={() => {
+                                      //   // let id = "plus";
+                                      //   handleAdd(itemCard, index, "plus");
+                                      // }}
+                                    >
+                                      <h6 className="m-0 fw-bold">
+                                        <i className="fa-solid fa-plus"></i>
+                                      </h6>
+                                    </button>
+                                    <h5 className=" fw-bold m-0 py-1 flex-grow-1  text-center">
+                                      {countObj[id].count}
+                                    </h5>
+                                    <button
+                                      className="btn btn-light fw-bold text-success rounded-start-0 border-0 "
+                                      style={{ padding: "12.5px" }}
+                                      // onClick={() => {
+                                      //   handleAdd(itemCard, index);
+                                      // }}
+                                    >
+                                      <h6 className="m-0 fw-bold">
+                                        <i className="fa-solid fa-minus"></i>
+                                      </h6>
+                                    </button>
+                                  </div>
+                                </>
+                              ) : (
+                                <div className=" bg-light fs-h1 text-success w-100  rounded d-flex justify-content-evenly align-items-center shadow-sm">
+                                  <button
+                                    className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                    type="button"
+                                    // onClick={() => {
+                                    //   // var sign= "plus";
+                                    //   handleAdd(itemCard, index, "plus");
+                                    // }}
+                                  >
+                                    <h5 className=" fw-bold m-0 py-1 "> ADD</h5>
+                                  </button>
+                                </div>
+                              )}
+                              <small
+                                className="text-center m-0 "
+                                style={{ color: "#8d8f91" }}
+                              >
+                                customisable
+                              </small>
+                            </div>
+                            {/* <div
                             className="px-4 text-center d-flex flex-column justify-content-center"
                             style={{
                               width: "100%",
@@ -288,14 +376,14 @@ export const Cart = () => {
                             >
                               customisable
                             </small>
+                          </div> */}
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              );
-            })}
+                  </>
+                );
+              })}
           </div>
         </>
       )}

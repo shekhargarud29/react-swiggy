@@ -13,7 +13,9 @@ export const useMenu = () => {
 
   const { id } = useParams();
   const { setMenuId } = useContext(menuIdContext);
-  setMenuId(id);
+  useEffect(() => {
+    setMenuId(id);
+  }, [id, setMenuId]);
   // console.log(menuId);
 
   // console.log(menuId);
@@ -43,7 +45,7 @@ export const useMenu = () => {
         // );
       } catch {
         console.log("error");
-        setMenuLoading(true);
+        setMenuLoading(false);
       }
     };
     menu();

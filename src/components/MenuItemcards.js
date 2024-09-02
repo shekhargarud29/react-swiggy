@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 // import { addItem } from "../utils/cartSlice";
-
+import { removeItem } from "../utils/cartSlice";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 export const MenuItemcards = ({
   title,
   itemCards,
   currentComponent,
   addingItem,
+  countObj,
+  // handleUpdateCounts,
+  handleAdd,
 }) => {
   //   const id = title.replace(/\s/g, "").replace(/'/g, "");
   // console.log(title);
   const [arrow, setArrow] = useState(false);
+  // console.log(Object.keys(countObj).length);
+
+  // countObj != null ? console.log(countObj) : console.log("he");
   return itemCards ? (
     <>
       <div className={currentComponent === "MenuCategory" ? "p-0 py-3" : "p-3"}>
@@ -65,10 +73,21 @@ export const MenuItemcards = ({
 
                 itemCards.map((itemCard, index) => {
                   // console.log(itemCards);
-                  const { name, ratings, description, imageId, isVeg, price } =
-                    itemCard?.card?.info;
+                  const {
+                    name,
+                    ratings,
+                    description,
+                    imageId,
+                    isVeg,
+                    price,
+                    id,
+                  } = itemCard?.card?.info;
                   const { rating, ratingCountV2 } = ratings?.aggregatedRating;
-                  // const{}
+                  // count.current = count.current - 1;
+                  // const count = useRef(0);
+                  // setCount;
+                  // console.log(counts);
+
                   return (
                     <div
                       key={`Z${index}`}
@@ -161,7 +180,7 @@ export const MenuItemcards = ({
                           <strong className="text-secondary">More</strong>
                         </div>
                       </div>
-                      <div className="right col-md-3 col-sm-6 py-md-0 mx-md-0 mx-sm-auto">
+                      <div className="right col-md-3 col-sm-5  py-md-0 mx-md-0 mx-sm-auto">
                         <div
                           className=" "
                           style={{ position: "relative", minWidth: "150px" }}
@@ -170,6 +189,7 @@ export const MenuItemcards = ({
                             <>
                               <img
                                 className="rounded-4 menu-img"
+                                style={{ width: "100%" }}
                                 src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${imageId}`}
                                 alt="Combo for 1 Non-Veg"
                               ></img>
@@ -187,22 +207,91 @@ export const MenuItemcards = ({
                             alt="Combo for 1 Non-Veg"
                           ></img> */}
                           <div
-                            className="px-4 text-center d-flex flex-column justify-content-center"
+                            className=" text-center d-flex flex-column justify-content-center"
                             style={{
                               width: "100%",
+                              padding: "0px 2.5rem ",
                               position: "absolute",
                               bottom: "-25%",
                               left: "0%",
                               // paddingInline: "",
                             }}
                           >
-                            <button
-                              className="btn btn-light fs-h1 text-success w-100  shadow-sm"
-                              type="button"
-                              onClick={() => addingItem(itemCard)}
-                            >
-                              <h5 className=" fw-bold m-0 py-1 "> ADD</h5>
-                            </button>
+                            {countObj[id] &&
+                            countObj[id]?.count > 0 &&
+                            Object.keys(countObj).includes(id) ? (
+                              <>
+                                <div className=" bg-light fs-h1 text-success w-100  rounded d-flex justify-content-evenly align-items-center shadow-sm">
+                                  <button
+                                    className="btn btn-light fw-bold text-success rounded-end-0 border-0"
+                                    style={{ padding: "12.5px" }}
+                                    onClick={() => {
+                                      // let id = "plus";
+                                      handleAdd(itemCard, index, "plus");
+                                    }}
+                                  >
+                                    <h6 className="m-0 fw-bold">
+                                      <i className="fa-solid fa-plus"></i>
+                                    </h6>
+                                  </button>
+                                  <h5 className=" fw-bold m-0 py-1 flex-grow-1  text-center">
+                                    {countObj[id].count}
+                                  </h5>
+                                  <button
+                                    className="btn btn-light fw-bold text-success rounded-start-0 border-0 "
+                                    style={{ padding: "12.5px" }}
+                                    onClick={() => {
+                                      handleAdd(itemCard, index);
+                                    }}
+                                  >
+                                    <h6 className="m-0 fw-bold">
+                                      <i className="fa-solid fa-minus"></i>
+                                    </h6>
+                                  </button>
+                                </div>
+                              </>
+                            ) : (
+                              <div className=" bg-light fs-h1 text-success w-100  rounded d-flex justify-content-evenly align-items-center shadow-sm">
+                                <button
+                                  className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                  type="button"
+                                  onClick={() => {
+                                    // var sign= "plus";
+                                    handleAdd(itemCard, index, "plus");
+                                  }}
+                                >
+                                  <h5 className=" fw-bold m-0 py-1 "> ADD</h5>
+                                </button>
+                              </div>
+                            )}
+                            {/* {countObj.length != undefined ? (
+                                <button
+                                  className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                  type="button"
+                                  onClick={() => {
+                                    var id = "plus";
+                                    handleAdd(itemCard, index, id);
+                                  }}
+                                >
+                                  <h5 className=" fw-bold m-0 py-1 "> ADD</h5>
+                                </button>
+                              ) : (
+                                <>
+                                  <button
+                                    className="btn btn-light fs-h1 text-success w-100  shadow-sm"
+                                    type="button"
+                                    onClick={() => {
+                                      var id = "plus";
+                                      handleAdd(itemCard, index, id);
+                                    }}
+                                  >
+                                    <h5 className=" fw-bold m-0 py-1 "> not</h5>
+                                  </button>
+                                </>
+                              )} */}
+
+                            {}
+
                             <small
                               className="text-center m-0 "
                               style={{ color: "#8d8f91" }}

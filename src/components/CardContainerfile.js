@@ -19,6 +19,12 @@ import { Carousal } from "./Carouselfile";
 import { SortBy } from "./SortBy";
 
 const CardContainer = () => {
+  const obj = {
+    car: "bmw",
+    seat: "two",
+  };
+  localStorage.setItem("carDetails", JSON.stringify(obj));
+
   // console.log(RestaurantList);
 
   // method 3

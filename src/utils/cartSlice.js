@@ -1,15 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import { Cart } from "../components/Cartfile";
 // import { json } from "react-router-dom";
 
 const fromLocalStorage = () => {
   const data = localStorage.getItem("items");
+
   return data ? JSON.parse(data) : [];
+};
+const fromStorage = () => {
+  const data2 = localStorage.getItem("countObj");
+
+  return data2 ? JSON.parse(data2) : {};
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: fromLocalStorage(),
+    countsObj: fromStorage(),
   },
   reducers: {
     addItem: (state, action) => {
@@ -17,12 +25,17 @@ const cartSlice = createSlice({
       localStorage.setItem("items", JSON.stringify(state.items));
     },
     removeItem: (state, action) => {
-      state.items.splice(action.payload, 1);
-      localStorage.setItem("items", JSON.stringify(state.items));
+      state.items = state.items.filter(
+        (item) => item?.card?.info?.id !== action.payload
+      );
+      console.log(action);
+
+      // localStorage.setItem("items", JSON.stringify(state.items));
     },
-    clearItem: (state) => {
+    clearItem: (state, action) => {
       state.items.length = 0;
       localStorage.removeItem("items");
+      localStorage.removeItem("countObj");
     },
   },
 });

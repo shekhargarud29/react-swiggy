@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Carousal } from "./Carouselfile";
 // import { useState } from "react";
@@ -9,6 +9,8 @@ import { MenuSortBy } from "./MenuSortBy";
 import { addItem } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { removeItem } from "../utils/cartSlice";
+// import { useState } from "react";
 
 // import { TextField, InputAdornment } from "@mui/material";
 
@@ -19,6 +21,94 @@ export const MenuInfo = ({
   setMenuDatas,
   cloneMenuDatas,
 }) => {
+  const dispatch = useDispatch();
+
+  const [countObj, setCountObj] = useState({});
+
+  useEffect(() => {
+    const data = localStorage.getItem("countObj");
+    const relObj = JSON.parse(data);
+    console.log(relObj);
+    if (relObj) {
+      setCountObj(relObj);
+    }
+  }, []);
+  // console.log(countObj);
+  const handleAdd = (itemCard, index, plus) => {
+    const { id } = itemCard.card.info;
+    if (plus) {
+      const newObj = {
+        ...countObj,
+        [id]: {
+          count: countObj[id] ? parseInt(countObj[id].count) + 1 : 1,
+          itemCard,
+        },
+      };
+      setCountObj(newObj);
+      toast.success("Added succesfully", {
+        position: "bottom-right",
+        autoClose: 1000,
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+
+      dispatch(addItem(itemCard));
+    } else {
+      console.log("minus");
+      // console.log(parseInt(countObj[id]));
+
+      if (countObj[id].count > 0) {
+        const newObj = {
+          ...countObj,
+          [id]: { count: parseInt(countObj[id].count) - 1, itemCard },
+        };
+        // if (countObj[id].count !== 0) {
+        //   setCountObj(newObj);
+        // }
+        // setCountObj((prevCountObj) => {
+        //   if (newObj[id]) {
+        //     if (newObj[id].count > 0) {
+        //       return newObj;
+        //     }
+        //   } else {
+        //     const { [id]: _, ...rest } = prevCountObj;
+        //     return rest;
+        //   }
+        // });
+        setCountObj(newObj);
+        dispatch(removeItem(id));
+        toast("Item removed", {
+          icon: "🗑️",
+          position: "bottom-right",
+          autoClose: 500,
+          style: {
+            borderRadius: "10px",
+            background: "#e13647",
+            color: "#fff",
+          },
+        });
+      }
+      // console.log(newObj);
+    }
+
+    // console.log(id);
+    // console.log(newObj);
+    // console.log(countObj[id]);
+  };
+
+  useEffect(() => {
+    // console.log(Object.values(countObj).map((val) => val.count > 0));
+
+    // const countZero = Object.values(countObj).map((val) => val.count > 0);
+    if (Object.keys(countObj).length > 0) {
+      console.log(countObj);
+      localStorage.setItem("countObj", JSON.stringify(countObj));
+    }
+  }, [countObj]);
+
   // const [scrollDeal, setScrollDeal] = useState(0);
   // const [scrollPick, setScrollPick] = useState(0);
   // const [arrow, setArrow] = useState(false);
@@ -58,7 +148,7 @@ export const MenuInfo = ({
     sla,
     feeDetails,
   } = menuItem?.info;
-
+  // const [countObj, setCountObj] = useState({});
   const deals = offers.map((offer) => {
     const title = () => {
       if (offer?.info?.couponCode) {
@@ -81,24 +171,27 @@ export const MenuInfo = ({
 
     return offerarray;
   });
-  const dispatch = useDispatch();
-  const addingItem = (val) => {
-    toast.success("Added succesfully", {
-      position: "bottom-right",
-      autoClose: 500,
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
-    dispatch(addItem(val));
-  };
+  // const addingItem = (val) => {
+  //   toast.success("Added succesfully", {
+  //     position: "bottom-right",
+  //     autoClose: 10000,
+  //     style: {
+  //       borderRadius: "10px",
+  //       background: "#333",
+  //       color: "#fff",
+  //     },
+  //   });
 
-  // console.log(deals);
-  // console.log(offerarray);
-  // console.log(offers);
-  // console.log(offers[0]?.info?.header);
+  //   dispatch(addItem(val));
+  // };
+
+  // const [countsObject, setCountsObject] = useState({});
+
+  // const handleAdd = (itemCard, index, id, count) => {
+  //   setCountsObject({
+  //     arry: count,
+  //   });
+  // };
 
   // const deals = [
   //   {
@@ -664,11 +757,7 @@ export const MenuInfo = ({
                   <div key={`A${index}`}>
                     {/* Top Picks */}
                     {/* <SortBy carousel={carousel} /> */}
-                    <Carousal
-                      topPicks={carousel}
-                      title={title}
-                      addingItem={addingItem}
-                    />
+                    <Carousal topPicks={carousel} title={title} />
                     {/* <div>
                     <div className="d-flex pt-4 justify-content-between">
                       <div>
@@ -762,7 +851,8 @@ export const MenuInfo = ({
                     <MenuCategory
                       title={title}
                       categories={categories}
-                      addingItem={addingItem}
+                      countObj={countObj}
+                      handleAdd={handleAdd}
                     />
 
                     {/* <div className="p-3">
@@ -994,7 +1084,8 @@ export const MenuInfo = ({
                     <MenuItemcards
                       title={title}
                       itemCards={itemCards}
-                      addingItem={addingItem}
+                      countObj={countObj}
+                      handleAdd={handleAdd}
                     />
                     {/* <div className="p-3">
                     <div className="card border-0 ">
