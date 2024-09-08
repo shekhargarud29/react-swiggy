@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+// import { useContext } from "react";
+// import { menuIdContext } from "../utils/userContext";
 
 const Header = () => {
-  const cartItems = useSelector((store) => store.cart.items);
-  // console.log(cartItems);
+  // const cartItems = useSelector((store) => store.cart.countsObj);
+  const total = useSelector((store) => store.cart.item);
+  // console.log(total);
+
+  // const { sum, setSum } = useContext(menuIdContext);
+  // console.log(setSum);
 
   const headers = [
     {
@@ -205,7 +211,7 @@ const Header = () => {
                                 <h6 className="m-0 mx-2 fw-bold header">
                                   {name}
                                   <sup className="px-1">
-                                    ({cartItems.length})
+                                    ({total}){/* ({cartItems.length}) */}
                                   </sup>
                                 </h6>
                               </>

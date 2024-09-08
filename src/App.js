@@ -1,6 +1,6 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "./components/Headerfile";
 // import Body from "./components/Bodyfile";
 import Footer from "./components/Footerfile";
@@ -9,7 +9,7 @@ import Footer from "./components/Footerfile";
 // import Body from "./components/Bodyfile";
 import { Outlet } from "react-router-dom";
 import { menuIdContext } from "./utils/userContext";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import appStore from "./utils/store";
 import { useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
@@ -18,7 +18,10 @@ import { Toaster } from "react-hot-toast";
 // import { provider } from "react";
 function App() {
   const [menuId, setMenuId] = useState("");
+  // const [sum, setSum] = useState(0);
+  // const [countObj, setCountObj] = useState({});
   // console.log(menuId);
+  // const countObj = useSelector((val) => val.cart.countsObj);
 
   const location = useLocation();
   // console.log(location.pathname);

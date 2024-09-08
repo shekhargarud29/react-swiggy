@@ -1,17 +1,23 @@
 import { useState, useRef, useEffect } from "react";
 // import { addItem } from "../utils/cartSlice";
-import { removeItem } from "../utils/cartSlice";
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { addItem, removeItem } from "../utils/cartSlice";
+
 export const MenuItemcards = ({
   title,
   itemCards,
   currentComponent,
-  addingItem,
-  countObj,
+  // addingItem,
+  // countObj,
   // handleUpdateCounts,
-  handleAdd,
+  // handleAdd,
 }) => {
+  const dispatch = useDispatch();
+  const countObj = useSelector((val) => val.cart.countsObj);
+  // console.log(countObj);
+
   //   const id = title.replace(/\s/g, "").replace(/'/g, "");
   // console.log(title);
   const [arrow, setArrow] = useState(false);
@@ -227,7 +233,8 @@ export const MenuItemcards = ({
                                     style={{ padding: "12.5px" }}
                                     onClick={() => {
                                       // let id = "plus";
-                                      handleAdd(itemCard, index, "plus");
+                                      // handleAdd(itemCard, index, "plus");
+                                      dispatch(addItem(itemCard));
                                     }}
                                   >
                                     <h6 className="m-0 fw-bold">
@@ -241,7 +248,8 @@ export const MenuItemcards = ({
                                     className="btn btn-light fw-bold text-success rounded-start-0 border-0 "
                                     style={{ padding: "12.5px" }}
                                     onClick={() => {
-                                      handleAdd(itemCard, index);
+                                      // handleAdd(itemCard, index);
+                                      dispatch(removeItem(itemCard));
                                     }}
                                   >
                                     <h6 className="m-0 fw-bold">
@@ -257,7 +265,8 @@ export const MenuItemcards = ({
                                   type="button"
                                   onClick={() => {
                                     // var sign= "plus";
-                                    handleAdd(itemCard, index, "plus");
+                                    // handleAdd(itemCard, index, "plus");
+                                    dispatch(addItem(itemCard));
                                   }}
                                 >
                                   <h5 className=" fw-bold m-0 py-1 "> ADD</h5>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Carousal } from "./Carouselfile";
 // import { useState } from "react";
@@ -10,6 +10,8 @@ import { addItem } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { removeItem } from "../utils/cartSlice";
+import { menuIdContext } from "../utils/userContext";
+import { useSelector } from "react-redux";
 // import { useState } from "react";
 
 // import { TextField, InputAdornment } from "@mui/material";
@@ -21,93 +23,78 @@ export const MenuInfo = ({
   setMenuDatas,
   cloneMenuDatas,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [countObj, setCountObj] = useState({});
+  const { setCountObj, countObj } = useContext(menuIdContext);
+  // const hh = useSelector((val) => val.cart.countsObj);
+  // console.log(hh);
 
-  useEffect(() => {
-    const data = localStorage.getItem("countObj");
-    const relObj = JSON.parse(data);
-    console.log(relObj);
-    if (relObj) {
-      setCountObj(relObj);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const data = localStorage.getItem("countObj");
+  //   const relObj = JSON.parse(data);
+  //   console.log(relObj);
+  //   if (relObj) {
+  //     setCountObj(relObj);
+  //   }
+  // }, []);
   // console.log(countObj);
-  const handleAdd = (itemCard, index, plus) => {
-    const { id } = itemCard.card.info;
-    if (plus) {
-      const newObj = {
-        ...countObj,
-        [id]: {
-          count: countObj[id] ? parseInt(countObj[id].count) + 1 : 1,
-          itemCard,
-        },
-      };
-      setCountObj(newObj);
-      toast.success("Added succesfully", {
-        position: "bottom-right",
-        autoClose: 1000,
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
+  // const handleAdd = (itemCard, index, plus) => {
+  //   console.log(itemCard);
 
-      dispatch(addItem(itemCard));
-    } else {
-      console.log("minus");
-      // console.log(parseInt(countObj[id]));
+  //   const { id } = itemCard.card.info;
+  //   if (plus) {
+  //     const newObj = {
+  //       ...countObj,
+  //       [id]: {
+  //         count: countObj[id] ? parseInt(countObj[id].count) + 1 : 1,
+  //         itemCard,
+  //       },
+  //     };
+  //     setCountObj(newObj);
 
-      if (countObj[id].count > 0) {
-        const newObj = {
-          ...countObj,
-          [id]: { count: parseInt(countObj[id].count) - 1, itemCard },
-        };
-        // if (countObj[id].count !== 0) {
-        //   setCountObj(newObj);
-        // }
-        // setCountObj((prevCountObj) => {
-        //   if (newObj[id]) {
-        //     if (newObj[id].count > 0) {
-        //       return newObj;
-        //     }
-        //   } else {
-        //     const { [id]: _, ...rest } = prevCountObj;
-        //     return rest;
-        //   }
-        // });
-        setCountObj(newObj);
-        dispatch(removeItem(id));
-        toast("Item removed", {
-          icon: "🗑️",
-          position: "bottom-right",
-          autoClose: 500,
-          style: {
-            borderRadius: "10px",
-            background: "#e13647",
-            color: "#fff",
-          },
-        });
-      }
-      // console.log(newObj);
-    }
+  //     dispatch(addItem(itemCard));
+  //   } else {
+  //     console.log("minus");
+  //     // console.log(parseInt(countObj[id]));
 
-    // console.log(id);
-    // console.log(newObj);
-    // console.log(countObj[id]);
-  };
+  //     if (countObj[id].count > 0) {
+  //       const newObj = {
+  //         ...countObj,
+  //         [id]: { count: parseInt(countObj[id].count) - 1, itemCard },
+  //       };
+  //       // if (countObj[id].count !== 0) {
+  //       //   setCountObj(newObj);
+  //       // }
+  //       // setCountObj((prevCountObj) => {
+  //       //   if (newObj[id]) {
+  //       //     if (newObj[id].count > 0) {
+  //       //       return newObj;
+  //       //     }
+  //       //   } else {
+  //       //     const { [id]: _, ...rest } = prevCountObj;
+  //       //     return rest;
+  //       //   }
+  //       // });
+  //       // setCountObj(newObj);
+  //       dispatch(removeItem(itemCard));
+  //     }
+  //     // console.log(newObj);
+  //   }
 
-  useEffect(() => {
-    // console.log(Object.values(countObj).map((val) => val.count > 0));
+  //   // console.log(id);
+  //   // console.log(newObj);
+  //   // console.log(countObj[id]);
+  // };
 
-    // const countZero = Object.values(countObj).map((val) => val.count > 0);
-    if (Object.keys(countObj).length > 0) {
-      console.log(countObj);
-      localStorage.setItem("countObj", JSON.stringify(countObj));
-    }
-  }, [countObj]);
+  // useEffect(() => {
+  //   // console.log(Object.values(countObj).map((val) => val.count > 0));
+
+  //   // const countZero = Object.values(countObj).map((val) => val.count > 0);
+  //   if (Object.keys(countObj).length > 0) {
+  //     console.log(countObj);
+  //     localStorage.setItem("countObj", JSON.stringify(countObj));
+  //   }
+  // }, [countObj]);
 
   // const [scrollDeal, setScrollDeal] = useState(0);
   // const [scrollPick, setScrollPick] = useState(0);
@@ -851,8 +838,8 @@ export const MenuInfo = ({
                     <MenuCategory
                       title={title}
                       categories={categories}
-                      countObj={countObj}
-                      handleAdd={handleAdd}
+                      // countObj={countObj}
+                      // handleAdd={handleAdd}
                     />
 
                     {/* <div className="p-3">
@@ -1084,8 +1071,8 @@ export const MenuInfo = ({
                     <MenuItemcards
                       title={title}
                       itemCards={itemCards}
-                      countObj={countObj}
-                      handleAdd={handleAdd}
+                      // countObj={countObj}
+                      // handleAdd={handleAdd}
                     />
                     {/* <div className="p-3">
                     <div className="card border-0 ">
