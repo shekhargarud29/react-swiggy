@@ -28,7 +28,9 @@ function App() {
 
   const noFooter = ["/SearchBar", "/searchbar", `/menu/${menuId}`];
   const hideFooter = noFooter.includes(location.pathname);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     // <div className="App">
     //   <header className="App-header">
